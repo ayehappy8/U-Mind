@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:table_calendar/table_calendar.dart';
 
 List<String> titulos = <String>[
   'Registro',
@@ -6,7 +7,6 @@ List<String> titulos = <String>[
   'Cápsulas',
   'Perfil'
 ];
-
 void main() => runApp(const UMind());
 
 class UMind extends StatelessWidget {
@@ -34,15 +34,15 @@ class Inicio extends StatelessWidget {
     return DefaultTabController(
       length: titulos.length,
       child: Scaffold(
-        backgroundColor: const Color.fromARGB(255, 154, 208, 194),
+        backgroundColor: const Color.fromARGB(255, 187, 222, 202),
         appBar: CustomAppBar(
-          height: 300,
+          height: 190,
           appBar: AppBar(
             flexibleSpace: Column(
               children: [
                 SizedBox(
-                  height: 250.0,
-                  width: 500.0,
+                  height: 150.0,
+                  width: 450.0,
                   child: Image.asset(
                     'assets/logo.png',
                   ),
@@ -54,9 +54,7 @@ class Inicio extends StatelessWidget {
           bottomWidget: Container(
             padding: const EdgeInsets.all(8),
             decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(10.0),
-              color: Colors.teal,
-            ),
+                borderRadius: BorderRadius.circular(30.0), color: Colors.teal),
             child: const Row(
               mainAxisAlignment: MainAxisAlignment.spaceAround,
               children: [
@@ -71,17 +69,29 @@ class Inicio extends StatelessWidget {
             ),
           ),
         ),
-        body: Center(
-          child: Column(
-            children: [
-              SizedBox(
-                height: 250.0,
-                width: 350.0,
-                child: Image.asset('assets/mascota.png'),
-              )
-            ],
-          ),
-        ),
+        body: Container(
+            margin: const EdgeInsets.only(bottom: 15.0),
+            child: Center(
+              child: SingleChildScrollView(
+                child: Column(
+                  children: [
+                    SizedBox(
+                      height: 300.0,
+                      width: 350.0,
+                      child: Image.asset('assets/mascota.png'),
+                    ),
+                    SizedBox(
+                        width: 350,
+                        child: TableCalendar(
+                            focusedDay: DateTime.now(),
+                            firstDay: DateTime.now()
+                                .subtract(const Duration(days: 365)),
+                            lastDay:
+                                DateTime.now().add(const Duration(days: 365)))),
+                  ],
+                ),
+              ),
+            )),
         floatingActionButton: const FloatingActionButton(
           onPressed: null,
           tooltip: 'Chatt',
@@ -112,14 +122,13 @@ class CustomAppBar extends StatelessWidget implements PreferredSize {
       child: Stack(
         children: [
           Container(
-            color: const Color.fromARGB(255, 154, 208, 194),
-            height: height / 1.2,
+            color: const Color.fromARGB(255, 187, 222, 202),
             child: appBar,
           ),
           Positioned(
             left: 30,
             right: 30,
-            bottom: 20,
+            bottom: 5,
             child: Material(
               //elevation: 2,
               child: bottomWidget,
