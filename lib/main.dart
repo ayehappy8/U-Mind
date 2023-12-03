@@ -35,7 +35,7 @@ class Inicio extends StatelessWidget {
       length: titulos.length,
       child: Scaffold(
         backgroundColor: const Color.fromARGB(255, 154, 208, 194),
-        appBar: MyCustomAppBar(
+        appBar: CustomAppBar(
           height: 300,
           appBar: AppBar(
             flexibleSpace: Column(
@@ -82,17 +82,23 @@ class Inicio extends StatelessWidget {
             ],
           ),
         ),
+        floatingActionButton: const FloatingActionButton(
+          onPressed: null,
+          tooltip: 'Chatt',
+          child: Icon(Icons.chat_bubble),
+        ),
       ),
     );
   }
 }
 
-class MyCustomAppBar extends StatelessWidget implements PreferredSize {
+//Creación de la custom appbar
+class CustomAppBar extends StatelessWidget implements PreferredSize {
   final AppBar appBar;
   final Widget bottomWidget;
   final double height;
 
-  const MyCustomAppBar({
+  const CustomAppBar({
     Key? key,
     required this.appBar,
     required this.bottomWidget,
