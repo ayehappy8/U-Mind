@@ -38,6 +38,7 @@ class Inicio extends StatelessWidget {
         appBar: CustomAppBar(
           height: 190,
           appBar: AppBar(
+            elevation: 0,
             flexibleSpace: Column(
               children: [
                 SizedBox(
@@ -147,10 +148,7 @@ class CustomAppBar extends StatelessWidget implements PreferredSize {
             left: 30,
             right: 30,
             bottom: 5,
-            child: Material(
-              //elevation: 2,
-              child: bottomWidget,
-            ),
+            child: bottomWidget,
           ),
         ],
       ),
