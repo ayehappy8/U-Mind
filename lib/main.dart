@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:table_calendar/table_calendar.dart';
+import 'widget/customAppBar.dart';
+import 'widget/chat.dart';
 
 List<String> titulos = <String>[
   'Registro',
@@ -111,53 +113,19 @@ class Inicio extends StatelessWidget {
                 ),
               ),
             )),
-        floatingActionButton: const FloatingActionButton(
-          onPressed: null,
-          tooltip: 'Chatt',
+        floatingActionButton: FloatingActionButton(
+          onPressed: () {
+            // Mostrar la ventana emergente de chat
+            showDialog(
+              context: context,
+              builder: (BuildContext context) {
+                return ChatPopup();
+              },
+            );
+          },
           child: Icon(Icons.chat_bubble),
         ),
       ),
     );
   }
-}
-
-//Creación de la custom appbar
-class CustomAppBar extends StatelessWidget implements PreferredSize {
-  final AppBar appBar;
-  final Widget bottomWidget;
-  final double height;
-
-  const CustomAppBar({
-    Key? key,
-    required this.appBar,
-    required this.bottomWidget,
-    required this.height,
-  }) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    return SizedBox(
-      height: height,
-      child: Stack(
-        children: [
-          Container(
-            color: const Color.fromARGB(255, 187, 222, 202),
-            child: appBar,
-          ),
-          Positioned(
-            left: 30,
-            right: 30,
-            bottom: 5,
-            child: bottomWidget,
-          ),
-        ],
-      ),
-    );
-  }
-
-  @override
-  Widget get child => this;
-
-  @override
-  Size get preferredSize => Size.fromHeight(height);
 }
