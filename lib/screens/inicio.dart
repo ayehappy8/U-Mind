@@ -72,7 +72,7 @@ class _InicioState extends State<Inicio> {
           showDialog(
             context: context,
             builder: (BuildContext context) {
-              return const ChatPopup();
+              return ChatPopup();
             },
           );
         },

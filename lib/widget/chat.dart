@@ -3,12 +3,12 @@ import 'package:flutter/material.dart';
 class ChatPop extends StatelessWidget {
   final Widget content;
 
-  const ChatPop({super.key, required this.content});
+  const ChatPop({required this.content});
 
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.only(left: 16.0),
+      padding: EdgeInsets.only(left: 16.0),
       child: Stack(
         children: [
           Container(
@@ -19,7 +19,7 @@ class ChatPop extends StatelessWidget {
               borderRadius: BorderRadius.circular(12.0),
               child: Container(
                 width: MediaQuery.of(context).size.width * 0.8,
-                padding: const EdgeInsets.all(4.0),
+                padding: EdgeInsets.all(4.0),
                 child: ClipRRect(
                   borderRadius: BorderRadius.circular(12.0),
                   child: content,
@@ -31,7 +31,7 @@ class ChatPop extends StatelessWidget {
             right: 60,
             top: -5,
             child: IconButton(
-              icon: Icon(Icons.close_outlined),
+              icon: Icon(Icons.close),
               onPressed: () {
                 Navigator.of(context).pop();
               },
@@ -44,8 +44,6 @@ class ChatPop extends StatelessWidget {
 }
 
 class ChatPopup extends StatefulWidget {
-  const ChatPopup({super.key});
-
   @override
   _ChatPopupState createState() => _ChatPopupState();
 }
@@ -62,20 +60,22 @@ class _ChatPopupState extends State<ChatPopup> {
           Expanded(
             child: Container(
               color: Colors.teal,
-              child: const Center(
+              child: Center(
                 child: Text('Mensajes del chat'),
               ),
             ),
           ),
           // Cuadro de entrada de mensaje
-          Padding(
-            padding: const EdgeInsets.all(8.0),
+          Container(
+            padding: EdgeInsets.only(
+              bottom: MediaQuery.of(context).viewInsets.bottom,
+            ),
             child: Row(
               children: [
                 Expanded(
                   child: TextField(
                     controller: _messageController,
-                    decoration: const InputDecoration(
+                    decoration: InputDecoration(
                       hintText: 'Escribe un mensaje...',
                     ),
                   ),
