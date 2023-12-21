@@ -12,7 +12,7 @@ class Capsulas extends StatelessWidget {
         child: const Center(
           child: SingleChildScrollView(
             child: Center(
-              child: Text("Pensamiento"),
+              child: Text("Cápsulas"),
             ),
           ),
         ),

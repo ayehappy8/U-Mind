@@ -12,7 +12,7 @@ class Perfil extends StatelessWidget {
         child: const Center(
           child: SingleChildScrollView(
             child: Center(
-              child: Text("Pensamiento"),
+              child: Text("Perfil"),
             ),
           ),
         ),
