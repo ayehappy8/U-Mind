@@ -23,7 +23,7 @@ class _PensamientoState extends State<Pensamiento> {
     return Scaffold(
       backgroundColor: const Color.fromARGB(255, 187, 222, 202),
       body: Container(
-        margin: const EdgeInsets.only(bottom: 15.0, left: 10, right: 10),
+        margin: const EdgeInsets.only(bottom: 30.0, left: 10, right: 10),
         child: Center(
           child: SingleChildScrollView(
             child: Column(
@@ -81,10 +81,13 @@ class _PensamientoState extends State<Pensamiento> {
                     width: 150.0,
                     child: Image.asset('assets/mascota.png'),
                   ),
-                  const Text(style: TextStyle(fontSize: 20), "¿Qué pienso?"),
+                  const Text(
+                      style: TextStyle(fontSize: 20),
+                      "¿Qué emoción me \n genera esto?"),
                 ]),
                 Container(
                   width: 294,
+                  margin: EdgeInsets.only(bottom: 50),
                   decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(30.0),
                     color: Colors.teal,
@@ -118,8 +121,32 @@ class _PensamientoState extends State<Pensamiento> {
                     onChanged: dropdownCallback,
                   ),
                 ),
-
                 //row 3
+                Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                    children: [
+                      ElevatedButton(
+                        style: ElevatedButton.styleFrom(
+                          backgroundColor: Colors.blue[900],
+                          minimumSize: const Size(146, 70),
+                        ),
+                        child: const Text(
+                            style: TextStyle(color: Colors.white, fontSize: 20),
+                            "Pensamientos\npasados"),
+                        onPressed: () => {},
+                      ),
+                      ElevatedButton(
+                        style: ElevatedButton.styleFrom(
+                          backgroundColor: Colors.teal,
+                          minimumSize: const Size(146, 70),
+                        ),
+                        child: const Text(
+                            style: TextStyle(color: Colors.white, fontSize: 20),
+                            "Guardar"),
+                        onPressed: () => {},
+                      ),
+                    ]),
+                //row 4
               ],
             ),
           ),
