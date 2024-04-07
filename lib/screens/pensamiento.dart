@@ -83,20 +83,42 @@ class _PensamientoState extends State<Pensamiento> {
                   ),
                   const Text(style: TextStyle(fontSize: 20), "¿Qué pienso?"),
                 ]),
-                DropdownButton(items: const [
-                  DropdownMenuItem(
-                    value: "Felicidad",
-                    child: Text("Felicidad"),
+                Container(
+                  width: 294,
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(30.0),
+                    color: Colors.teal,
                   ),
-                  DropdownMenuItem(
-                    value: "Tristeza",
-                    child: Text("Tristeza"),
+                  child: DropdownButton(
+                    isExpanded: true,
+                    dropdownColor: Colors.teal,
+                    style: const TextStyle(fontSize: 20, color: Colors.white),
+                    borderRadius: BorderRadius.circular(30.0),
+                    items: const [
+                      DropdownMenuItem(
+                        value: "Felicidad",
+                        child: Center(
+                            child: Text(
+                                "Felicidad")), // Centra el texto horizontalmente
+                      ),
+                      DropdownMenuItem(
+                        value: "Tristeza",
+                        child: Center(
+                            child: Text(
+                                "Tristeza")), // Centra el texto horizontalmente
+                      ),
+                      DropdownMenuItem(
+                        value: "Ira",
+                        child: Center(
+                            child:
+                                Text("Ira")), // Centra el texto horizontalmente
+                      ),
+                    ],
+                    value: _emocion,
+                    onChanged: dropdownCallback,
                   ),
-                  DropdownMenuItem(
-                    value: "Ira",
-                    child: Text("Ira"),
-                  ),
-                ], value: _emocion, onChanged: dropdownCallback),
+                ),
+
                 //row 3
               ],
             ),

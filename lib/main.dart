@@ -10,7 +10,7 @@ class UMind extends StatelessWidget {
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: () {
-        FocusManager.instance.primaryFocus?.unfocus();
+  FocusManager.instance.primaryFocus?.unfocus();
       },
       child: MaterialApp(
         theme: ThemeData(
