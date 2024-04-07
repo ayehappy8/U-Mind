@@ -41,6 +41,7 @@ class _PensamientoState extends State<Pensamiento> {
                   height: 193,
                   width: 294,
                   child: TextField(
+                    maxLines: 6,
                     decoration: InputDecoration(
                       fillColor: Color(0xFFECF4D6),
                       filled: true,
@@ -64,6 +65,7 @@ class _PensamientoState extends State<Pensamiento> {
                   height: 193,
                   width: 294,
                   child: TextField(
+                    maxLines: 6,
                     decoration: InputDecoration(
                       fillColor: Color(0xFFECF4D6),
                       filled: true,
