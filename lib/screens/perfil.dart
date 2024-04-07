@@ -9,10 +9,36 @@ class Perfil extends StatelessWidget {
       backgroundColor: const Color.fromARGB(255, 187, 222, 202),
       body: Container(
         margin: const EdgeInsets.only(bottom: 15.0),
-        child: const Center(
+        child: Center(
           child: SingleChildScrollView(
-            child: Center(
-              child: Text("Perfil"),
+            child: Column(
+              children: [
+                Row(
+                  children: [
+                    const SizedBox(
+                      width: 250,
+                      child: Text(
+                        'Joan Pozo', 
+                        textAlign: TextAlign.center,
+                        style: TextStyle(fontSize: 30, color: Color.fromARGB(255, 23, 56, 84))
+                      ),
+                    ),
+                    SizedBox(
+                      height: 100.0,
+                      width: 100.0,
+                      child: Image.asset('assets/mascota.png'),
+                    ),
+                  ],
+                ),
+                const SizedBox(
+                  width: 300,
+                  child: Text(
+                    'Última Consulta',
+                    textAlign: TextAlign.start,
+                    style: TextStyle(fontSize: 25, color: Color.fromARGB(255, 23, 56, 84)),
+                  ),
+                )
+              ],
             ),
           ),
         ),
