@@ -51,14 +51,14 @@ class Perfil extends StatelessWidget {
                       style: TextStyle(fontSize: 20, color: Color.fromARGB(255, 23, 56, 84))
                     ),
                 ),
-                Row(
+                /*Row(
                   children: [
                     TextButton(
                         onPressed: onPressed, 
                         child: const Text('Ver Consultas'), 
                         style: TextButton.styleFrom(foregroundColor: Color.fromARGB(255, 38, 80, 115)),)
                   ],
-                )
+                )*/
               ],
             ),
           ),
