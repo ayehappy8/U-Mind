@@ -18,25 +18,46 @@ class Perfil extends StatelessWidget {
                     const SizedBox(
                       width: 250,
                       child: Text(
-                        'Joan Pozo', 
+                        'Joan Pozon\n  12.345.678-9', 
                         textAlign: TextAlign.center,
                         style: TextStyle(fontSize: 30, color: Color.fromARGB(255, 23, 56, 84))
                       ),
                     ),
                     SizedBox(
-                      height: 100.0,
-                      width: 100.0,
+                      height: 140.0,
+                      width: 140.0,
                       child: Image.asset('assets/mascota.png'),
                     ),
                   ],
                 ),
                 const SizedBox(
-                  width: 300,
+                  width: 320,
                   child: Text(
                     'Última Consulta',
                     textAlign: TextAlign.start,
                     style: TextStyle(fontSize: 25, color: Color.fromARGB(255, 23, 56, 84)),
                   ),
+                ),
+                Container(
+                    decoration: BoxDecoration(
+                      color: Color.fromARGB(255, 236, 244, 214), // Cambia el color de fondo del Container (y, por lo tanto, del SizedBox)
+                      borderRadius: BorderRadius.circular(
+                          10.0), // Ajusta el radio de borde según tus preferencias
+                    ),
+                    width: 320,
+                    height: 300,
+                    child: const Text(
+                      '\tAsunto\n\tDetalle',
+                      style: TextStyle(fontSize: 20, color: Color.fromARGB(255, 23, 56, 84))
+                    ),
+                ),
+                Row(
+                  children: [
+                    TextButton(
+                        onPressed: onPressed, 
+                        child: const Text('Ver Consultas'), 
+                        style: TextButton.styleFrom(foregroundColor: Color.fromARGB(255, 38, 80, 115)),)
+                  ],
                 )
               ],
             ),
