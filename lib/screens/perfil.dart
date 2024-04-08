@@ -12,6 +12,7 @@ class Perfil extends StatelessWidget {
         child: Center(
           child: SingleChildScrollView(
             child: Column(
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: [
                 Row(
                   children: [
@@ -51,14 +52,41 @@ class Perfil extends StatelessWidget {
                       style: TextStyle(fontSize: 20, color: Color.fromARGB(255, 23, 56, 84))
                     ),
                 ),
-                /*Row(
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                   children: [
-                    TextButton(
-                        onPressed: onPressed, 
-                        child: const Text('Ver Consultas'), 
-                        style: TextButton.styleFrom(foregroundColor: Color.fromARGB(255, 38, 80, 115)),)
+                    ElevatedButton(
+                      style: ElevatedButton.styleFrom(
+                        backgroundColor: Color.fromARGB(255, 38, 80, 115),
+                        minimumSize: const Size(120, 70),
+                      ),
+                      child: const Text(
+                          style: TextStyle(color: Color.fromARGB(255, 236, 244, 214), fontSize: 20),
+                          "Ver\nConsultas", textAlign: TextAlign.center),
+                      onPressed: () => {},
+                    ),
+                    ElevatedButton(
+                      style: ElevatedButton.styleFrom(
+                        backgroundColor: Color.fromARGB(255, 253, 238, 220),
+                        minimumSize: const Size(70, 70),
+                      ),
+                      child: const Text(
+                          style: TextStyle(color: Color.fromARGB(255, 236, 244, 214), fontSize: 20),
+                          ""),
+                      onPressed: () => {},
+                    ),
+                    ElevatedButton(
+                      style: ElevatedButton.styleFrom(
+                        backgroundColor: Color.fromARGB(255, 179, 19, 18),
+                        minimumSize: const Size(120, 70),
+                      ),
+                      child: const Text(
+                          style: TextStyle(color: Color.fromARGB(255, 236, 244, 214), fontSize: 20),
+                          "Cerrar\nSesión"),
+                      onPressed: () => {},
+                    ),
                   ],
-                )*/
+                )
               ],
             ),
           ),
