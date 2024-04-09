@@ -116,6 +116,24 @@ class _PensamientoState extends State<Pensamiento> {
                             child:
                                 Text("Ira")), // Centra el texto horizontalmente
                       ),
+                      DropdownMenuItem(
+                        value: "Miedo",
+                        child: Center(
+                            child: Text(
+                                "Miedo")), // Centra el texto horizontalmente
+                      ),
+                      DropdownMenuItem(
+                        value: "Asco",
+                        child: Center(
+                            child: Text(
+                                "Asco")), // Centra el texto horizontalmente
+                      ),
+                      DropdownMenuItem(
+                        value: "Sorpresa",
+                        child: Center(
+                            child: Text(
+                                "Sorpresa")), // Centra el texto horizontalmente
+                      ),
                     ],
                     value: _emocion,
                     onChanged: dropdownCallback,
