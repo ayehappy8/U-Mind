@@ -150,7 +150,8 @@ class _PensamientoState extends State<Pensamiento> {
                         ),
                         child: const Text(
                             style: TextStyle(color: Colors.white, fontSize: 20),
-                            "Pensamientos\npasados"),
+                            "Pensamientos\npasados",
+                            textAlign: TextAlign.center),
                         onPressed: () => {},
                       ),
                       ElevatedButton(
