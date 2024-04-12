@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:umind/screens/consultas.dart';
+import 'package:umind/screens/configuracion.dart';
 
 class Perfil extends StatelessWidget {
   const Perfil({super.key});
@@ -69,7 +71,11 @@ class Perfil extends StatelessWidget {
                             fontSize: 20),
                         "Ver\nConsultas",
                         textAlign: TextAlign.center),
-                    onPressed: () => {},
+                    onPressed: () => {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(builder: (context) => Consultas()))
+                    },
                   ),
                   ElevatedButton(
                     style: ElevatedButton.styleFrom(
@@ -81,7 +87,11 @@ class Perfil extends StatelessWidget {
                             color: Color.fromARGB(255, 236, 244, 214),
                             fontSize: 20),
                         ""),
-                    onPressed: () => {},
+                    onPressed: () => {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(builder: (context) => Configuracion()))
+                    },
                   ),
                   ElevatedButton(
                     style: ElevatedButton.styleFrom(
