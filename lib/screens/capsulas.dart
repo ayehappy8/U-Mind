@@ -20,7 +20,7 @@ class Capsulas extends StatelessWidget {
                 children: <Widget>[
                   //Row 1 - video 1 -
                   Row(
-                    mainAxisAlignment: MainAxisAlignment.start,
+                    mainAxisAlignment: MainAxisAlignment.center,
                     children: [
                       const Text(
                           style: TextStyle(fontSize: 10),
@@ -57,7 +57,7 @@ class Capsulas extends StatelessWidget {
                   ),
                   //Row 2 - Informacion 1 -
                   Row(
-                    mainAxisAlignment: MainAxisAlignment.start,
+                    mainAxisAlignment: MainAxisAlignment.center,
                     children: [
                       const Text(
                           style: TextStyle(fontSize: 10),
@@ -94,7 +94,7 @@ class Capsulas extends StatelessWidget {
                   ),
                   //Row 3
                   Row(
-                    mainAxisAlignment: MainAxisAlignment.start,
+                    mainAxisAlignment: MainAxisAlignment.center,
                     children: [
                       const Text(
                           style: TextStyle(fontSize: 10),
@@ -131,7 +131,7 @@ class Capsulas extends StatelessWidget {
                   ),
                   //Row 4
                   Row(
-                    mainAxisAlignment: MainAxisAlignment.start,
+                    mainAxisAlignment: MainAxisAlignment.center,
                     children: [
                       const Text(
                           style: TextStyle(fontSize: 10),
