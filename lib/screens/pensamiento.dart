@@ -1,4 +1,7 @@
+// ignore_for_file: prefer_const_constructors
+
 import 'package:flutter/material.dart';
+import '/widget/penasamientosPasados.dart';
 
 class Pensamiento extends StatefulWidget {
   const Pensamiento({Key? key}) : super(key: key);
@@ -8,6 +11,8 @@ class Pensamiento extends StatefulWidget {
 }
 
 String _emocion = 'Felicidad';
+bool condicion_row = true;
+bool condicion_container = false;
 
 class _PensamientoState extends State<Pensamiento> {
   void dropdownCallback(String? selectedValue) {
@@ -140,31 +145,75 @@ class _PensamientoState extends State<Pensamiento> {
                   ),
                 ),
                 //row 3
-                Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                    children: [
-                      ElevatedButton(
-                        style: ElevatedButton.styleFrom(
-                          backgroundColor: Colors.blue[900],
-                          minimumSize: const Size(146, 70),
+                //Manejo y uso de Emociones pasadas
+                Visibility(
+                  visible: condicion_row,
+                  child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                      children: [
+                        ElevatedButton(
+                          style: ElevatedButton.styleFrom(
+                            backgroundColor: Colors.blue[900],
+                            minimumSize: const Size(146, 70),
+                          ),
+                          child: const Text(
+                              style:
+                                  TextStyle(color: Colors.white, fontSize: 20),
+                              "Pensamientos\npasados",
+                              textAlign: TextAlign.center),
+                          onPressed: () => {
+                            setState(() {
+                              condicion_row = false;
+                              condicion_container = true;
+                            })
+                          },
                         ),
-                        child: const Text(
-                            style: TextStyle(color: Colors.white, fontSize: 20),
-                            "Pensamientos\npasados",
-                            textAlign: TextAlign.center),
-                        onPressed: () => {},
-                      ),
-                      ElevatedButton(
-                        style: ElevatedButton.styleFrom(
-                          backgroundColor: Colors.teal,
-                          minimumSize: const Size(146, 70),
+                        ElevatedButton(
+                          style: ElevatedButton.styleFrom(
+                            backgroundColor: Colors.teal,
+                            minimumSize: const Size(146, 70),
+                          ),
+                          child: const Text(
+                              style:
+                                  TextStyle(color: Colors.white, fontSize: 20),
+                              "Guardar"),
+                          onPressed: () => {},
                         ),
-                        child: const Text(
-                            style: TextStyle(color: Colors.white, fontSize: 20),
-                            "Guardar"),
-                        onPressed: () => {},
-                      ),
-                    ]),
+                      ]),
+                ),
+                Visibility(
+                    visible: condicion_container,
+                    child: Container(
+                        margin: EdgeInsets.only(bottom: 10),
+                        decoration: BoxDecoration(
+                            color: Colors.teal,
+                            borderRadius: BorderRadius.circular(20.0)),
+                        child: Column(
+                          children: [
+                            CustomTable(),
+                            Container(
+                              margin: EdgeInsets.all(15),
+                              child: ElevatedButton(
+                                style: ElevatedButton.styleFrom(
+                                  backgroundColor: Colors.red,
+                                  minimumSize: const Size(294, 50),
+                                ),
+                                child: const Text(
+                                  style: TextStyle(
+                                      color: Colors.white, fontSize: 20),
+                                  "Volver",
+                                  textAlign: TextAlign.center,
+                                ),
+                                onPressed: () => {
+                                  setState(() {
+                                    condicion_row = true;
+                                    condicion_container = false;
+                                  })
+                                },
+                              ),
+                            ),
+                          ],
+                        )))
                 //row 4
               ],
             ),
