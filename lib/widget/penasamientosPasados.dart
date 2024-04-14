@@ -28,14 +28,14 @@ class CustomTable extends StatelessWidget {
         ),
         TableRow(
           children: [
-            Padding(
+            const Padding(
               padding: EdgeInsets.all(15.0),
               child: Text(
                 "Alegria",
                 style: TextStyle(color: Colors.white, fontSize: 20),
               ),
             ),
-            Padding(
+            const Padding(
               padding: EdgeInsets.all(15.0),
               child: Text(
                 "11-10-23",
@@ -43,7 +43,7 @@ class CustomTable extends StatelessWidget {
               ),
             ),
             Container(
-              margin: EdgeInsets.only(right: 10),
+              margin: const EdgeInsets.only(right: 10),
               child: ElevatedButton(
                 style: ElevatedButton.styleFrom(
                   shape: RoundedRectangleBorder(
