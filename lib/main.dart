@@ -1,7 +1,13 @@
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'screens/inicio.dart';
 
-void main() => runApp(const UMind());
+void main() => {
+      WidgetsFlutterBinding.ensureInitialized(),
+      Firebase.initializeApp().then((value) {
+        runApp(const UMind());
+      }),
+    };
 
 class UMind extends StatelessWidget {
   const UMind({Key? key}) : super(key: key);
@@ -10,7 +16,7 @@ class UMind extends StatelessWidget {
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: () {
-  FocusManager.instance.primaryFocus?.unfocus();
+        FocusManager.instance.primaryFocus?.unfocus();
       },
       child: MaterialApp(
         theme: ThemeData(

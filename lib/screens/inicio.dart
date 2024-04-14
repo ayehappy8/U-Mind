@@ -1,3 +1,5 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import '/widget/customAppBar.dart';
 import '/widget/chat.dart';
@@ -14,8 +16,26 @@ class Inicio extends StatefulWidget {
 }
 
 class _InicioState extends State<Inicio> {
+  @override
+  void initState() {
+    super.initState();
+    getUsers();
+  }
+
   final PageController _controladorPagina = PageController();
-  int _PaginaActual = 0;
+  int _paginaActual = 0;
+
+  void getUsers() async {
+    CollectionReference collectionReference =
+        FirebaseFirestore.instance.collection("Alumnos");
+
+    QuerySnapshot users = await collectionReference.get();
+    if (users.docs.length != 0) {
+      for (var doc in users.docs) {
+        print(doc.data());
+      }
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -56,7 +76,7 @@ class _InicioState extends State<Inicio> {
         controller: _controladorPagina,
         onPageChanged: (int page) {
           setState(() {
-            _PaginaActual = page;
+            _paginaActual = page;
           });
         },
         children: const [
@@ -93,7 +113,7 @@ class _InicioState extends State<Inicio> {
       child: Text(
         title,
         style: TextStyle(
-          color: _PaginaActual == index ? Colors.white : Colors.grey,
+          color: _paginaActual == index ? Colors.white : Colors.grey,
         ),
       ),
     );
