@@ -5,44 +5,34 @@ class CustomTable extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Table(
-      children: [
-        const TableRow(
-          children: [
-            Padding(
-              padding: EdgeInsets.all(15.0),
-              child: Text(
-                "Emoción",
-                style: TextStyle(color: Colors.white, fontSize: 20),
-              ),
-            ),
-            Padding(
-              padding: EdgeInsets.all(15.0),
-              child: Text(
-                "Fecha",
-                style: TextStyle(color: Colors.white, fontSize: 20),
-              ),
-            ),
-            SizedBox(),
-          ],
+    return DataTable(
+      columns: const [
+        DataColumn(
+          label: Text(
+            "Emoción",
+            style: TextStyle(color: Colors.white, fontSize: 20),
+          ),
         ),
-        TableRow(
-          children: [
-            const Padding(
-              padding: EdgeInsets.all(15.0),
-              child: Text(
-                "Alegria",
-                style: TextStyle(color: Colors.white, fontSize: 20),
-              ),
+        DataColumn(
+            label: Text(
+          "Fecha",
+          style: TextStyle(color: Colors.white, fontSize: 20),
+        )),
+        DataColumn(label: SizedBox())
+      ],
+      rows: [
+        DataRow(cells: [
+          const DataCell(Text(
+            "Alegria",
+            style: TextStyle(color: Colors.white, fontSize: 20),
+          )),
+          const DataCell(
+            Text(
+              "11-10-23",
+              style: TextStyle(color: Colors.white, fontSize: 20),
             ),
-            const Padding(
-              padding: EdgeInsets.all(15.0),
-              child: Text(
-                "11-10-23",
-                style: TextStyle(color: Colors.white, fontSize: 20),
-              ),
-            ),
-            Container(
+          ),
+          DataCell(Container(
               margin: const EdgeInsets.only(right: 10),
               child: ElevatedButton(
                 style: ElevatedButton.styleFrom(
@@ -59,28 +49,21 @@ class CustomTable extends StatelessWidget {
                   style: TextStyle(color: Colors.white, fontSize: 20),
                   textAlign: TextAlign.center,
                 ),
-              ),
+              ))),
+        ]),
+        DataRow(cells: [
+          const DataCell(Text(
+            "Tristeza",
+            style: TextStyle(color: Colors.white, fontSize: 20),
+          )),
+          const DataCell(
+            Text(
+              "18-10-23",
+              style: TextStyle(color: Colors.white, fontSize: 20),
             ),
-          ],
-        ),
-        TableRow(
-          children: [
-            Padding(
-              padding: EdgeInsets.all(15.0),
-              child: Text(
-                "Tristeza",
-                style: TextStyle(color: Colors.white, fontSize: 20),
-              ),
-            ),
-            Padding(
-              padding: EdgeInsets.all(15.0),
-              child: Text(
-                "18-10-23",
-                style: TextStyle(color: Colors.white, fontSize: 20),
-              ),
-            ),
-            Container(
-              margin: EdgeInsets.only(right: 10),
+          ),
+          DataCell(Container(
+              margin: const EdgeInsets.only(right: 10),
               child: ElevatedButton(
                 style: ElevatedButton.styleFrom(
                   shape: RoundedRectangleBorder(
@@ -96,28 +79,21 @@ class CustomTable extends StatelessWidget {
                   style: TextStyle(color: Colors.white, fontSize: 20),
                   textAlign: TextAlign.center,
                 ),
-              ),
+              ))),
+        ]),
+        DataRow(cells: [
+          const DataCell(Text(
+            "Asco",
+            style: TextStyle(color: Colors.white, fontSize: 20),
+          )),
+          const DataCell(
+            Text(
+              "22-10-23",
+              style: TextStyle(color: Colors.white, fontSize: 20),
             ),
-          ],
-        ),
-        TableRow(
-          children: [
-            Padding(
-              padding: EdgeInsets.all(15.0),
-              child: Text(
-                "Asco",
-                style: TextStyle(color: Colors.white, fontSize: 20),
-              ),
-            ),
-            Padding(
-              padding: EdgeInsets.all(15.0),
-              child: Text(
-                "22-10-23",
-                style: TextStyle(color: Colors.white, fontSize: 20),
-              ),
-            ),
-            Container(
-              margin: EdgeInsets.only(right: 10),
+          ),
+          DataCell(Container(
+              margin: const EdgeInsets.only(right: 10),
               child: ElevatedButton(
                 style: ElevatedButton.styleFrom(
                   shape: RoundedRectangleBorder(
@@ -133,10 +109,38 @@ class CustomTable extends StatelessWidget {
                   style: TextStyle(color: Colors.white, fontSize: 20),
                   textAlign: TextAlign.center,
                 ),
-              ),
+              ))),
+        ]),
+        DataRow(cells: [
+          const DataCell(Text(
+            "Asco",
+            style: TextStyle(color: Colors.white, fontSize: 20),
+          )),
+          const DataCell(
+            Text(
+              "23-10-23",
+              style: TextStyle(color: Colors.white, fontSize: 20),
             ),
-          ],
-        ),
+          ),
+          DataCell(Container(
+              margin: const EdgeInsets.only(right: 10),
+              child: ElevatedButton(
+                style: ElevatedButton.styleFrom(
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(5),
+                  ),
+                  backgroundColor: Colors.blue[900],
+                ),
+                onPressed: () {
+                  // Acción al presionar el botón
+                },
+                child: const Text(
+                  "Ver",
+                  style: TextStyle(color: Colors.white, fontSize: 20),
+                  textAlign: TextAlign.center,
+                ),
+              ))),
+        ])
       ],
     );
   }
