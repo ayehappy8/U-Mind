@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:umind/screens/registrocuadro.dart';
 
 class Registroemocion extends StatelessWidget {
   const Registroemocion({super.key});
@@ -51,7 +52,8 @@ class Registroemocion extends StatelessWidget {
                             // Acción al presionar el botón
                             Navigator.push(
                               context,
-                              MaterialPageRoute(builder: (context) => Registroemocion()),
+                              
+                              MaterialPageRoute(builder: (context) => Registrocuadro()),
                             );
                           },
                           child: Text(
