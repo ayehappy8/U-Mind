@@ -23,15 +23,19 @@ class Registrocuadro extends StatelessWidget {
                   child: Image.asset('assets/mascota.png'),
                 ),
 
-                const SizedBox(
+                SizedBox(
                   height: 283.0,
-                  width: 303.0,
+                  width: 303.0,                    
+                  
+                    
                   child: TextField(
                     maxLines: 9,
                     decoration: InputDecoration(
-                      fillColor: Color(0xFFECF4D6),
+                      fillColor: const Color(0xFFECF4D6),
                       filled: true,
-                      border: OutlineInputBorder(),
+                      border: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(20.0), // Define el radio del borde
+                      ),
                       hintText: '....',
                     ),
                   ),
