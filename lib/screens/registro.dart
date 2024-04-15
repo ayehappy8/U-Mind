@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:table_calendar/table_calendar.dart';
-import 'package:umind/screens/registroemocion.dart';
+import 'package:umind/screens/registro/registroemocion.dart';
 
 
 class Registro extends StatelessWidget {
@@ -24,7 +24,7 @@ class Registro extends StatelessWidget {
                       // Acción al tocar la imagen
                       Navigator.push(
                         context,
-                        MaterialPageRoute(builder: (context) => Registroemocion()),
+                        MaterialPageRoute(builder: (context) => const Registroemocion()),
                       );
                     },
                     child: Image.asset('assets/mascota.png'),

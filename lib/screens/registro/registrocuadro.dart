@@ -15,7 +15,7 @@ class Registrocuadro extends StatelessWidget {
             child: Column(
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: [
-                const Text("¿Qué sientes hoy?", style: TextStyle(fontSize: 25)),
+                const Text("Profundiza tu emoción", style: TextStyle(fontSize: 25)),
 
                 SizedBox(
                   height: 300.0,
