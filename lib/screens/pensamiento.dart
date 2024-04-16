@@ -1,5 +1,6 @@
 // ignore_for_file: prefer_const_constructors
 
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import '/widget/penasamientosPasados.dart';
 
@@ -23,6 +24,46 @@ class _PensamientoState extends State<Pensamiento> {
     }
   }
 
+  final _pregunta1 = TextEditingController();
+  final _pregunta2 = TextEditingController();
+  List<Map<String, dynamic>> _datos_usuarios = <Map<String, dynamic>>[];
+  DateTime fecha = DateTime.now();
+
+  void getInfoPensamientos() async {
+    CollectionReference collectionReference =
+        FirebaseFirestore.instance.collection("Pruebas");
+    QuerySnapshot users = await collectionReference.get();
+    if (users.docs.length != 0) {
+      for (var doc in users.docs) {
+        print(doc.data());
+        _datos_usuarios.add(doc.data() as Map<String, dynamic>);
+      }
+    }
+  }
+
+  Future<void> agregarDatos() async {
+    try {
+      // Referencia a la colección y documento en Firestore
+      CollectionReference preguntasCollection =
+          FirebaseFirestore.instance.collection('Pruebas');
+      DocumentReference documento = preguntasCollection.doc();
+
+      // Datos que quieres agregar
+      Map<String, dynamic> datos = {
+        'pregunta1': _pregunta1.text,
+        'pregunta2': _pregunta2.text,
+        'Emocion': _emocion
+      };
+
+      // Agregar los datos al documento
+      await documento.set(datos);
+
+      print('Datos agregados correctamente.');
+    } catch (e) {
+      print('Error al agregar datos: $e');
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -40,12 +81,14 @@ class _PensamientoState extends State<Pensamiento> {
                     width: 150.0,
                     child: Image.asset('assets/mascota.png'),
                   ),
-                  const Text(style: TextStyle(fontSize: 20), "¿Qué pienso?"),
+                  Text(
+                      style: TextStyle(fontSize: 20), "¿Qué pienso? Los datos"),
                 ]),
-                const SizedBox(
+                SizedBox(
                   height: 193,
                   width: 294,
                   child: TextField(
+                    controller: _pregunta1,
                     maxLines: 6,
                     decoration: InputDecoration(
                       fillColor: Color(0xFFECF4D6),
@@ -66,10 +109,11 @@ class _PensamientoState extends State<Pensamiento> {
                       style: TextStyle(fontSize: 20),
                       "¿Qué situación me\n hace pensar esto?"),
                 ]),
-                const SizedBox(
+                SizedBox(
                   height: 193,
                   width: 294,
                   child: TextField(
+                    controller: _pregunta2,
                     maxLines: 6,
                     decoration: InputDecoration(
                       fillColor: Color(0xFFECF4D6),
@@ -163,6 +207,9 @@ class _PensamientoState extends State<Pensamiento> {
                               textAlign: TextAlign.center),
                           onPressed: () => {
                             setState(() {
+                              print("fecha ${fecha}");
+                              getInfoPensamientos();
+                              print("datos externos ${_datos_usuarios}");
                               condicion_row = false;
                               condicion_container = true;
                             })
@@ -177,7 +224,12 @@ class _PensamientoState extends State<Pensamiento> {
                               style:
                                   TextStyle(color: Colors.white, fontSize: 20),
                               "Guardar"),
-                          onPressed: () => {},
+                          onPressed: () => {
+                            agregarDatos(),
+                            print("Datos pregunta 1 ${_pregunta1.text}"),
+                            print("Datos pregunta 2 ${_pregunta2.text}"),
+                            print("Datos Emocion ${_emocion}")
+                          },
                         ),
                       ]),
                 ),
