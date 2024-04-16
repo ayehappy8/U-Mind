@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:umind/screens/perfil/consultas.dart';
+import 'package:umind/screens/perfil/configuracion.dart';
+import 'package:pelaicons/pelaicons.dart';
 
 class Perfil extends StatelessWidget {
   const Perfil({super.key});
@@ -69,19 +72,27 @@ class Perfil extends StatelessWidget {
                             fontSize: 20),
                         "Ver\nConsultas",
                         textAlign: TextAlign.center),
-                    onPressed: () => {},
+                    onPressed: () => {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(builder: (context) => Consultas()))
+                    },
                   ),
                   ElevatedButton(
                     style: ElevatedButton.styleFrom(
                       backgroundColor: Color.fromARGB(255, 253, 238, 220),
                       minimumSize: const Size(70, 70),
                     ),
-                    child: const Text(
-                        style: TextStyle(
-                            color: Color.fromARGB(255, 236, 244, 214),
-                            fontSize: 20),
-                        ""),
-                    onPressed: () => {},
+                    child: const Icon(
+                      Pelaicons.settings_light_outline,
+                      size: 50,
+                      weight: 50,
+                      ),
+                    onPressed: () => {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(builder: (context) => Configuracion()))
+                    },
                   ),
                   ElevatedButton(
                     style: ElevatedButton.styleFrom(

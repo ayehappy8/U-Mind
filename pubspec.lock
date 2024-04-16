@@ -147,6 +147,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "1.9.0"
+  pelaicons:
+    dependency: "direct main"
+    description:
+      name: pelaicons
+      sha256: fc1c1e972e4ad64bc2de3cea4d5b059327e2c2f92b68f74c18ab46ba8f65fa40
+      url: "https://pub.dev"
+    source: hosted
+    version: "0.0.1"
   simple_gesture_detector:
     dependency: transitive
     description:
