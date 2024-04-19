@@ -81,8 +81,7 @@ class _PensamientoState extends State<Pensamiento> {
                     width: 150.0,
                     child: Image.asset('assets/mascota.png'),
                   ),
-                  Text(
-                      style: TextStyle(fontSize: 20), "¿Qué pienso? Los datos"),
+                  Text(style: TextStyle(fontSize: 20), "¿Qué pienso?"),
                 ]),
                 SizedBox(
                   height: 193,
