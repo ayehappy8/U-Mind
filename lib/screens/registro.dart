@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:table_calendar/table_calendar.dart';
+import 'package:umind/screens/registro/registroemocion.dart';
 
 
 class Registro extends StatelessWidget {
@@ -18,7 +19,16 @@ class Registro extends StatelessWidget {
                   SizedBox(
                     height: 300.0,
                     width: 350.0,
+                    child: InkWell(
+                    onTap: () {
+                      // Acción al tocar la imagen
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(builder: (context) => const Registroemocion()),
+                      );
+                    },
                     child: Image.asset('assets/mascota.png'),
+                    ),
                   ),
                   Container(
                     decoration: BoxDecoration(
