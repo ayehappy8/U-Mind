@@ -2,6 +2,7 @@
 
 import 'package:flutter/material.dart';
 import '/widget/penasamientosPasados.dart';
+import 'inicio.dart';
 
 class Pensamiento extends StatefulWidget {
   const Pensamiento({Key? key}) : super(key: key);
