@@ -30,6 +30,13 @@ class _InicioState extends State<Inicio> {
     getUsers();
   }
 
+  void moverPagina(int pagina) {
+    setState(() {
+      _paginaActual = pagina;
+      _controladorPagina.jumpToPage(pagina);
+    });
+  }
+
   final PageController _controladorPagina = PageController();
   int _paginaActual = 0;
 

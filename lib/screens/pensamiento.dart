@@ -4,6 +4,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import '/widget/penasamientosPasados.dart';
 import 'inicio.dart';
+import '/widget/dialogo.dart';
 
 class Pensamiento extends StatefulWidget {
   const Pensamiento({Key? key}) : super(key: key);
@@ -226,6 +227,13 @@ class _PensamientoState extends State<Pensamiento> {
                               "Guardar"),
                           onPressed: () => {
                             agregarDatos(),
+                            Dialogo.mostrarDialogo(
+                                context,
+                                'Datos',
+                                'Se guardaron los datos correctamente',
+                                () => {
+                                      Inicio.cambiarTab(context, 0),
+                                    }),
                             print("Datos pregunta 1 ${_pregunta1.text}"),
                             print("Datos pregunta 2 ${_pregunta2.text}"),
                             print("Datos Emocion ${_emocion}")
