@@ -42,7 +42,7 @@ class _InicioState extends State<Inicio> {
 
   void getUsers() async {
     CollectionReference collectionReference =
-        FirebaseFirestore.instance.collection("Alumnos");
+        FirebaseFirestore.instance.collection("Pruebas");
 
     QuerySnapshot users = await collectionReference.get();
     if (users.docs.length != 0) {
