@@ -13,6 +13,7 @@ class Registrocuadro extends StatelessWidget {
       },
       child: Scaffold(
         backgroundColor: const Color.fromARGB(255, 187, 222, 202),
+        
         body: Container(
           margin: const EdgeInsets.only(bottom: 15.0),
           child: Center(
@@ -53,10 +54,14 @@ class Registrocuadro extends StatelessWidget {
                       ),
                       onPressed: () {
                         // Acción al presionar el botón
-                        Navigator.push(
+                        Navigator.pushAndRemoveUntil(
                           context,
-                          MaterialPageRoute(builder: (context) => Inicio()),
+                          MaterialPageRoute(builder: (context) => const Inicio()),
+                          (Route<dynamic> route) => false,  // No permite volver a ninguna pantalla anterior
                         );
+
+                        
+
                       },
                       child: const Text(
                         'Guardar',
