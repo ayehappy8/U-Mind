@@ -15,19 +15,16 @@ class Consultas extends StatelessWidget {
             child: Column(
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: [
-                const SizedBox(
-                  width: 320,
-                  child: Text("Consultas Anteriores", 
-                    textAlign: TextAlign.center,
-                    style: TextStyle(
-                      fontSize: 20,
-                      color: Color.fromARGB(255, 23, 56, 84)
-                    ),
+                Container(
+                  margin: const EdgeInsets.only(bottom: 40, top: 15),
+                  height: 180,
+                  width: 450,
+                  child: Image.asset(
+                    'assets/Logo2.png'
                   ),
                 ),
-                const SizedBox(
-                  width:350,
-                  height: 330,
+                Container(
+                  margin: EdgeInsets.only(bottom: 50),
                   child: DataConsultas(),
                 ),
                 ElevatedButton(
@@ -53,12 +50,60 @@ class Consultas extends StatelessWidget {
   }
 }
 
+class MyDataSource extends DataTableSource{
+  @override
+  DataRow? getRow(int index) {
+    switch (index) {
+      case 0:
+        return const DataRow(
+          cells: <DataCell>[
+            DataCell(Text('Sarah')),
+            DataCell(Text('19')),
+            DataCell(Text('Student')),
+          ],
+        );
+      case 1:
+        return const DataRow(
+          cells: <DataCell>[
+            DataCell(Text('Janine')),
+            DataCell(Text('43')),
+            DataCell(Text('Professor')),
+          ],
+        );
+      case 2:
+        return const DataRow(
+          cells: <DataCell>[
+            DataCell(Text('William')),
+            DataCell(Text('27')),
+            DataCell(Text('Associate Professor')),
+          ],
+        );
+      default:
+        return null;
+    }
+  }
+
+  @override
+  // TODO: implement isRowCountApproximate
+  bool get isRowCountApproximate => false;
+
+  @override
+  // TODO: implement rowCount
+  int get rowCount => 3;
+
+  @override
+  // TODO: implement selectedRowCount
+  int get selectedRowCount => 0;
+  
+}
+final DataTableSource dataSource = MyDataSource();
+
 class DataConsultas extends StatelessWidget {
   const DataConsultas({super.key});
 
   @override
   Widget build(BuildContext context) {
-    return DataTable(
+    return PaginatedDataTable(
       columns: const <DataColumn>[
         DataColumn(
           label: Expanded(
@@ -85,29 +130,17 @@ class DataConsultas extends StatelessWidget {
           ),
         ),
       ],
-      rows: const <DataRow>[
-        DataRow(
-          cells: <DataCell>[
-            DataCell(Text('Primera Sesion')),
-            DataCell(Text('01/01/2023')),
-            DataCell(Text('Primera sesión de acercamiento con el estudiante')),
-          ],
-        ),
-        DataRow(
-          cells: <DataCell>[
-            DataCell(Text('Ansiedad')),
-            DataCell(Text('04/02/2023')),
-            DataCell(Text('Estudiante demuestra sintomas de ansiedad')),
-          ],
-        ),
-        DataRow(
-          cells: <DataCell>[
-            DataCell(Text('Manejo de Ansiedad')),
-            DataCell(Text('03/03/2023')),
-            DataCell(Text('Estudiante logra manejar su ansiedad, controlando sus tiempos.')),
-          ],
-        ),
-      ],
+      source: dataSource,
+      header: const Center(child: Text("Consultas Anteriores", 
+                    textAlign: TextAlign.center,
+                    style: TextStyle(
+                      fontSize: 20,
+                      color: Color.fromARGB(255, 23, 56, 84)
+                    ),
+                  ),),
+      columnSpacing: 100,
+      horizontalMargin: 20,
+      rowsPerPage: 4,
     );
   }
 }
