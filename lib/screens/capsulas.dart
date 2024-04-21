@@ -22,7 +22,7 @@ class Capsulas extends StatelessWidget {
                     children: [
                       const Text(
                           style: TextStyle(fontSize: 10),
-                          " ¿Cómo trabajar el bienestar emocional? "),
+                          " ¿Cómo trabajar el\n bienestar emocional? "),
                       ElevatedButton(
                         style: ElevatedButton.styleFrom(
                           backgroundColor:
@@ -37,8 +37,8 @@ class Capsulas extends StatelessWidget {
                         onPressed: () => {},
                       ),
                       SizedBox(
-                        height: 125.0,
-                        width: 125.0,
+                        height: 100.0,
+                        width: 100.0,
                         child: InkWell(
                           onTap: () {
                             // Acción al tocar la imagen
@@ -74,8 +74,8 @@ class Capsulas extends StatelessWidget {
                         onPressed: () => {},
                       ),
                       SizedBox(
-                        height: 110.0,
-                        width: 110.0,
+                        height: 100.0,
+                        width: 100.0,
                         child: InkWell(
                           onTap: () {
                             // Acción al tocar la imagen
@@ -96,7 +96,7 @@ class Capsulas extends StatelessWidget {
                     children: [
                       const Text(
                           style: TextStyle(fontSize: 10),
-                          " ¿Cómo sobrellevar el estés o la sobrecarga de trabajo? "),
+                          " ¿Cómo sobrellevar el estés \n o la sobrecarga de trabajo? "),
                       ElevatedButton(
                         style: ElevatedButton.styleFrom(
                           backgroundColor:
@@ -111,8 +111,8 @@ class Capsulas extends StatelessWidget {
                         onPressed: () => {},
                       ),
                       SizedBox(
-                        height: 125.0,
-                        width: 125.0,
+                        height: 100,
+                        width: 100,
                         child: InkWell(
                           onTap: () {
                             // Acción al tocar la imagen
@@ -148,8 +148,8 @@ class Capsulas extends StatelessWidget {
                         onPressed: () => {},
                       ),
                       SizedBox(
-                        height: 110.0,
-                        width: 110.0,
+                        height: 100.0,
+                        width: 100.0,
                         child: InkWell(
                           onTap: () {
                             // Acción al tocar la imagen

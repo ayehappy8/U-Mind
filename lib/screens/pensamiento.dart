@@ -1,8 +1,10 @@
-// ignore_for_file: prefer_const_constructors
+// ignore_for_file: prefer_const_constructors, library_private_types_in_public_api
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import '/widget/penasamientosPasados.dart';
+import 'inicio.dart';
+import '/widget/dialogo.dart';
 
 class Pensamiento extends StatefulWidget {
   const Pensamiento({Key? key}) : super(key: key);
@@ -12,8 +14,9 @@ class Pensamiento extends StatefulWidget {
 }
 
 String _emocion = 'Felicidad';
-bool condicion_row = true;
-bool condicion_container = false;
+//condiciones para visibilidad
+bool condicionRow = true;
+bool condicionContainer = false;
 
 class _PensamientoState extends State<Pensamiento> {
   void dropdownCallback(String? selectedValue) {
@@ -26,19 +29,20 @@ class _PensamientoState extends State<Pensamiento> {
 
   final _pregunta1 = TextEditingController();
   final _pregunta2 = TextEditingController();
-  List<Map<String, dynamic>> _datos_usuarios = <Map<String, dynamic>>[];
-  DateTime fecha = DateTime.now();
+  final List<Map<String, dynamic>> _datosUsuarios = <Map<String, dynamic>>[];
+  final DateTime _fecha = DateTime.now();
 
   void getInfoPensamientos() async {
+    _datosUsuarios.clear();
     CollectionReference collectionReference =
         FirebaseFirestore.instance.collection("Pruebas");
     QuerySnapshot users = await collectionReference.get();
-    if (users.docs.length != 0) {
+    if (users.docs.isNotEmpty) {
       for (var doc in users.docs) {
-        print(doc.data());
-        _datos_usuarios.add(doc.data() as Map<String, dynamic>);
+        _datosUsuarios.add(doc.data() as Map<String, dynamic>);
       }
     }
+    setState(() {});
   }
 
   Future<void> agregarDatos() async {
@@ -48,11 +52,12 @@ class _PensamientoState extends State<Pensamiento> {
           FirebaseFirestore.instance.collection('Pruebas');
       DocumentReference documento = preguntasCollection.doc();
 
-      // Datos que quieres agregar
+      // Datos que se quieran agregar
       Map<String, dynamic> datos = {
+        'emocion': _emocion,
+        'fecha': _fecha, // Usar el Timestamp convertido
         'pregunta1': _pregunta1.text,
         'pregunta2': _pregunta2.text,
-        'Emocion': _emocion
       };
 
       // Agregar los datos al documento
@@ -81,8 +86,7 @@ class _PensamientoState extends State<Pensamiento> {
                     width: 150.0,
                     child: Image.asset('assets/mascota.png'),
                   ),
-                  Text(
-                      style: TextStyle(fontSize: 20), "¿Qué pienso? Los datos"),
+                  Text(style: TextStyle(fontSize: 20), "¿Qué pienso?"),
                 ]),
                 SizedBox(
                   height: 193,
@@ -93,7 +97,8 @@ class _PensamientoState extends State<Pensamiento> {
                     decoration: InputDecoration(
                       fillColor: Color(0xFFECF4D6),
                       filled: true,
-                      border: OutlineInputBorder(),
+                      border: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(20)),
                       hintText: '....',
                     ),
                   ),
@@ -118,7 +123,8 @@ class _PensamientoState extends State<Pensamiento> {
                     decoration: InputDecoration(
                       fillColor: Color(0xFFECF4D6),
                       filled: true,
-                      border: OutlineInputBorder(),
+                      border: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(20)),
                       hintText: '....',
                     ),
                   ),
@@ -191,7 +197,7 @@ class _PensamientoState extends State<Pensamiento> {
                 //row 3
                 //Manejo y uso de Emociones pasadas
                 Visibility(
-                  visible: condicion_row,
+                  visible: condicionRow,
                   child: Row(
                       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                       children: [
@@ -207,11 +213,9 @@ class _PensamientoState extends State<Pensamiento> {
                               textAlign: TextAlign.center),
                           onPressed: () => {
                             setState(() {
-                              print("fecha ${fecha}");
                               getInfoPensamientos();
-                              print("datos externos ${_datos_usuarios}");
-                              condicion_row = false;
-                              condicion_container = true;
+                              condicionRow = false;
+                              condicionContainer = true;
                             })
                           },
                         ),
@@ -226,15 +230,19 @@ class _PensamientoState extends State<Pensamiento> {
                               "Guardar"),
                           onPressed: () => {
                             agregarDatos(),
-                            print("Datos pregunta 1 ${_pregunta1.text}"),
-                            print("Datos pregunta 2 ${_pregunta2.text}"),
-                            print("Datos Emocion ${_emocion}")
+                            Dialogo.mostrarDialogo(
+                                context,
+                                'Datos',
+                                'Se guardaron los datos',
+                                () => {
+                                      Inicio.cambiarTab(context, 0),
+                                    }),
                           },
                         ),
                       ]),
                 ),
                 Visibility(
-                    visible: condicion_container,
+                    visible: condicionContainer,
                     child: Container(
                         margin: EdgeInsets.only(bottom: 10),
                         decoration: BoxDecoration(
@@ -242,7 +250,7 @@ class _PensamientoState extends State<Pensamiento> {
                             borderRadius: BorderRadius.circular(20.0)),
                         child: Column(
                           children: [
-                            CustomTable(),
+                            PensamientoPasado(pensamientos: _datosUsuarios),
                             Container(
                               margin: EdgeInsets.all(15),
                               child: ElevatedButton(
@@ -258,8 +266,8 @@ class _PensamientoState extends State<Pensamiento> {
                                 ),
                                 onPressed: () => {
                                   setState(() {
-                                    condicion_row = true;
-                                    condicion_container = false;
+                                    condicionRow = true;
+                                    condicionContainer = false;
                                   })
                                 },
                               ),

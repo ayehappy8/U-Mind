@@ -9,6 +9,14 @@ import 'capsulas.dart';
 import 'perfil.dart';
 
 class Inicio extends StatefulWidget {
+  //Este metodo ayuda a cambiar de pagina desde otra screen
+  static void cambiarTab(BuildContext context, int pageIndex) {
+    final _InicioState? state = context.findAncestorStateOfType<_InicioState>();
+    if (state != null) {
+      state.moverPagina(pageIndex);
+    }
+  }
+
   const Inicio({Key? key}) : super(key: key);
 
   @override
@@ -16,18 +24,26 @@ class Inicio extends StatefulWidget {
 }
 
 class _InicioState extends State<Inicio> {
+  /*
   @override
   void initState() {
     super.initState();
     getUsers();
   }
+*/
+  void moverPagina(int pagina) {
+    setState(() {
+      _paginaActual = pagina;
+      _controladorPagina.jumpToPage(pagina);
+    });
+  }
 
   final PageController _controladorPagina = PageController();
   int _paginaActual = 0;
-
+/*
   void getUsers() async {
     CollectionReference collectionReference =
-        FirebaseFirestore.instance.collection("Alumnos");
+        FirebaseFirestore.instance.collection("Pruebas");
 
     QuerySnapshot users = await collectionReference.get();
     if (users.docs.length != 0) {
@@ -36,7 +52,7 @@ class _InicioState extends State<Inicio> {
       }
     }
   }
-
+*/
   @override
   Widget build(BuildContext context) {
     return Scaffold(
