@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "703570535771",
+    "project_id": "u-mind-3cda9",
+    "storage_bucket": "u-mind-3cda9.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:703570535771:android:81955e2760b09eef66667e",
+        "android_client_info": {
+          "package_name": "com.example.umind"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDD8HTONyGsJWWa7yznNXV5UOyDIdqpOpY"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
