@@ -16,7 +16,6 @@ class PensamientoPasado extends StatefulWidget {
 class _PensamientoPasadoState extends State<PensamientoPasado> {
   @override
   Widget build(BuildContext context) {
-    print("dentro de pasados ${widget.pensamientos}");
     return DataTable(columns: const [
       DataColumn(
         label: Text(
@@ -30,12 +29,13 @@ class _PensamientoPasadoState extends State<PensamientoPasado> {
         style: TextStyle(color: Colors.white, fontSize: 20),
       )),
       DataColumn(label: SizedBox())
-    ], rows: _buildRows(widget.pensamientos));
+    ], rows: _buildRows(context, widget.pensamientos));
   }
 }
 
 //Construye los rows
-List<DataRow> _buildRows(List<Map<String, dynamic>> pensamientos) {
+List<DataRow> _buildRows(
+    BuildContext context, List<Map<String, dynamic>> pensamientos) {
   //Formato de la fecha
   final DateFormat formato = DateFormat('dd-MM-yyyy');
   return pensamientos.map((pensamiento) {
@@ -62,7 +62,7 @@ List<DataRow> _buildRows(List<Map<String, dynamic>> pensamientos) {
             backgroundColor: Colors.blue[900],
           ),
           onPressed: () {
-            // Acción al presionar el botón
+            _mostrarInformacion(context, pensamiento);
           },
           child: const Text(
             "Ver",
@@ -73,4 +73,88 @@ List<DataRow> _buildRows(List<Map<String, dynamic>> pensamientos) {
       )),
     ]);
   }).toList();
+}
+
+// Función para mostrar la información en un diálogo
+void _mostrarInformacion(
+    BuildContext context, Map<String, dynamic> pensamiento) {
+  final DateFormat formato = DateFormat('dd-MM-yyyy');
+  final DateTime fecha = (pensamiento['fecha'] as Timestamp).toDate();
+  showDialog(
+    context: context,
+    builder: (BuildContext context) {
+      return AlertDialog(
+        backgroundColor: Colors
+            .transparent, // Fondo transparente para que el contenedor sobresalga
+        contentPadding: EdgeInsets
+            .zero, // Padding cero para que el contenedor ocupe todo el espacio disponible
+        insetPadding: EdgeInsets.symmetric(
+            horizontal: 40), // Padding alrededor del contenedor
+        content: Container(
+          padding: EdgeInsets.all(20), // Padding dentro del contenedor
+          decoration: BoxDecoration(
+            color: Colors.teal, // Color de fondo personalizado
+            borderRadius: BorderRadius.circular(20.0), // Bordes redondeados
+          ),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              const Text(
+                "Detalle",
+                style: TextStyle(
+                  color: Colors.white,
+                  fontSize: 20,
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
+              Row(
+                children: [
+                  Text(
+                    "Emcocion : ${pensamiento['emocion']} ",
+                    style: TextStyle(
+                      color: Colors.white,
+                      fontSize: 14,
+                    ),
+                  ),
+                  Text(
+                    "Fecha : ${formato.format(fecha)} ",
+                    style: TextStyle(
+                      color: Colors.white,
+                      fontSize: 14,
+                    ),
+                  ),
+                ],
+              ),
+              SizedBox(height: 10),
+              Text(
+                "¿Qué pensé?: ${pensamiento['pregunta1']}",
+                style: TextStyle(color: Colors.white),
+              ),
+              Text(
+                "¿Qué situación me hizo pensar eso?: ${pensamiento['pregunta2']}",
+                style: TextStyle(color: Colors.white),
+              ),
+              // Agrega aquí más información que desees mostrar
+              SizedBox(height: 20),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.end,
+                children: [
+                  TextButton(
+                    onPressed: () {
+                      Navigator.of(context).pop();
+                    },
+                    child: Text(
+                      "Cerrar",
+                      style: TextStyle(color: Colors.white),
+                    ),
+                  ),
+                ],
+              ),
+            ],
+          ),
+        ),
+      );
+    },
+  );
 }

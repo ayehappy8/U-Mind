@@ -14,6 +14,7 @@ class Pensamiento extends StatefulWidget {
 }
 
 String _emocion = 'Felicidad';
+//condiciones para visibilidad
 bool condicionRow = true;
 bool condicionContainer = false;
 
@@ -211,7 +212,6 @@ class _PensamientoState extends State<Pensamiento> {
                           onPressed: () => {
                             setState(() {
                               getInfoPensamientos();
-                              print("esto es ahora ${_datosUsuarios}");
                               condicionRow = false;
                               condicionContainer = true;
                             })
