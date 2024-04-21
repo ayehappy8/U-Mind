@@ -97,7 +97,8 @@ class _PensamientoState extends State<Pensamiento> {
                     decoration: InputDecoration(
                       fillColor: Color(0xFFECF4D6),
                       filled: true,
-                      border: OutlineInputBorder(),
+                      border: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(20)),
                       hintText: '....',
                     ),
                   ),
@@ -122,7 +123,8 @@ class _PensamientoState extends State<Pensamiento> {
                     decoration: InputDecoration(
                       fillColor: Color(0xFFECF4D6),
                       filled: true,
-                      border: OutlineInputBorder(),
+                      border: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(20)),
                       hintText: '....',
                     ),
                   ),
@@ -231,7 +233,7 @@ class _PensamientoState extends State<Pensamiento> {
                             Dialogo.mostrarDialogo(
                                 context,
                                 'Datos',
-                                'Se guardaron los datos correctamente',
+                                'Se guardaron los datos',
                                 () => {
                                       Inicio.cambiarTab(context, 0),
                                     }),

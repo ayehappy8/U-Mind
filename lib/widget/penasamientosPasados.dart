@@ -1,6 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
-import 'package:umind/screens/pensamiento.dart';
 import 'package:intl/intl.dart';
 
 class PensamientoPasado extends StatefulWidget {
@@ -16,20 +15,27 @@ class PensamientoPasado extends StatefulWidget {
 class _PensamientoPasadoState extends State<PensamientoPasado> {
   @override
   Widget build(BuildContext context) {
-    return DataTable(columns: const [
-      DataColumn(
-        label: Text(
-          "Emoción",
-          style: TextStyle(color: Colors.white, fontSize: 20),
-        ),
-      ),
-      DataColumn(
-          label: Text(
-        "Fecha",
-        style: TextStyle(color: Colors.white, fontSize: 20),
-      )),
-      DataColumn(label: SizedBox())
-    ], rows: _buildRows(context, widget.pensamientos));
+    return DataTable(
+        columnSpacing: 40,
+        columns: const [
+          DataColumn(
+            label: Text(
+              "Emoción",
+              style: TextStyle(color: Colors.white, fontSize: 20),
+            ),
+          ),
+          DataColumn(
+              label: Text(
+            "Fecha",
+            style: TextStyle(color: Colors.white, fontSize: 20),
+          )),
+          DataColumn(
+              label: Text(
+            "Detalle",
+            style: TextStyle(color: Colors.white, fontSize: 20),
+          ))
+        ],
+        rows: _buildRows(context, widget.pensamientos));
   }
 }
 
@@ -38,6 +44,12 @@ List<DataRow> _buildRows(
     BuildContext context, List<Map<String, dynamic>> pensamientos) {
   //Formato de la fecha
   final DateFormat formato = DateFormat('dd-MM-yyyy');
+  // Ordenar los pensamientos por fecha
+  pensamientos.sort((a, b) {
+    final DateTime fechaA = (a['fecha'] as Timestamp).toDate();
+    final DateTime fechaB = (b['fecha'] as Timestamp).toDate();
+    return fechaB.compareTo(fechaA);
+  });
   return pensamientos.map((pensamiento) {
     final DateTime fecha = (pensamiento['fecha'] as Timestamp).toDate();
     return DataRow(cells: [
@@ -52,12 +64,11 @@ List<DataRow> _buildRows(
           style: const TextStyle(color: Colors.white, fontSize: 20),
         ),
       ),
-      DataCell(Container(
-        margin: const EdgeInsets.only(right: 10),
-        child: ElevatedButton(
+      DataCell(
+        ElevatedButton(
           style: ElevatedButton.styleFrom(
             shape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.circular(5),
+              borderRadius: BorderRadius.circular(2),
             ),
             backgroundColor: Colors.blue[900],
           ),
@@ -66,11 +77,11 @@ List<DataRow> _buildRows(
           },
           child: const Text(
             "Ver",
-            style: TextStyle(color: Colors.white, fontSize: 20),
+            style: TextStyle(color: Colors.white, fontSize: 16),
             textAlign: TextAlign.center,
           ),
         ),
-      )),
+      ),
     ]);
   }).toList();
 }
@@ -84,16 +95,13 @@ void _mostrarInformacion(
     context: context,
     builder: (BuildContext context) {
       return AlertDialog(
-        backgroundColor: Colors
-            .transparent, // Fondo transparente para que el contenedor sobresalga
-        contentPadding: EdgeInsets
-            .zero, // Padding cero para que el contenedor ocupe todo el espacio disponible
-        insetPadding: EdgeInsets.symmetric(
-            horizontal: 40), // Padding alrededor del contenedor
+        backgroundColor: Colors.transparent,
+        contentPadding: EdgeInsets.zero,
+        insetPadding: const EdgeInsets.symmetric(horizontal: 40),
         content: Container(
-          padding: EdgeInsets.all(20), // Padding dentro del contenedor
+          padding: const EdgeInsets.all(20), // Padding dentro del contenedor
           decoration: BoxDecoration(
-            color: Colors.teal, // Color de fondo personalizado
+            color: Colors.teal,
             borderRadius: BorderRadius.circular(20.0), // Bordes redondeados
           ),
           child: Column(
@@ -109,34 +117,79 @@ void _mostrarInformacion(
                 ),
               ),
               Row(
+                mainAxisAlignment: MainAxisAlignment.start,
                 children: [
-                  Text(
-                    "Emcocion : ${pensamiento['emocion']} ",
-                    style: TextStyle(
-                      color: Colors.white,
-                      fontSize: 14,
+                  RichText(
+                    text: TextSpan(
+                      style: const TextStyle(
+                        color: Colors.white,
+                        fontSize: 16,
+                      ),
+                      children: <TextSpan>[
+                        const TextSpan(
+                            text: 'Emoción: ',
+                            style: TextStyle(fontWeight: FontWeight.bold)),
+                        TextSpan(
+                          text: '${pensamiento['emocion']}',
+                        ),
+                      ],
                     ),
                   ),
-                  Text(
-                    "Fecha : ${formato.format(fecha)} ",
-                    style: TextStyle(
-                      color: Colors.white,
-                      fontSize: 14,
+                  const SizedBox(width: 10),
+                  RichText(
+                    text: TextSpan(
+                      style: const TextStyle(
+                        color: Colors.white,
+                        fontSize: 16,
+                      ),
+                      children: <TextSpan>[
+                        const TextSpan(
+                            text: 'Fecha: ',
+                            style: TextStyle(fontWeight: FontWeight.bold)),
+                        TextSpan(
+                          text: formato.format(fecha),
+                        ),
+                      ],
                     ),
                   ),
                 ],
               ),
-              SizedBox(height: 10),
-              Text(
-                "¿Qué pensé?: ${pensamiento['pregunta1']}",
-                style: TextStyle(color: Colors.white),
+              const SizedBox(height: 10),
+              RichText(
+                text: TextSpan(
+                  style: const TextStyle(
+                    color: Colors.white,
+                    fontSize: 14,
+                  ),
+                  children: <TextSpan>[
+                    const TextSpan(
+                        text: '¿Qué pensé?: ',
+                        style: TextStyle(fontWeight: FontWeight.bold)),
+                    TextSpan(
+                      text: '${pensamiento['pregunta1']}',
+                    ),
+                  ],
+                ),
               ),
-              Text(
-                "¿Qué situación me hizo pensar eso?: ${pensamiento['pregunta2']}",
-                style: TextStyle(color: Colors.white),
+              const SizedBox(height: 10),
+              RichText(
+                text: TextSpan(
+                  style: const TextStyle(
+                    color: Colors.white,
+                    fontSize: 14,
+                  ),
+                  children: <TextSpan>[
+                    const TextSpan(
+                        text: '¿Qué situación me hizo pensar eso?:  ',
+                        style: TextStyle(fontWeight: FontWeight.bold)),
+                    TextSpan(
+                      text: '${pensamiento['pregunta2']}',
+                    ),
+                  ],
+                ),
               ),
               // Agrega aquí más información que desees mostrar
-              SizedBox(height: 20),
+              const SizedBox(height: 10),
               Row(
                 mainAxisAlignment: MainAxisAlignment.end,
                 children: [
@@ -144,9 +197,12 @@ void _mostrarInformacion(
                     onPressed: () {
                       Navigator.of(context).pop();
                     },
-                    child: Text(
+                    child: const Text(
                       "Cerrar",
-                      style: TextStyle(color: Colors.white),
+                      style: TextStyle(
+                        color: Colors.white,
+                        fontSize: 18,
+                      ),
                     ),
                   ),
                 ],

@@ -24,12 +24,13 @@ class Inicio extends StatefulWidget {
 }
 
 class _InicioState extends State<Inicio> {
+  /*
   @override
   void initState() {
     super.initState();
     getUsers();
   }
-
+*/
   void moverPagina(int pagina) {
     setState(() {
       _paginaActual = pagina;
@@ -39,7 +40,7 @@ class _InicioState extends State<Inicio> {
 
   final PageController _controladorPagina = PageController();
   int _paginaActual = 0;
-
+/*
   void getUsers() async {
     CollectionReference collectionReference =
         FirebaseFirestore.instance.collection("Pruebas");
@@ -51,7 +52,7 @@ class _InicioState extends State<Inicio> {
       }
     }
   }
-
+*/
   @override
   Widget build(BuildContext context) {
     return Scaffold(
