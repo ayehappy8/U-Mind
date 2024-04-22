@@ -1,8 +1,43 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
+import 'package:intl/intl.dart';
 
-class Consultas extends StatelessWidget {
-  const Consultas({super.key});
+
+class Consultas extends StatefulWidget {
+  const Consultas({Key? key}) : super(key: key);
+
+  @override
+  _ConsultasState createState() => _ConsultasState();
+}
+
+final List<Map<String, dynamic>> _datosConsulta = <Map<String, dynamic>>[];
+
+
+class _ConsultasState extends State<Consultas>{
+
+
+  void getInfoConsultas() async {
+    _datosConsulta.clear();
+    CollectionReference collectionReference =
+        FirebaseFirestore.instance.collection("consultas");
+    QuerySnapshot users = await collectionReference.get();
+    if (users.docs.isNotEmpty) {
+      for (var doc in users.docs) {
+        _datosConsulta.add(doc.data() as Map<String, dynamic>);
+        
+      }
+
+    }
+    setState(() {});
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    getInfoConsultas();
+    
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -24,7 +59,7 @@ class Consultas extends StatelessWidget {
                   ),
                 ),
                 Container(
-                  margin: EdgeInsets.only(bottom: 50),
+                  margin: const EdgeInsets.only(bottom: 50),
                   child: DataConsultas(),
                 ),
                 ElevatedButton(
@@ -50,97 +85,114 @@ class Consultas extends StatelessWidget {
   }
 }
 
+
 class MyDataSource extends DataTableSource{
+
   @override
   DataRow? getRow(int index) {
-    switch (index) {
-      case 0:
-        return const DataRow(
-          cells: <DataCell>[
-            DataCell(Text('Sarah')),
-            DataCell(Text('19')),
-            DataCell(Text('Student')),
-          ],
-        );
-      case 1:
-        return const DataRow(
-          cells: <DataCell>[
-            DataCell(Text('Janine')),
-            DataCell(Text('43')),
-            DataCell(Text('Professor')),
-          ],
-        );
-      case 2:
-        return const DataRow(
-          cells: <DataCell>[
-            DataCell(Text('William')),
-            DataCell(Text('27')),
-            DataCell(Text('Associate Professor')),
-          ],
-        );
-      default:
-        return null;
-    }
+    final DateFormat formato = DateFormat('dd-MM-yyyy');
+    final DateTime fecha = (_datosConsulta[index] ["Fecha"] as Timestamp).toDate();
+
+    
+    return DataRow(cells: [
+      DataCell(Text(_datosConsulta[index]['Asunto'], style: TextStyle(color: Color.fromARGB(255, 23, 56, 84)),)),
+      DataCell(Text(formato.format(fecha), style: TextStyle(color: Color.fromARGB(255, 23, 56, 84)),)),
+      DataCell(Text(_datosConsulta[index]['Detalle'], style: TextStyle(color: Color.fromARGB(255, 23, 56, 84)),))
+      
+    ]);
   }
 
   @override
-  // TODO: implement isRowCountApproximate
   bool get isRowCountApproximate => false;
 
   @override
-  // TODO: implement rowCount
-  int get rowCount => 3;
+  int get rowCount => _datosConsulta.length;
+
 
   @override
-  // TODO: implement selectedRowCount
   int get selectedRowCount => 0;
   
 }
-final DataTableSource dataSource = MyDataSource();
 
-class DataConsultas extends StatelessWidget {
-  const DataConsultas({super.key});
+
+
+class DataConsultas extends StatefulWidget {
+  const DataConsultas({Key? key}) : super(key: key);
+
+
+  @override
+  DataConsultasState createState() => DataConsultasState();
+
+}
+
+class DataConsultasState extends State<DataConsultas>{
+
+  @override
+  void initState() {
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
-    return PaginatedDataTable(
-      columns: const <DataColumn>[
-        DataColumn(
-          label: Expanded(
-            child: Text(
-              'Asunto',
-              style: TextStyle(fontStyle: FontStyle.italic),
+
+    return Theme(data: ThemeData(
+        cardTheme: CardTheme(color: Color.fromARGB(255, 45, 149, 150)),
+        primaryColor: Color.fromARGB(255, 236, 244, 214),
+        dataTableTheme: DataTableThemeData(
+          dataRowColor: MaterialStateProperty.resolveWith<Color>((states) {
+            if (states.contains(MaterialState.selected)) {
+              return Theme.of(context).colorScheme.primary.withOpacity(0.08);
+            }
+            return Color.fromARGB(255, 236, 244, 214);
+          }),
+          headingRowColor: MaterialStateProperty.all(Color.fromARGB(255, 236, 244, 214)),
+          headingTextStyle: TextStyle(fontStyle: FontStyle.italic),
+        ),
+      ),
+      child: PaginatedDataTable(
+        arrowHeadColor: Color.fromARGB(255, 236, 244, 214),
+        
+        columns: <DataColumn>[
+          DataColumn(
+            label: Expanded(
+              child: Text(
+                'Asunto',
+                style: TextStyle(color: Color.fromARGB(255, 23, 56, 84)),
+              ),
             ),
           ),
-        ),
-        DataColumn(
-          label: Expanded(
-            child: Text(
-              'Fecha',
-              style: TextStyle(fontStyle: FontStyle.italic),
+          DataColumn(
+            label: Expanded(
+              child: Text(
+                'Fecha',
+                style: TextStyle(color: Color.fromARGB(255, 23, 56, 84)),
+              ),
             ),
           ),
-        ),
-        DataColumn(
-          label: Expanded(
-            child: Text(
-              'Detalle',
-              style: TextStyle(fontStyle: FontStyle.italic),
+          DataColumn(
+            label: Expanded(
+              child: Text(
+                'Detalle',
+                style: TextStyle(color: Color.fromARGB(255, 23, 56, 84)),
+              ),
             ),
           ),
-        ),
-      ],
-      source: dataSource,
-      header: const Center(child: Text("Consultas Anteriores", 
-                    textAlign: TextAlign.center,
-                    style: TextStyle(
-                      fontSize: 20,
-                      color: Color.fromARGB(255, 23, 56, 84)
+        ],
+        source: MyDataSource(),
+        header: Text("Consultas Anteriores", 
+                      textAlign: TextAlign.center,
+                      style: TextStyle(
+                        fontSize: 20,
+                        color: Color.fromARGB(255, 236, 244, 214)
+                      ),
                     ),
-                  ),),
-      columnSpacing: 100,
-      horizontalMargin: 20,
-      rowsPerPage: 4,
+        columnSpacing: 100,
+        horizontalMargin: 20,
+        rowsPerPage: 4,
+        
+        
+        
+      )
     );
   }
 }
