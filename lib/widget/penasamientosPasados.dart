@@ -12,30 +12,80 @@ class PensamientoPasado extends StatefulWidget {
   _PensamientoPasadoState createState() => _PensamientoPasadoState();
 }
 
+final int _rowsPorPagina = 5;
+int _paginaActual = 0;
+
 class _PensamientoPasadoState extends State<PensamientoPasado> {
   @override
   Widget build(BuildContext context) {
-    return DataTable(
-        columnSpacing: 40,
-        columns: const [
-          DataColumn(
-            label: Text(
-              "Emoción",
+    final rowsTotales = widget.pensamientos.length;
+    final paginasTotales = (rowsTotales / _rowsPorPagina).ceil();
+    final paginaInicial = _paginaActual * _rowsPorPagina;
+    final paginaFinal = (_paginaActual + 1) * _rowsPorPagina;
+
+    widget.pensamientos.sort((a, b) {
+      final DateTime fechaA = (a['fecha'] as Timestamp).toDate();
+      final DateTime fechaB = (b['fecha'] as Timestamp).toDate();
+      return fechaB.compareTo(fechaA);
+    });
+    final rowsDeLaPaginaActual = widget.pensamientos.sublist(
+        paginaInicial, paginaFinal > rowsTotales ? rowsTotales : paginaFinal);
+
+    return Column(children: [
+      DataTable(
+          columnSpacing: 40,
+          columns: const [
+            DataColumn(
+              label: Text(
+                "Emoción",
+                style: TextStyle(color: Colors.white, fontSize: 20),
+              ),
+            ),
+            DataColumn(
+                label: Text(
+              "Fecha",
               style: TextStyle(color: Colors.white, fontSize: 20),
+            )),
+            DataColumn(
+                label: Text(
+              "Detalle",
+              style: TextStyle(color: Colors.white, fontSize: 20),
+            ))
+          ],
+          rows: _buildRows(context, rowsDeLaPaginaActual)),
+      Row(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          IconButton(
+            onPressed: _paginaActual > 0
+                ? () {
+                    setState(() {
+                      _paginaActual--;
+                    });
+                  }
+                : null,
+            icon: Icon(
+              Icons.arrow_back_ios,
+              color: Colors.white,
             ),
           ),
-          DataColumn(
-              label: Text(
-            "Fecha",
-            style: TextStyle(color: Colors.white, fontSize: 20),
-          )),
-          DataColumn(
-              label: Text(
-            "Detalle",
-            style: TextStyle(color: Colors.white, fontSize: 20),
-          ))
+          Text(
+            "Página ${_paginaActual + 1} de $paginasTotales",
+            style: TextStyle(color: Colors.white),
+          ),
+          IconButton(
+            onPressed: _paginaActual < paginasTotales - 1
+                ? () {
+                    setState(() {
+                      _paginaActual++;
+                    });
+                  }
+                : null,
+            icon: Icon(Icons.arrow_forward, color: Colors.white),
+          ),
         ],
-        rows: _buildRows(context, widget.pensamientos));
+      ),
+    ]);
   }
 }
 
@@ -45,11 +95,7 @@ List<DataRow> _buildRows(
   //Formato de la fecha
   final DateFormat formato = DateFormat('dd-MM-yyyy');
   // Ordenar los pensamientos por fecha
-  pensamientos.sort((a, b) {
-    final DateTime fechaA = (a['fecha'] as Timestamp).toDate();
-    final DateTime fechaB = (b['fecha'] as Timestamp).toDate();
-    return fechaB.compareTo(fechaA);
-  });
+
   return pensamientos.map((pensamiento) {
     final DateTime fecha = (pensamiento['fecha'] as Timestamp).toDate();
     return DataRow(cells: [
