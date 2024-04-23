@@ -73,6 +73,7 @@ class Perfil extends StatelessWidget {
                         "Ver\nConsultas",
                         textAlign: TextAlign.center),
                     onPressed: () => {
+                      
                       Navigator.push(
                         context,
                         MaterialPageRoute(builder: (context) => Consultas()))
