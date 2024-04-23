@@ -20,21 +20,26 @@ class Capsulas extends StatelessWidget {
                   Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                      const Text(
-                          style: TextStyle(fontSize: 10),
-                          " ¿Cómo trabajar el bienestar emocional? "),
-                      ElevatedButton(
-                        style: ElevatedButton.styleFrom(
-                          backgroundColor:
-                              const Color.fromARGB(255, 0, 150, 40),
-                          minimumSize: const Size(100, 20),
-                        ),
-                        child: const Text(
-                            style: TextStyle(
-                                color: Color.fromARGB(255, 0, 0, 0),
-                                fontSize: 10),
-                            "Video"),
-                        onPressed: () => {},
+                      Column(
+                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                        children: [
+                          const Text(
+                              style: TextStyle(fontSize: 10),
+                              " ¿Cómo trabajar el bienestar emocional? "),
+                          ElevatedButton(
+                            style: ElevatedButton.styleFrom(
+                              backgroundColor:
+                                  const Color.fromARGB(255, 0, 150, 40),
+                              minimumSize: const Size(100, 20),
+                            ),
+                            child: const Text(
+                                style: TextStyle(
+                                    color: Color.fromARGB(255, 0, 0, 0),
+                                    fontSize: 10),
+                                "Video"),
+                            onPressed: () => {},
+                          ),
+                        ],
                       ),
                       SizedBox(
                         height: 125.0,
@@ -45,7 +50,7 @@ class Capsulas extends StatelessWidget {
                             Navigator.push(
                               context,
                               MaterialPageRoute(
-                                  builder: (context) => Capsulas()),
+                                  builder: (context) => const Capsulas()),
                             );
                           },
                           child: Image.asset('assets/video.png'),
@@ -57,21 +62,26 @@ class Capsulas extends StatelessWidget {
                   Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                      const Text(
-                          style: TextStyle(fontSize: 10),
-                          " ¿Cómo dejar de procrastrinar? "),
-                      ElevatedButton(
-                        style: ElevatedButton.styleFrom(
-                          backgroundColor:
-                              const Color.fromARGB(255, 230, 233, 89),
-                          minimumSize: const Size(100, 20),
-                        ),
-                        child: const Text(
-                            style: TextStyle(
-                                color: Color.fromARGB(255, 0, 0, 0),
-                                fontSize: 10),
-                            "Información"),
-                        onPressed: () => {},
+                      Column(
+                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                        children: [
+                          const Text(
+                              style: TextStyle(fontSize: 10),
+                              " ¿Cómo dejar de procrastrinar? "),
+                          ElevatedButton(
+                            style: ElevatedButton.styleFrom(
+                              backgroundColor:
+                                  const Color.fromARGB(255, 230, 233, 89),
+                              minimumSize: const Size(100, 20),
+                            ),
+                            child: const Text(
+                                style: TextStyle(
+                                    color: Color.fromARGB(255, 0, 0, 0),
+                                    fontSize: 10),
+                                "Información"),
+                            onPressed: () => {},
+                          ),
+                        ],
                       ),
                       SizedBox(
                         height: 110.0,
@@ -82,7 +92,7 @@ class Capsulas extends StatelessWidget {
                             Navigator.push(
                               context,
                               MaterialPageRoute(
-                                  builder: (context) => Capsulas()),
+                                  builder: (context) => const Capsulas()),
                             );
                           },
                           child: Image.asset('assets/info.png'),
@@ -94,21 +104,26 @@ class Capsulas extends StatelessWidget {
                   Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                      const Text(
-                          style: TextStyle(fontSize: 10),
-                          " ¿Cómo sobrellevar el estés o la sobrecarga de trabajo? "),
-                      ElevatedButton(
-                        style: ElevatedButton.styleFrom(
-                          backgroundColor:
-                              const Color.fromARGB(255, 0, 150, 40),
-                          minimumSize: const Size(100, 20),
-                        ),
-                        child: const Text(
-                            style: TextStyle(
-                                color: Color.fromARGB(255, 0, 0, 0),
-                                fontSize: 10),
-                            "Video"),
-                        onPressed: () => {},
+                      Column(
+                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                        children: [
+                          const Text(
+                              style: TextStyle(fontSize: 10),
+                              " ¿Cómo sobrellevar el estés o la sobrecarga de trabajo? "),
+                          ElevatedButton(
+                            style: ElevatedButton.styleFrom(
+                              backgroundColor:
+                                  const Color.fromARGB(255, 0, 150, 40),
+                              minimumSize: const Size(100, 20),
+                            ),
+                            child: const Text(
+                                style: TextStyle(
+                                    color: Color.fromARGB(255, 0, 0, 0),
+                                    fontSize: 10),
+                                "Video"),
+                            onPressed: () => {},
+                          ),
+                        ],
                       ),
                       SizedBox(
                         height: 125.0,
@@ -119,7 +134,7 @@ class Capsulas extends StatelessWidget {
                             Navigator.push(
                               context,
                               MaterialPageRoute(
-                                  builder: (context) => Capsulas()),
+                                  builder: (context) => const Capsulas()),
                             );
                           },
                           child: Image.asset('assets/video.png'),
@@ -131,21 +146,26 @@ class Capsulas extends StatelessWidget {
                   Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                      const Text(
-                          style: TextStyle(fontSize: 10),
-                          " ¿Qué es la autoconciencia? "),
-                      ElevatedButton(
-                        style: ElevatedButton.styleFrom(
-                          backgroundColor:
-                              const Color.fromARGB(255, 230, 233, 89),
-                          minimumSize: const Size(100, 20),
-                        ),
-                        child: const Text(
-                            style: TextStyle(
-                                color: Color.fromARGB(255, 0, 0, 0),
-                                fontSize: 10),
-                            "Información"),
-                        onPressed: () => {},
+                      Column(
+                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                        children: [
+                          const Text(
+                              style: TextStyle(fontSize: 10),
+                              " ¿Qué es la autoconciencia? "),
+                          ElevatedButton(
+                            style: ElevatedButton.styleFrom(
+                              backgroundColor:
+                                  const Color.fromARGB(255, 230, 233, 89),
+                              minimumSize: const Size(100, 20),
+                            ),
+                            child: const Text(
+                                style: TextStyle(
+                                    color: Color.fromARGB(255, 0, 0, 0),
+                                    fontSize: 10),
+                                "Información"),
+                            onPressed: () => {},
+                          ),
+                        ],
                       ),
                       SizedBox(
                         height: 110.0,
@@ -156,7 +176,7 @@ class Capsulas extends StatelessWidget {
                             Navigator.push(
                               context,
                               MaterialPageRoute(
-                                  builder: (context) => Capsulas()),
+                                  builder: (context) => const Capsulas()),
                             );
                           },
                           child: Image.asset('assets/info.png'),
