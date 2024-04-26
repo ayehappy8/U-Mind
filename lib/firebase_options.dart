@@ -22,12 +22,6 @@ class DefaultFirebaseOptions {
     switch (defaultTargetPlatform) {
       case TargetPlatform.android:
         return android;
-      case TargetPlatform.iOS:
-        return ios;
-      case TargetPlatform.macOS:
-        return macos;
-      case TargetPlatform.windows:
-        return windows;
       case TargetPlatform.linux:
         throw UnsupportedError(
           'DefaultFirebaseOptions have not been configured for linux - '
@@ -54,33 +48,6 @@ class DefaultFirebaseOptions {
     appId: '1:703570535771:android:81955e2760b09eef66667e',
     messagingSenderId: '703570535771',
     projectId: 'u-mind-3cda9',
-    storageBucket: 'u-mind-3cda9.appspot.com',
-  );
-
-  static const FirebaseOptions ios = FirebaseOptions(
-    apiKey: 'AIzaSyAFuexwxVSY8GHRaYNS3kLgxc8BhjLwYMw',
-    appId: '1:703570535771:ios:c457524df16f736066667e',
-    messagingSenderId: '703570535771',
-    projectId: 'u-mind-3cda9',
-    storageBucket: 'u-mind-3cda9.appspot.com',
-    iosBundleId: 'com.example.umind',
-  );
-
-  static const FirebaseOptions macos = FirebaseOptions(
-    apiKey: 'AIzaSyAFuexwxVSY8GHRaYNS3kLgxc8BhjLwYMw',
-    appId: '1:703570535771:ios:c457524df16f736066667e',
-    messagingSenderId: '703570535771',
-    projectId: 'u-mind-3cda9',
-    storageBucket: 'u-mind-3cda9.appspot.com',
-    iosBundleId: 'com.example.umind',
-  );
-
-  static const FirebaseOptions windows = FirebaseOptions(
-    apiKey: 'AIzaSyCWwln7EbUc7wu9nCbVQ4-my-TgWEiwEeU',
-    appId: '1:703570535771:web:84218b499fc5e0d366667e',
-    messagingSenderId: '703570535771',
-    projectId: 'u-mind-3cda9',
-    authDomain: 'u-mind-3cda9.firebaseapp.com',
     storageBucket: 'u-mind-3cda9.appspot.com',
   );
 }
