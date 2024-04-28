@@ -13,14 +13,20 @@ class Pensamiento extends StatefulWidget {
   _PensamientoState createState() => _PensamientoState();
 }
 
-String _emocion = 'Felicidad';
+String _emocion = 'Seleccionar emoción';
 //condiciones para visibilidad
 bool condicionRow = true;
 bool condicionContainer = false;
 
 class _PensamientoState extends State<Pensamiento> {
+  @override
+  void initState() {
+    super.initState();
+    _emocion = 'Seleccionar emoción';
+  }
+
   void dropdownCallback(String? selectedValue) {
-    if (selectedValue is String) {
+    if (selectedValue is String && selectedValue != 'Seleccionar emoción') {
       setState(() {
         _emocion = selectedValue;
       });
@@ -52,7 +58,7 @@ class _PensamientoState extends State<Pensamiento> {
           FirebaseFirestore.instance.collection('Pruebas');
       DocumentReference documento = preguntasCollection.doc();
 
-      // Datos que se quieran agregar
+      //( Datos que se quieran agregar
       Map<String, dynamic> datos = {
         'emocion': _emocion,
         'fecha': _fecha, // Usar el Timestamp convertido
@@ -152,7 +158,17 @@ class _PensamientoState extends State<Pensamiento> {
                     dropdownColor: Colors.teal,
                     style: const TextStyle(fontSize: 20, color: Colors.white),
                     borderRadius: BorderRadius.circular(30.0),
-                    items: const [
+                    items: [
+                      DropdownMenuItem(
+                        enabled: false,
+                        value:
+                            "Seleccionar emoción", // Cambiado a tu valor por defecto
+                        child: Container(
+                            decoration: BoxDecoration(
+                                color: Color.fromARGB(255, 143, 187, 160),
+                                borderRadius: BorderRadius.circular(20)),
+                            child: Center(child: Text("Seleccionar emoción"))),
+                      ),
                       DropdownMenuItem(
                         value: "Felicidad",
                         child: Center(
@@ -190,8 +206,19 @@ class _PensamientoState extends State<Pensamiento> {
                                 "Sorpresa")), // Centra el texto horizontalmente
                       ),
                     ],
-                    value: _emocion,
+                    value: _emocion != 'Seleccionar emoción' ? _emocion : null,
                     onChanged: dropdownCallback,
+                    hint: _emocion == 'Seleccionar emoción'
+                        ? Center(
+                            child: Text(
+                              'Seleccionar emoción',
+                              style: TextStyle(
+                                fontSize: 20,
+                                color: Colors.white,
+                              ),
+                            ),
+                          )
+                        : null,
                   ),
                 ),
                 //row 3
@@ -220,25 +247,28 @@ class _PensamientoState extends State<Pensamiento> {
                           },
                         ),
                         ElevatedButton(
-                          style: ElevatedButton.styleFrom(
-                            backgroundColor: Colors.teal,
-                            minimumSize: const Size(146, 70),
-                          ),
-                          child: const Text(
-                              style:
-                                  TextStyle(color: Colors.white, fontSize: 20),
-                              "Guardar"),
-                          onPressed: () => {
-                            agregarDatos(),
-                            Dialogo.mostrarDialogo(
-                                context,
-                                'Datos',
-                                'Se guardaron los datos',
-                                () => {
-                                      Inicio.cambiarTab(context, 0),
-                                    }),
-                          },
-                        ),
+                            style: ElevatedButton.styleFrom(
+                              backgroundColor: Colors.teal,
+                              minimumSize: const Size(146, 70),
+                            ),
+                            child: const Text(
+                                style: TextStyle(
+                                    color: Colors.white, fontSize: 20),
+                                "Guardar"),
+                            onPressed: (_emocion != 'Seleccionar emoción' &&
+                                    _pregunta1.text.isNotEmpty &&
+                                    _pregunta2.text.isNotEmpty)
+                                ? () => {
+                                      agregarDatos(),
+                                      Dialogo.mostrarDialogo(
+                                          context,
+                                          'Datos',
+                                          'Se guardaron los datos',
+                                          () => {
+                                                Inicio.cambiarTab(context, 0),
+                                              }),
+                                    }
+                                : null),
                       ]),
                 ),
                 Visibility(
