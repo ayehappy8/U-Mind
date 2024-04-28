@@ -280,7 +280,7 @@ class _PensamientoState extends State<Pensamiento> {
                             borderRadius: BorderRadius.circular(20.0)),
                         child: Column(
                           children: [
-                            PensamientoPasado(pensamientos: _datosUsuarios),
+                            PensamientoPasado(),
                             Container(
                               margin: EdgeInsets.all(15),
                               child: ElevatedButton(
