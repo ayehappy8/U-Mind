@@ -13,18 +13,19 @@ class _LoginState extends State<Login> {
     return Scaffold(
         backgroundColor: const Color.fromARGB(255, 187, 222, 202),
         body: Padding(
-          padding: EdgeInsets.all(16),
+          padding: const EdgeInsets.all(16),
           child: Column(
             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             children: [
+              //Logo universidad
               Image.asset('assets/ulagos.png'),
               const Text(style: TextStyle(fontSize: 35), "Inicio de sesión"),
               Container(
-                margin: EdgeInsets.only(bottom: 30),
+                margin: const EdgeInsets.only(bottom: 30),
                 child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      Text(style: TextStyle(fontSize: 20), "Usuario:"),
+                      const Text(style: TextStyle(fontSize: 20), "Usuario:"),
                       Row(
                         mainAxisAlignment: MainAxisAlignment.start,
                         children: [
@@ -32,7 +33,7 @@ class _LoginState extends State<Login> {
                             width: 210,
                             height: 40,
                             child: TextField(
-                              style: TextStyle(fontSize: 12),
+                              style: const TextStyle(fontSize: 12),
                               textAlignVertical: TextAlignVertical.center,
                               textAlign: TextAlign.start,
                               decoration: InputDecoration(
@@ -46,16 +47,16 @@ class _LoginState extends State<Login> {
                               ),
                             ),
                           ),
-                          Text(style: TextStyle(fontSize: 18), "@"),
+                          const Text(style: TextStyle(fontSize: 18), "@"),
                           SizedBox(
                             width: 150,
                             height: 40,
                             child: TextField(
-                              style: TextStyle(fontSize: 12),
+                              style: const TextStyle(fontSize: 12),
                               decoration: InputDecoration(
                                 contentPadding:
                                     const EdgeInsets.symmetric(horizontal: 10),
-                                fillColor: Color(0xFFECF4D6),
+                                fillColor: const Color(0xFFECF4D6),
                                 filled: true,
                                 border: OutlineInputBorder(
                                     borderRadius: BorderRadius.circular(20)),
@@ -65,8 +66,8 @@ class _LoginState extends State<Login> {
                           ),
                         ],
                       ),
-                      SizedBox(height: 30),
-                      Text(style: TextStyle(fontSize: 20), "Contraseña:"),
+                      const SizedBox(height: 30),
+                      const Text(style: TextStyle(fontSize: 20), "Contraseña:"),
                       Row(
                         mainAxisAlignment: MainAxisAlignment.start,
                         children: [
@@ -74,7 +75,7 @@ class _LoginState extends State<Login> {
                             width: 375,
                             height: 40,
                             child: TextField(
-                              style: TextStyle(fontSize: 12),
+                              style: const TextStyle(fontSize: 12),
                               textAlignVertical: TextAlignVertical.center,
                               textAlign: TextAlign.start,
                               decoration: InputDecoration(
@@ -99,7 +100,7 @@ class _LoginState extends State<Login> {
                       minimumSize: const Size(294, 50),
                     ),
                     onPressed: () {},
-                    child: Text(
+                    child: const Text(
                         style: TextStyle(color: Colors.white, fontSize: 20),
                         "Iniciar sesión")),
               )
