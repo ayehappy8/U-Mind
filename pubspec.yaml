@@ -39,6 +39,7 @@ dependencies:
   firebase_core: ^2.27.0
   cloud_firestore: ^4.15.8
   pelaicons: ^0.0.1
+  firebase_auth: ^4.17.8
 
 dev_dependencies:
   flutter_test:

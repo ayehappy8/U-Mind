@@ -1,4 +1,7 @@
+import "package:firebase_auth/firebase_auth.dart";
 import "package:flutter/material.dart";
+import "package:umind/usuario_auth/firebase_auth_service/firebase_auth_service.dart";
+import "inicio.dart";
 
 class Login extends StatefulWidget {
   const Login({Key? key}) : super(key: key);
@@ -8,6 +11,26 @@ class Login extends StatefulWidget {
 }
 
 class _LoginState extends State<Login> {
+  final FirebaseAuthService _auth = FirebaseAuthService();
+
+  void _signIn() async {
+    String email = _emailController.text;
+    String password = _passwordController.text;
+
+    User? user = await _auth.singInwithEmailAndPassword(email, password);
+
+    if (user != null) {
+      print("Se ha logiado con exito");
+      Navigator.pushReplacement(
+          context, MaterialPageRoute(builder: (context) => Inicio()));
+    } else {
+      print("Error en el login");
+    }
+  }
+
+  final _emailController = TextEditingController();
+  final _passwordController = TextEditingController();
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -30,9 +53,10 @@ class _LoginState extends State<Login> {
                         mainAxisAlignment: MainAxisAlignment.start,
                         children: [
                           SizedBox(
-                            width: 210,
+                            width: 375,
                             height: 40,
                             child: TextField(
+                              controller: _emailController,
                               style: const TextStyle(fontSize: 12),
                               textAlignVertical: TextAlignVertical.center,
                               textAlign: TextAlign.start,
@@ -43,24 +67,7 @@ class _LoginState extends State<Login> {
                                 filled: true,
                                 border: OutlineInputBorder(
                                     borderRadius: BorderRadius.circular(20)),
-                                hintText: 'Correo',
-                              ),
-                            ),
-                          ),
-                          const Text(style: TextStyle(fontSize: 18), "@"),
-                          SizedBox(
-                            width: 150,
-                            height: 40,
-                            child: TextField(
-                              style: const TextStyle(fontSize: 12),
-                              decoration: InputDecoration(
-                                contentPadding:
-                                    const EdgeInsets.symmetric(horizontal: 10),
-                                fillColor: const Color(0xFFECF4D6),
-                                filled: true,
-                                border: OutlineInputBorder(
-                                    borderRadius: BorderRadius.circular(20)),
-                                hintText: 'alumnos.ulagos.cl',
+                                hintText: 'Correo Institucional',
                               ),
                             ),
                           ),
@@ -75,6 +82,7 @@ class _LoginState extends State<Login> {
                             width: 375,
                             height: 40,
                             child: TextField(
+                              controller: _passwordController,
                               style: const TextStyle(fontSize: 12),
                               textAlignVertical: TextAlignVertical.center,
                               textAlign: TextAlign.start,
@@ -99,7 +107,9 @@ class _LoginState extends State<Login> {
                       backgroundColor: Colors.blue[900],
                       minimumSize: const Size(294, 50),
                     ),
-                    onPressed: () {},
+                    onPressed: () {
+                      _signIn();
+                    },
                     child: const Text(
                         style: TextStyle(color: Colors.white, fontSize: 20),
                         "Iniciar sesión")),

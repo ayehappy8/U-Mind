@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:umind/screens/login.dart';
 import 'package:umind/screens/perfil/consultas.dart';
 import 'package:umind/screens/perfil/configuracion.dart';
 import 'package:pelaicons/pelaicons.dart';
+import "package:firebase_auth/firebase_auth.dart";
 
 class Perfil extends StatelessWidget {
   const Perfil({super.key});
@@ -73,10 +75,8 @@ class Perfil extends StatelessWidget {
                         "Ver\nConsultas",
                         textAlign: TextAlign.center),
                     onPressed: () => {
-                      
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(builder: (context) => Consultas()))
+                      Navigator.push(context,
+                          MaterialPageRoute(builder: (context) => Consultas()))
                     },
                   ),
                   ElevatedButton(
@@ -88,11 +88,12 @@ class Perfil extends StatelessWidget {
                       Pelaicons.settings_light_outline,
                       size: 50,
                       weight: 50,
-                      ),
+                    ),
                     onPressed: () => {
                       Navigator.push(
-                        context,
-                        MaterialPageRoute(builder: (context) => Configuracion()))
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => Configuracion()))
                     },
                   ),
                   ElevatedButton(
@@ -105,7 +106,11 @@ class Perfil extends StatelessWidget {
                             color: Color.fromARGB(255, 236, 244, 214),
                             fontSize: 20),
                         "Cerrar\nSesión"),
-                    onPressed: () => {},
+                    onPressed: () => {
+                      FirebaseAuth.instance.signOut(),
+                      Navigator.pushReplacement(context,
+                          MaterialPageRoute(builder: (context) => Login()))
+                    },
                   ),
                 ],
               )
