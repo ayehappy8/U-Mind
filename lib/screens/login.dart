@@ -12,7 +12,7 @@ class Login extends StatefulWidget {
 
 class _LoginState extends State<Login> {
   final FirebaseAuthService _auth = FirebaseAuthService();
-
+//Funcion de inicio de sesion con firebaseauth
   void _signIn() async {
     String email = _emailController.text;
     String password = _passwordController.text;
@@ -21,6 +21,7 @@ class _LoginState extends State<Login> {
 
     if (user != null) {
       print("Se ha logiado con exito");
+      //navegación hacia inicio
       Navigator.pushReplacement(
           context, MaterialPageRoute(builder: (context) => Inicio()));
     } else {
@@ -30,6 +31,13 @@ class _LoginState extends State<Login> {
 
   final _emailController = TextEditingController();
   final _passwordController = TextEditingController();
+
+  @override
+  void dispose() {
+    _emailController.dispose();
+    _passwordController.dispose();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -83,6 +91,7 @@ class _LoginState extends State<Login> {
                             height: 40,
                             child: TextField(
                               controller: _passwordController,
+                              obscureText: true,
                               style: const TextStyle(fontSize: 12),
                               textAlignVertical: TextAlignVertical.center,
                               textAlign: TextAlign.start,
