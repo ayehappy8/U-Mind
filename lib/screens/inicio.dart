@@ -1,4 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import '/widget/customAppBar.dart';
@@ -24,13 +25,26 @@ class Inicio extends StatefulWidget {
 }
 
 class _InicioState extends State<Inicio> {
-  /*
+  String? getCurrentUserId() {
+    User? user = FirebaseAuth.instance.currentUser;
+    if (user != null) {
+      userId = user.uid;
+      return user.uid;
+    } else {
+      return null; // El usuario no está autenticado
+    }
+  }
+
+  String userId = '';
   @override
   void initState() {
     super.initState();
+    print("id usuario ${getCurrentUserId()}");
+    getCurrentUserId();
     getUsers();
+    getPensamientos();
   }
-*/
+
   void moverPagina(int pagina) {
     setState(() {
       _paginaActual = pagina;
@@ -40,19 +54,44 @@ class _InicioState extends State<Inicio> {
 
   final PageController _controladorPagina = PageController();
   int _paginaActual = 0;
-/*
-  void getUsers() async {
-    CollectionReference collectionReference =
-        FirebaseFirestore.instance.collection("Pruebas");
 
-    QuerySnapshot users = await collectionReference.get();
-    if (users.docs.length != 0) {
-      for (var doc in users.docs) {
-        print(doc.data());
+  void getUsers() async {
+    try {
+      // Obtener una referencia al documento específico
+      DocumentSnapshot documentSnapshot = await FirebaseFirestore.instance
+          .collection("Usuario")
+          .doc(userId)
+          .get();
+
+      if (documentSnapshot.exists) {
+        // Acceder a los datos del documento
+        Map<String, dynamic> data =
+            documentSnapshot.data() as Map<String, dynamic>;
+
+        // Imprimir los datos del documento
+        print("Datos del Documento: ${data}");
       }
+    } catch (e) {
+      // Manejar cualquier error que pueda ocurrir
+      print("Error al obtener los usuarios: $e");
     }
   }
-*/
+
+  final List<Map<String, dynamic>> _datosUsuarios = <Map<String, dynamic>>[];
+  void getPensamientos() async {
+    // Obtener una referencia al documento específico
+    DocumentReference documentReference =
+        FirebaseFirestore.instance.collection("Usuario").doc(userId);
+    QuerySnapshot pensamientos =
+        await documentReference.collection("Pensamiento").get();
+    if (pensamientos.docs.isNotEmpty) {
+      for (var doc in pensamientos.docs) {
+        _datosUsuarios.add(doc.data() as Map<String, dynamic>);
+      }
+      print(_datosUsuarios);
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
