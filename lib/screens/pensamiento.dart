@@ -1,6 +1,7 @@
 // ignore_for_file: prefer_const_constructors, library_private_types_in_public_api
 
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import '/widget/penasamientosPasados.dart';
 import 'inicio.dart';
@@ -25,6 +26,15 @@ class _PensamientoState extends State<Pensamiento> {
     _emocion = 'Seleccionar emoción';
   }
 
+  String? getCurrentUserId() {
+    User? user = FirebaseAuth.instance.currentUser;
+    if (user != null) {
+      return user.uid;
+    } else {
+      return null; // El usuario no está autenticado
+    }
+  }
+
   void dropdownCallback(String? selectedValue) {
     if (selectedValue is String && selectedValue != 'Seleccionar emoción') {
       setState(() {
@@ -40,9 +50,13 @@ class _PensamientoState extends State<Pensamiento> {
   Future<void> agregarDatos() async {
     try {
       // Referencia a la colección y documento en Firestore
-      CollectionReference preguntasCollection =
-          FirebaseFirestore.instance.collection('Pruebas');
-      DocumentReference documento = preguntasCollection.doc();
+      DocumentReference usuarioDocumnto = FirebaseFirestore.instance
+          .collection('Usuarios')
+          .doc(getCurrentUserId());
+      CollectionReference pensamientoCollection =
+          usuarioDocumnto.collection('Pensamientos');
+
+      DocumentReference documento = pensamientoCollection.doc();
 
       //( Datos que se quieran agregar
       Map<String, dynamic> datos = {
