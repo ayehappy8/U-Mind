@@ -64,11 +64,11 @@ class _LoginState extends State<Login> {
                         mainAxisAlignment: MainAxisAlignment.start,
                         children: [
                           SizedBox(
-                            width: 375,
-                            height: 40,
+                            width: 360,
+                            height: 50,
                             child: TextField(
                               controller: _emailController,
-                              style: const TextStyle(fontSize: 12),
+                              style: const TextStyle(fontSize: 14),
                               textAlignVertical: TextAlignVertical.center,
                               textAlign: TextAlign.start,
                               decoration: InputDecoration(
@@ -90,12 +90,12 @@ class _LoginState extends State<Login> {
                         mainAxisAlignment: MainAxisAlignment.start,
                         children: [
                           SizedBox(
-                            width: 375,
-                            height: 40,
+                            width: 360,
+                            height: 50,
                             child: TextField(
                               controller: _passwordController,
                               obscureText: true,
-                              style: const TextStyle(fontSize: 12),
+                              style: const TextStyle(fontSize: 14),
                               textAlignVertical: TextAlignVertical.center,
                               textAlign: TextAlign.start,
                               decoration: InputDecoration(
