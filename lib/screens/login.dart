@@ -1,6 +1,7 @@
 import "package:firebase_auth/firebase_auth.dart";
 import "package:flutter/material.dart";
 import "package:umind/usuario_auth/firebase_auth_service/firebase_auth_service.dart";
+import '/widget/dialogo.dart';
 import "inicio.dart";
 
 class Login extends StatefulWidget {
@@ -26,6 +27,8 @@ class _LoginState extends State<Login> {
           context, MaterialPageRoute(builder: (context) => Inicio()));
     } else {
       print("Error en el login");
+      Dialogo.mostrarDialogo(
+          context, 'Error', 'Correo y/o contraseña Equivocada', () => {});
     }
   }
 
