@@ -35,21 +35,7 @@ class _PensamientoState extends State<Pensamiento> {
 
   final _pregunta1 = TextEditingController();
   final _pregunta2 = TextEditingController();
-  final List<Map<String, dynamic>> _datosUsuarios = <Map<String, dynamic>>[];
   final DateTime _fecha = DateTime.now();
-
-  void getInfoPensamientos() async {
-    _datosUsuarios.clear();
-    CollectionReference collectionReference =
-        FirebaseFirestore.instance.collection("Pruebas");
-    QuerySnapshot users = await collectionReference.get();
-    if (users.docs.isNotEmpty) {
-      for (var doc in users.docs) {
-        _datosUsuarios.add(doc.data() as Map<String, dynamic>);
-      }
-    }
-    setState(() {});
-  }
 
   Future<void> agregarDatos() async {
     try {
@@ -240,7 +226,6 @@ class _PensamientoState extends State<Pensamiento> {
                               textAlign: TextAlign.center),
                           onPressed: () => {
                             setState(() {
-                              getInfoPensamientos();
                               condicionRow = false;
                               condicionContainer = true;
                             })
