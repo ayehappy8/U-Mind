@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:umind/screens/registro/registrocuadro.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
+
 
 class Registroemocion extends StatefulWidget {
   const Registroemocion({Key? key}) : super(key: key);
@@ -7,6 +9,51 @@ class Registroemocion extends StatefulWidget {
   @override
   _RegistroemocionState createState() => _RegistroemocionState();
 }
+
+String _emocion = 'Felicidad';
+String _pregunta1 = 'Felicidad';
+String _pregunta2 = 'Felicidad';
+
+final List<Map<String, dynamic>> _datosUsuarios = <Map<String, dynamic>>[];
+final DateTime _fecha = DateTime.now();
+
+void getInfoPensamientos() async {
+    _datosUsuarios.clear();
+    CollectionReference collectionReference =
+        FirebaseFirestore.instance.collection("Pruebas");
+    QuerySnapshot users = await collectionReference.get();
+    if (users.docs.isNotEmpty) {
+      for (var doc in users.docs) {
+        _datosUsuarios.add(doc.data() as Map<String, dynamic>);
+      }
+    }
+    setState(() {});
+  }
+
+  Future<void> agregarDatos() async {
+    try {
+      // Referencia a la colección y documento en Firestore
+      CollectionReference preguntasCollection =
+          FirebaseFirestore.instance.collection('Pruebas');
+      DocumentReference documento = preguntasCollection.doc();
+
+      // Datos que se quieran agregar
+      Map<String, dynamic> datos = {
+        'emocion': _emocion,
+        'fecha': _fecha, // Usar el Timestamp convertido
+        'pregunta1': _pregunta1,
+        'pregunta2': _pregunta2,
+      };
+
+      // Agregar los datos al documento
+      await documento.set(datos);
+
+      print('Datos agregados correctamente.');
+    } catch (e) {
+      print('Error al agregar datos: $e');
+    }
+  }
+
 
 class _RegistroemocionState extends State<Registroemocion> {
   List<String> buttonNames = [
@@ -126,6 +173,8 @@ class _RegistroemocionState extends State<Registroemocion> {
                           ),
                           onPressed: () {
                             if (cont == true) {
+                              agregarDatos();
+
                               Navigator.push(
                                 context,
                                 MaterialPageRoute(builder: (context) => const Registrocuadro()),

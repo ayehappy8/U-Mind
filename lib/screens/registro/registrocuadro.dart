@@ -4,6 +4,8 @@ import 'package:umind/screens/inicio.dart';
 class Registrocuadro extends StatelessWidget {
   const Registrocuadro({super.key});
 
+  
+
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
