@@ -1,12 +1,10 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 
 class PensamientoPasado extends StatefulWidget {
-  final List<Map<String, dynamic>> pensamientos;
-
-  const PensamientoPasado({Key? key, required this.pensamientos})
-      : super(key: key);
+  const PensamientoPasado({Key? key}) : super(key: key);
 
   @override
   _PensamientoPasadoState createState() => _PensamientoPasadoState();
@@ -14,21 +12,54 @@ class PensamientoPasado extends StatefulWidget {
 
 final int _rowsPorPagina = 5;
 int _paginaActual = 0;
+final List<Map<String, dynamic>> _datosUsuarios = <Map<String, dynamic>>[];
 
 class _PensamientoPasadoState extends State<PensamientoPasado> {
   @override
+  void initState() {
+    super.initState();
+
+    getInfoPensamientos();
+  }
+
+  String? getCurrentUserId() {
+    User? user = FirebaseAuth.instance.currentUser;
+    if (user != null) {
+      return user.uid;
+    } else {
+      return null; // El usuario no está autenticado
+    }
+  }
+
+  void getInfoPensamientos() async {
+    _datosUsuarios.clear();
+    DocumentReference documentReference = FirebaseFirestore.instance
+        .collection("Usuarios")
+        .doc(getCurrentUserId());
+    QuerySnapshot pensamientos =
+        await documentReference.collection("Pensamientos").get();
+
+    if (pensamientos.docs.isNotEmpty) {
+      for (var doc in pensamientos.docs) {
+        _datosUsuarios.add(doc.data() as Map<String, dynamic>);
+      }
+    }
+    setState(() {});
+  }
+
+  @override
   Widget build(BuildContext context) {
-    final rowsTotales = widget.pensamientos.length;
+    final rowsTotales = _datosUsuarios.length;
     final paginasTotales = (rowsTotales / _rowsPorPagina).ceil();
     final paginaInicial = _paginaActual * _rowsPorPagina;
     final paginaFinal = (_paginaActual + 1) * _rowsPorPagina;
 
-    widget.pensamientos.sort((a, b) {
+    _datosUsuarios.sort((a, b) {
       final DateTime fechaA = (a['fecha'] as Timestamp).toDate();
       final DateTime fechaB = (b['fecha'] as Timestamp).toDate();
       return fechaB.compareTo(fechaA);
     });
-    final rowsDeLaPaginaActual = widget.pensamientos.sublist(
+    final rowsDeLaPaginaActual = _datosUsuarios.sublist(
         paginaInicial, paginaFinal > rowsTotales ? rowsTotales : paginaFinal);
 
     return Column(children: [

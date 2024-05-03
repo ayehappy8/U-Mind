@@ -1,6 +1,7 @@
 // ignore_for_file: prefer_const_constructors, library_private_types_in_public_api
 
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import '/widget/penasamientosPasados.dart';
 import 'inicio.dart';
@@ -13,14 +14,29 @@ class Pensamiento extends StatefulWidget {
   _PensamientoState createState() => _PensamientoState();
 }
 
-String _emocion = 'Felicidad';
+String _emocion = 'Seleccionar emoción';
 //condiciones para visibilidad
 bool condicionRow = true;
 bool condicionContainer = false;
 
 class _PensamientoState extends State<Pensamiento> {
+  @override
+  void initState() {
+    super.initState();
+    _emocion = 'Seleccionar emoción';
+  }
+
+  String? getCurrentUserId() {
+    User? user = FirebaseAuth.instance.currentUser;
+    if (user != null) {
+      return user.uid;
+    } else {
+      return null; // El usuario no está autenticado
+    }
+  }
+
   void dropdownCallback(String? selectedValue) {
-    if (selectedValue is String) {
+    if (selectedValue is String && selectedValue != 'Seleccionar emoción') {
       setState(() {
         _emocion = selectedValue;
       });
@@ -29,30 +45,20 @@ class _PensamientoState extends State<Pensamiento> {
 
   final _pregunta1 = TextEditingController();
   final _pregunta2 = TextEditingController();
-  final List<Map<String, dynamic>> _datosUsuarios = <Map<String, dynamic>>[];
   final DateTime _fecha = DateTime.now();
-
-  void getInfoPensamientos() async {
-    _datosUsuarios.clear();
-    CollectionReference collectionReference =
-        FirebaseFirestore.instance.collection("Pruebas");
-    QuerySnapshot users = await collectionReference.get();
-    if (users.docs.isNotEmpty) {
-      for (var doc in users.docs) {
-        _datosUsuarios.add(doc.data() as Map<String, dynamic>);
-      }
-    }
-    setState(() {});
-  }
 
   Future<void> agregarDatos() async {
     try {
       // Referencia a la colección y documento en Firestore
-      CollectionReference preguntasCollection =
-          FirebaseFirestore.instance.collection('Pruebas');
-      DocumentReference documento = preguntasCollection.doc();
+      DocumentReference usuarioDocumnto = FirebaseFirestore.instance
+          .collection('Usuarios')
+          .doc(getCurrentUserId());
+      CollectionReference pensamientoCollection =
+          usuarioDocumnto.collection('Pensamientos');
 
-      // Datos que se quieran agregar
+      DocumentReference documento = pensamientoCollection.doc();
+
+      //( Datos que se quieran agregar
       Map<String, dynamic> datos = {
         'emocion': _emocion,
         'fecha': _fecha, // Usar el Timestamp convertido
@@ -152,7 +158,17 @@ class _PensamientoState extends State<Pensamiento> {
                     dropdownColor: Colors.teal,
                     style: const TextStyle(fontSize: 20, color: Colors.white),
                     borderRadius: BorderRadius.circular(30.0),
-                    items: const [
+                    items: [
+                      DropdownMenuItem(
+                        enabled: false,
+                        value:
+                            "Seleccionar emoción", // Cambiado a tu valor por defecto
+                        child: Container(
+                            decoration: BoxDecoration(
+                                color: Color.fromARGB(255, 143, 187, 160),
+                                borderRadius: BorderRadius.circular(20)),
+                            child: Center(child: Text("Seleccionar emoción"))),
+                      ),
                       DropdownMenuItem(
                         value: "Felicidad",
                         child: Center(
@@ -190,8 +206,19 @@ class _PensamientoState extends State<Pensamiento> {
                                 "Sorpresa")), // Centra el texto horizontalmente
                       ),
                     ],
-                    value: _emocion,
+                    value: _emocion != 'Seleccionar emoción' ? _emocion : null,
                     onChanged: dropdownCallback,
+                    hint: _emocion == 'Seleccionar emoción'
+                        ? Center(
+                            child: Text(
+                              'Seleccionar emoción',
+                              style: TextStyle(
+                                fontSize: 20,
+                                color: Colors.white,
+                              ),
+                            ),
+                          )
+                        : null,
                   ),
                 ),
                 //row 3
@@ -213,32 +240,34 @@ class _PensamientoState extends State<Pensamiento> {
                               textAlign: TextAlign.center),
                           onPressed: () => {
                             setState(() {
-                              getInfoPensamientos();
                               condicionRow = false;
                               condicionContainer = true;
                             })
                           },
                         ),
                         ElevatedButton(
-                          style: ElevatedButton.styleFrom(
-                            backgroundColor: Colors.teal,
-                            minimumSize: const Size(146, 70),
-                          ),
-                          child: const Text(
-                              style:
-                                  TextStyle(color: Colors.white, fontSize: 20),
-                              "Guardar"),
-                          onPressed: () => {
-                            agregarDatos(),
-                            Dialogo.mostrarDialogo(
-                                context,
-                                'Datos',
-                                'Se guardaron los datos',
-                                () => {
-                                      Inicio.cambiarTab(context, 0),
-                                    }),
-                          },
-                        ),
+                            style: ElevatedButton.styleFrom(
+                              backgroundColor: Colors.teal,
+                              minimumSize: const Size(146, 70),
+                            ),
+                            child: const Text(
+                                style: TextStyle(
+                                    color: Colors.white, fontSize: 20),
+                                "Guardar"),
+                            onPressed: (_emocion != 'Seleccionar emoción' &&
+                                    _pregunta1.text.isNotEmpty &&
+                                    _pregunta2.text.isNotEmpty)
+                                ? () => {
+                                      agregarDatos(),
+                                      Dialogo.mostrarDialogo(
+                                          context,
+                                          'Datos',
+                                          'Se guardaron los datos',
+                                          () => {
+                                                Inicio.cambiarTab(context, 0),
+                                              }),
+                                    }
+                                : null),
                       ]),
                 ),
                 Visibility(
@@ -250,7 +279,7 @@ class _PensamientoState extends State<Pensamiento> {
                             borderRadius: BorderRadius.circular(20.0)),
                         child: Column(
                           children: [
-                            PensamientoPasado(pensamientos: _datosUsuarios),
+                            PensamientoPasado(),
                             Container(
                               margin: EdgeInsets.all(15),
                               child: ElevatedButton(
