@@ -17,19 +17,6 @@ String _pregunta2 = 'Felicidad';
 final List<Map<String, dynamic>> _datosUsuarios = <Map<String, dynamic>>[];
 final DateTime _fecha = DateTime.now();
 
-void getInfoPensamientos() async {
-    _datosUsuarios.clear();
-    CollectionReference collectionReference =
-        FirebaseFirestore.instance.collection("Pruebas");
-    QuerySnapshot users = await collectionReference.get();
-    if (users.docs.isNotEmpty) {
-      for (var doc in users.docs) {
-        _datosUsuarios.add(doc.data() as Map<String, dynamic>);
-      }
-    }
-    setState(() {});
-  }
-
   Future<void> agregarDatos() async {
     try {
       // Referencia a la colección y documento en Firestore
@@ -64,6 +51,30 @@ class _RegistroemocionState extends State<Registroemocion> {
     'Asco',
     'Sorpresa',
   ];
+
+  Future<void> agregarDatos() async {
+    try {
+      // Referencia a la colección y documento en Firestore
+      CollectionReference preguntasCollection =
+          FirebaseFirestore.instance.collection('Pruebas');
+      DocumentReference documento = preguntasCollection.doc();
+
+      // Datos que se quieran agregar
+      Map<String, dynamic> datos = {
+        'emocion': _emocion,
+        'fecha': _fecha, // Usar el Timestamp convertido
+        'pregunta1': _pregunta1,
+        'pregunta2': _pregunta2,
+      };
+
+      // Agregar los datos al documento
+      await documento.set(datos);
+
+      print('Datos agregados correctamente.');
+    } catch (e) {
+      print('Error al agregar datos: $e');
+    }
+  }
 
   void changeButtonNames(int index) {
     setState(() {
