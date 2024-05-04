@@ -1,11 +1,11 @@
 // ignore_for_file: prefer_const_constructors, library_private_types_in_public_api
 
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import '/widget/penasamientosPasados.dart';
 import 'inicio.dart';
 import '/widget/dialogo.dart';
+import 'package:umind/usuario_auth/firebase_auth_service/getUsuario.dart';
 
 class Pensamiento extends StatefulWidget {
   const Pensamiento({Key? key}) : super(key: key);
@@ -24,15 +24,6 @@ class _PensamientoState extends State<Pensamiento> {
   void initState() {
     super.initState();
     _emocion = 'Seleccionar emoción';
-  }
-
-  String? getCurrentUserId() {
-    User? user = FirebaseAuth.instance.currentUser;
-    if (user != null) {
-      return user.uid;
-    } else {
-      return null; // El usuario no está autenticado
-    }
   }
 
   void dropdownCallback(String? selectedValue) {

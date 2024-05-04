@@ -1,5 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:firebase_auth/firebase_auth.dart';
+import 'package:umind/usuario_auth/firebase_auth_service/getUsuario.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 
@@ -20,15 +20,6 @@ class _PensamientoPasadoState extends State<PensamientoPasado> {
     super.initState();
 
     getInfoPensamientos();
-  }
-
-  String? getCurrentUserId() {
-    User? user = FirebaseAuth.instance.currentUser;
-    if (user != null) {
-      return user.uid;
-    } else {
-      return null; // El usuario no está autenticado
-    }
   }
 
   void getInfoPensamientos() async {

@@ -1,6 +1,5 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
-import 'screens/inicio.dart';
 import 'screens/login.dart';
 
 void main() => {
@@ -24,7 +23,7 @@ class UMind extends StatelessWidget {
           colorScheme: ColorScheme.fromSwatch(
             primarySwatch: Colors.teal,
             accentColor: const Color.fromARGB(255, 154, 208, 194),
-          ),  
+          ),
         ),
         home: const Login(),
       ),
