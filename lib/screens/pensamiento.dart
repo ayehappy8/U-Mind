@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import '/widget/penasamientosPasados.dart';
 import 'inicio.dart';
 import '/widget/dialogo.dart';
+import 'package:umind/usuario_auth/firebase_auth_service/getUsuario.dart';
 
 class Pensamiento extends StatefulWidget {
   const Pensamiento({Key? key}) : super(key: key);
@@ -35,28 +36,18 @@ class _PensamientoState extends State<Pensamiento> {
 
   final _pregunta1 = TextEditingController();
   final _pregunta2 = TextEditingController();
-  final List<Map<String, dynamic>> _datosUsuarios = <Map<String, dynamic>>[];
   final DateTime _fecha = DateTime.now();
-
-  void getInfoPensamientos() async {
-    _datosUsuarios.clear();
-    CollectionReference collectionReference =
-        FirebaseFirestore.instance.collection("Pruebas");
-    QuerySnapshot users = await collectionReference.get();
-    if (users.docs.isNotEmpty) {
-      for (var doc in users.docs) {
-        _datosUsuarios.add(doc.data() as Map<String, dynamic>);
-      }
-    }
-    setState(() {});
-  }
 
   Future<void> agregarDatos() async {
     try {
       // Referencia a la colección y documento en Firestore
-      CollectionReference preguntasCollection =
-          FirebaseFirestore.instance.collection('Pruebas');
-      DocumentReference documento = preguntasCollection.doc();
+      DocumentReference usuarioDocumnto = FirebaseFirestore.instance
+          .collection('Usuarios')
+          .doc(getCurrentUserId());
+      CollectionReference pensamientoCollection =
+          usuarioDocumnto.collection('Pensamientos');
+
+      DocumentReference documento = pensamientoCollection.doc();
 
       //( Datos que se quieran agregar
       Map<String, dynamic> datos = {
@@ -240,7 +231,6 @@ class _PensamientoState extends State<Pensamiento> {
                               textAlign: TextAlign.center),
                           onPressed: () => {
                             setState(() {
-                              getInfoPensamientos();
                               condicionRow = false;
                               condicionContainer = true;
                             })

@@ -1,4 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:umind/usuario_auth/firebase_auth_service/getUsuario.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 
@@ -17,16 +18,20 @@ class _PensamientoPasadoState extends State<PensamientoPasado> {
   @override
   void initState() {
     super.initState();
+
     getInfoPensamientos();
   }
 
   void getInfoPensamientos() async {
     _datosUsuarios.clear();
-    CollectionReference collectionReference =
-        FirebaseFirestore.instance.collection("Pruebas");
-    QuerySnapshot users = await collectionReference.get();
-    if (users.docs.isNotEmpty) {
-      for (var doc in users.docs) {
+    DocumentReference documentReference = FirebaseFirestore.instance
+        .collection("Usuarios")
+        .doc(getCurrentUserId());
+    QuerySnapshot pensamientos =
+        await documentReference.collection("Pensamientos").get();
+
+    if (pensamientos.docs.isNotEmpty) {
+      for (var doc in pensamientos.docs) {
         _datosUsuarios.add(doc.data() as Map<String, dynamic>);
       }
     }
