@@ -1,7 +1,7 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
-import 'package:intl/intl.dart';
+import 'package:umind/screens/perfil/consultasAnteriores.dart';
 
 
 class Consultas extends StatefulWidget {
@@ -11,34 +11,8 @@ class Consultas extends StatefulWidget {
   _ConsultasState createState() => _ConsultasState();
 }
 
-final List<Map<String, dynamic>> _datosConsulta = <Map<String, dynamic>>[];
-
 
 class _ConsultasState extends State<Consultas>{
-
-
-  void getInfoConsultas() async {
-    _datosConsulta.clear();
-    CollectionReference collectionReference =
-        FirebaseFirestore.instance.collection("consultas");
-    QuerySnapshot users = await collectionReference.get();
-    if (users.docs.isNotEmpty) {
-      for (var doc in users.docs) {
-        _datosConsulta.add(doc.data() as Map<String, dynamic>);
-        
-      }
-
-    }
-    setState(() {});
-  }
-
-  @override
-  void initState() {
-    super.initState();
-    getInfoConsultas();
-    
-  }
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -59,8 +33,15 @@ class _ConsultasState extends State<Consultas>{
                   ),
                 ),
                 Container(
-                  margin: const EdgeInsets.only(bottom: 50),
-                  child: DataConsultas(),
+                  margin: EdgeInsets.only(bottom: 10),
+                  decoration: BoxDecoration(
+                      color: Colors.teal,
+                      borderRadius: BorderRadius.circular(20.0)),
+                  child: Column(
+                    children: [
+                      ConsultasAnteriores(),
+                    ],
+                  )
                 ),
                 ElevatedButton(
                   style: ElevatedButton.styleFrom(
@@ -84,7 +65,7 @@ class _ConsultasState extends State<Consultas>{
     );
   }
 }
-
+/*
 
 class MyDataSource extends DataTableSource{
 
@@ -92,15 +73,32 @@ class MyDataSource extends DataTableSource{
   DataRow? getRow(int index) {
     final DateFormat formato = DateFormat('dd-MM-yyyy');
     final DateTime fecha = (_datosConsulta[index] ["Fecha"] as Timestamp).toDate();
-
     
     return DataRow(cells: [
       DataCell(Text(_datosConsulta[index]['Asunto'], style: TextStyle(color: Color.fromARGB(255, 23, 56, 84)),)),
       DataCell(Text(formato.format(fecha), style: TextStyle(color: Color.fromARGB(255, 23, 56, 84)),)),
-      DataCell(Text(_datosConsulta[index]['Detalle'], style: TextStyle(color: Color.fromARGB(255, 23, 56, 84)),))
+      DataCell(ElevatedButton(
+          style: ElevatedButton.styleFrom(
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(2),
+            ),
+            backgroundColor: Colors.blue[900],
+          ),
+          onPressed: () {
+            Navigator.push(context,
+                          MaterialPageRoute(builder: (context) => Consultas()))
+            //_mostrarInformacion(_datosConsulta[index]['Asunto'], fecha, _datosConsulta[index]['Detalle']);
+          },
+          child: const Text(
+            "Ver",
+            style: TextStyle(color: Colors.white, fontSize: 16),
+            textAlign: TextAlign.center,
+          ),
+        ),)
       
     ]);
   }
+  //Text(_datosConsulta[index]['Detalle'], style: TextStyle(color: Color.fromARGB(255, 23, 56, 84)),)
 
   @override
   bool get isRowCountApproximate => false;
@@ -113,6 +111,7 @@ class MyDataSource extends DataTableSource{
   int get selectedRowCount => 0;
   
 }
+
 
 
 
@@ -151,7 +150,6 @@ class DataConsultasState extends State<DataConsultas>{
       ),
       child: PaginatedDataTable(
         arrowHeadColor: Color.fromARGB(255, 236, 244, 214),
-        
         columns: <DataColumn>[
           DataColumn(
             label: Expanded(
@@ -189,10 +187,7 @@ class DataConsultasState extends State<DataConsultas>{
         columnSpacing: 100,
         horizontalMargin: 20,
         rowsPerPage: 4,
-        
-        
-        
       )
     );
   }
-}
+}*/
