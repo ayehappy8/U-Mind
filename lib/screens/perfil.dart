@@ -7,6 +7,8 @@ import "package:firebase_auth/firebase_auth.dart";
 import 'package:umind/screens/perfil/consultasAnteriores.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:intl/intl.dart';
+import 'package:umind/usuario_auth/firebase_auth_service/getUsuario.dart';
+
 
 
 class Perfil extends StatefulWidget {
@@ -17,18 +19,33 @@ class Perfil extends StatefulWidget {
 }
 
 final List<Map<String, dynamic>> _datosConsulta = <Map<String, dynamic>>[];
+final List<Map<String, dynamic>> _datosPerfil = <Map<String, dynamic>>[];
+
 
 
 
 class _PerfilState extends State<Perfil> {
 
+  void getInfoPerfil() async {
+    _datosPerfil.clear();
+    DocumentSnapshot usuarioDatos = await FirebaseFirestore.instance.collection("Usuarios").doc(getCurrentUserId()).get();
+    if (usuarioDatos.exists){
+      _datosPerfil.add(usuarioDatos.data() as Map<String, dynamic>);
+    }
+    setState(() {});
+  }
+
   void getInfoConsultas() async {
+
     _datosConsulta.clear();
-    CollectionReference collectionReference =
-        FirebaseFirestore.instance.collection("consultas");
-    QuerySnapshot users = await collectionReference.get();
-    if (users.docs.isNotEmpty) {
-      for (var doc in users.docs) {
+    DocumentReference documentReference = FirebaseFirestore.instance
+        .collection("Usuarios")
+        .doc(getCurrentUserId());
+    QuerySnapshot consultas =
+        await documentReference.collection("Consultas").get();
+
+    if (consultas.docs.isNotEmpty) {
+      for (var doc in consultas.docs) {
         _datosConsulta.add(doc.data() as Map<String, dynamic>);
       }
     }
@@ -39,12 +56,13 @@ class _PerfilState extends State<Perfil> {
   void initState() {
     super.initState();
     getInfoConsultas();
+    getInfoPerfil();
   }
 
   @override
   Widget build(BuildContext context) {
 
-    if (_datosConsulta.isEmpty){
+    if (_datosConsulta.isEmpty || _datosPerfil.isEmpty){
       print("Datos vacios");
       return Scaffold(
         backgroundColor: const Color.fromARGB(255, 187, 222, 202),
@@ -57,8 +75,8 @@ class _PerfilState extends State<Perfil> {
       );
     }else{
       _datosConsulta.sort((a, b) {
-        final DateTime fechaA = (a['Fecha'] as Timestamp).toDate();
-        final DateTime fechaB = (b['Fecha'] as Timestamp).toDate();
+        final DateTime fechaA = (a['fecha'] as Timestamp).toDate();
+        final DateTime fechaB = (b['fecha'] as Timestamp).toDate();
         return fechaB.compareTo(fechaA);
       });
     
@@ -73,17 +91,26 @@ class _PerfilState extends State<Perfil> {
               children: [
                 Row(
                   children: [
-                    const SizedBox(
+                    Container(
+                      margin: EdgeInsets.only(left: 45),
                       width: 250,
-                      child: Text('Joan Pozon\n  12.345.678-9',
-                          textAlign: TextAlign.center,
-                          style: TextStyle(
-                              fontSize: 30,
-                              color: Color.fromARGB(255, 23, 56, 84))),
+                      child: RichText(
+                              text: TextSpan(
+                                style: const TextStyle(
+                                  color: Color.fromARGB(255, 23, 56, 84),
+                                  fontSize: 24,
+                                ),
+                                children: <TextSpan>[
+                                  TextSpan(
+                                    text: '${_datosPerfil[0]['nombre']}\n${_datosPerfil[0]['rut']}'
+                                  ),
+                                ],
+                              ),
+                            ),
                     ),
                     SizedBox(
-                      height: 140.0,
-                      width: 140.0,
+                      height: 95.0,
+                      width: 95.0,
                       child: Image.asset('assets/mascota.png'),
                     ),
                   ],
@@ -107,7 +134,7 @@ class _PerfilState extends State<Perfil> {
                               .black) // Ajusta el radio de borde según tus preferencias
                       ),
                   width: 320,
-                  height: 193,
+                  height: 340,
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     mainAxisSize: MainAxisSize.min,
@@ -126,7 +153,7 @@ class _PerfilState extends State<Perfil> {
                                 ),
                                 children: <TextSpan>[
                                   TextSpan(
-                                    text: '${_datosConsulta[0]['Asunto']}',
+                                    text: '${_datosConsulta[0]['asunto']}',
                                     style: const TextStyle(fontWeight: FontWeight.bold)
                                   ),
                                 ],
@@ -141,7 +168,7 @@ class _PerfilState extends State<Perfil> {
                                 ),
                                 children: <TextSpan>[
                                   TextSpan(
-                                    text: '${_datosConsulta[0]['Detalle']}',
+                                    text: '${_datosConsulta[0]['detalle']}',
                                   ),
                                 ],
                               ),

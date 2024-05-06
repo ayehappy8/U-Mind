@@ -1,6 +1,8 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
+import 'package:umind/usuario_auth/firebase_auth_service/getUsuario.dart';
+
 
 class ConsultasAnteriores extends StatefulWidget {
   const ConsultasAnteriores({Key? key}) : super(key: key);
@@ -21,12 +23,16 @@ class _ConsultasAnterioresState extends State<ConsultasAnteriores> {
   }
 
   void getInfoConsultas() async {
+
     _datosConsulta.clear();
-    CollectionReference collectionReference =
-        FirebaseFirestore.instance.collection("consultas");
-    QuerySnapshot users = await collectionReference.get();
-    if (users.docs.isNotEmpty) {
-      for (var doc in users.docs) {
+    DocumentReference documentReference = FirebaseFirestore.instance
+        .collection("Usuarios")
+        .doc(getCurrentUserId());
+    QuerySnapshot consultas =
+        await documentReference.collection("Consultas").get();
+
+    if (consultas.docs.isNotEmpty) {
+      for (var doc in consultas.docs) {
         _datosConsulta.add(doc.data() as Map<String, dynamic>);
       }
     }
@@ -41,8 +47,8 @@ class _ConsultasAnterioresState extends State<ConsultasAnteriores> {
     final paginaFinal = (_paginaActual + 1) * _rowsPorPagina;
 
     _datosConsulta.sort((a, b) {
-      final DateTime fechaA = (a['Fecha'] as Timestamp).toDate();
-      final DateTime fechaB = (b['Fecha'] as Timestamp).toDate();
+      final DateTime fechaA = (a['fecha'] as Timestamp).toDate();
+      final DateTime fechaB = (b['fecha'] as Timestamp).toDate();
       return fechaB.compareTo(fechaA);
     });
     final rowsDeLaPaginaActual = _datosConsulta.sublist(
@@ -114,10 +120,10 @@ List<DataRow> _buildRows(
   // Ordenar los pensamientos por fecha
 
   return consultas.map((consulta) {
-    final DateTime fecha = (consulta['Fecha'] as Timestamp).toDate();
+    final DateTime fecha = (consulta['fecha'] as Timestamp).toDate();
     return DataRow(cells: [
       DataCell(Text(
-        consulta['Asunto'],
+        consulta['asunto'],
         style: const TextStyle(color: Colors.white, fontSize: 20),
       )),
       DataCell(
@@ -153,7 +159,7 @@ List<DataRow> _buildRows(
 void _mostrarInformacion(
     BuildContext context, Map<String, dynamic> consulta) {
   final DateFormat formato = DateFormat('dd-MM-yyyy');
-  final DateTime fecha = (consulta['Fecha'] as Timestamp).toDate();
+  final DateTime fecha = (consulta['fecha'] as Timestamp).toDate();
   showDialog(
     context: context,
     builder: (BuildContext context) {
@@ -212,7 +218,7 @@ void _mostrarInformacion(
                         text: 'Asunto: ',
                         style: TextStyle(fontWeight: FontWeight.bold)),
                     TextSpan(
-                      text: '${consulta['Asunto']}',
+                      text: '${consulta['asunto']}',
                     ),
                   ],
                 ),
@@ -229,7 +235,7 @@ void _mostrarInformacion(
                         text: 'Detalle:  ',
                         style: TextStyle(fontWeight: FontWeight.bold)),
                     TextSpan(
-                      text: '${consulta['Detalle']}',
+                      text: '${consulta['detalle']}',
                     ),
                   ],
                 ),
