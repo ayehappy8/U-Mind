@@ -20,10 +20,18 @@ bool condicionRow = true;
 bool condicionContainer = false;
 
 class _PensamientoState extends State<Pensamiento> {
+  final ScrollController _scrollController = ScrollController();
   @override
   void initState() {
     super.initState();
     _emocion = 'Seleccionar emoción';
+  }
+
+  @override
+  void dispose() {
+    // Asegúrate de liberar recursos
+    _scrollController.dispose();
+    super.dispose();
   }
 
   void dropdownCallback(String? selectedValue) {
@@ -32,6 +40,14 @@ class _PensamientoState extends State<Pensamiento> {
         _emocion = selectedValue;
       });
     }
+  }
+
+  void scrollToBottom() {
+    _scrollController.animateTo(
+      _scrollController.position.maxScrollExtent,
+      duration: Duration(milliseconds: 400),
+      curve: Curves.easeInOut,
+    );
   }
 
   final _pregunta1 = TextEditingController();
@@ -74,6 +90,7 @@ class _PensamientoState extends State<Pensamiento> {
         margin: const EdgeInsets.only(bottom: 30.0, left: 10, right: 10),
         child: Center(
           child: SingleChildScrollView(
+            controller: _scrollController,
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: <Widget>[
@@ -233,7 +250,9 @@ class _PensamientoState extends State<Pensamiento> {
                             setState(() {
                               condicionRow = false;
                               condicionContainer = true;
-                            })
+                              Future.delayed(
+                                  Duration(milliseconds: 400), scrollToBottom);
+                            }),
                           },
                         ),
                         ElevatedButton(
