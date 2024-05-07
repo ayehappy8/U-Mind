@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:umind/screens/registro/registrocuadro.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
+
+
 
 
 class Registroemocion extends StatefulWidget {
@@ -9,38 +10,7 @@ class Registroemocion extends StatefulWidget {
   @override
   _RegistroemocionState createState() => _RegistroemocionState();
 }
-
-String _emocion = 'Felicidad';
-String _pregunta1 = 'Felicidad';
-String _pregunta2 = 'Felicidad';
-
-final List<Map<String, dynamic>> _datosUsuarios = <Map<String, dynamic>>[];
-final DateTime _fecha = DateTime.now();
-
-  Future<void> agregarDatos() async {
-    try {
-      // Referencia a la colección y documento en Firestore
-      CollectionReference preguntasCollection =
-          FirebaseFirestore.instance.collection('Pruebas');
-      DocumentReference documento = preguntasCollection.doc();
-
-      // Datos que se quieran agregar
-      Map<String, dynamic> datos = {
-        'emocion': _emocion,
-        'fecha': _fecha, // Usar el Timestamp convertido
-        'pregunta1': _pregunta1,
-        'pregunta2': _pregunta2,
-      };
-
-      // Agregar los datos al documento
-      await documento.set(datos);
-
-      print('Datos agregados correctamente.');
-    } catch (e) {
-      print('Error al agregar datos: $e');
-    }
-  }
-
+String emocion='Tristeza';
 
 class _RegistroemocionState extends State<Registroemocion> {
   List<String> buttonNames = [
@@ -51,30 +21,6 @@ class _RegistroemocionState extends State<Registroemocion> {
     'Asco',
     'Sorpresa',
   ];
-
-  Future<void> agregarDatos() async {
-    try {
-      // Referencia a la colección y documento en Firestore
-      CollectionReference preguntasCollection =
-          FirebaseFirestore.instance.collection('Pruebas');
-      DocumentReference documento = preguntasCollection.doc();
-
-      // Datos que se quieran agregar
-      Map<String, dynamic> datos = {
-        'emocion': _emocion,
-        'fecha': _fecha, // Usar el Timestamp convertido
-        'pregunta1': _pregunta1,
-        'pregunta2': _pregunta2,
-      };
-
-      // Agregar los datos al documento
-      await documento.set(datos);
-
-      print('Datos agregados correctamente.');
-    } catch (e) {
-      print('Error al agregar datos: $e');
-    }
-  }
 
   void changeButtonNames(int index) {
     setState(() {
@@ -184,13 +130,12 @@ class _RegistroemocionState extends State<Registroemocion> {
                           ),
                           onPressed: () {
                             if (cont == true) {
-                              agregarDatos();
-
                               Navigator.push(
                                 context,
-                                MaterialPageRoute(builder: (context) => const Registrocuadro()),
+                                MaterialPageRoute(builder: (context) => Registrocuadro(data: emocion)),
                               );
                             }
+                            emocion=buttonNames[index];
                             cont = true;
                             _text= "¿Y más especificamente?";
                             ratio=10/4;

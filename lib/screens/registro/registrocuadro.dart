@@ -1,8 +1,63 @@
 import 'package:flutter/material.dart';
 import 'package:umind/screens/inicio.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 
-class Registrocuadro extends StatelessWidget {
-  const Registrocuadro({super.key});
+
+
+class Registrocuadro extends StatefulWidget {
+  final String data;
+  const Registrocuadro({Key? key, required this.data}) : super(key: key);
+
+  @override
+  _RegistrocuadroState createState() => _RegistrocuadroState();
+}
+
+class _RegistrocuadroState extends State<Registrocuadro> {
+
+final _emocion = Text(widget.data);
+final String _pregunta1 = 'Felicidad';
+final String _pregunta2 = 'Felicidad';
+
+final List<Map<String, dynamic>> _datosUsuarios = <Map<String, dynamic>>[];
+final DateTime _fecha = DateTime.now();
+
+  String? getCurrentUserId() {
+    User? user = FirebaseAuth.instance.currentUser;
+    if (user != null) {
+      return user.uid;
+    } else {
+      return null; // El usuario no está autenticado
+    }
+  }
+
+  Future<void> agregarDatos() async {
+    try {
+      // Referencia a la colección y documento en Firestore
+      DocumentReference usuarioDocumnto = FirebaseFirestore.instance
+          .collection('Usuarios')
+          .doc(getCurrentUserId());
+      CollectionReference pensamientoCollection =
+          usuarioDocumnto.collection('Registro');
+
+      DocumentReference documento = pensamientoCollection.doc();
+
+      //( Datos que se quieran agregar
+      Map<String, dynamic> datos = {
+        'emocion': _emocion,
+        'fecha': _fecha, // Usar el Timestamp convertido
+        'pregunta1': _pregunta1,
+        'pregunta2': _pregunta2,
+      };
+
+      // Agregar los datos al documento
+      await documento.set(datos);
+
+      print('Datos agregados correctamente.');
+    } catch (e) {
+      print('Error al agregar datos: $e');
+    }
+  }
 
   
 
@@ -56,6 +111,8 @@ class Registrocuadro extends StatelessWidget {
                       ),
                       onPressed: () {
                         // Acción al presionar el botón
+                        agregarDatos();
+
                         Navigator.pushAndRemoveUntil(
                           context,
                           MaterialPageRoute(builder: (context) => const Inicio()),
