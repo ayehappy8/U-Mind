@@ -2,12 +2,15 @@ import 'package:flutter/material.dart';
 import 'package:umind/screens/inicio.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:umind/screens/registro/registroemocion.dart';
+import '/widget/dialogo.dart';
 
 
 
 class Registrocuadro extends StatefulWidget {
   final String data;
-  const Registrocuadro({Key? key, required this.data}) : super(key: key);
+  final String data2;
+  Registrocuadro({Key? key, required this.data, required this.data2}) : super(key: key);
 
   @override
   _RegistrocuadroState createState() => _RegistrocuadroState();
@@ -15,9 +18,10 @@ class Registrocuadro extends StatefulWidget {
 
 class _RegistrocuadroState extends State<Registrocuadro> {
 
-final _emocion = Text(widget.data);
-final String _pregunta1 = 'Felicidad';
-final String _pregunta2 = 'Felicidad';
+String _emocion1 = 'alegria';
+String _emocion2 = 'Felicidad';
+final _detalle = TextEditingController();
+
 
 final List<Map<String, dynamic>> _datosUsuarios = <Map<String, dynamic>>[];
 final DateTime _fecha = DateTime.now();
@@ -44,10 +48,10 @@ final DateTime _fecha = DateTime.now();
 
       //( Datos que se quieran agregar
       Map<String, dynamic> datos = {
-        'emocion': _emocion,
+        'emocion1': _emocion1,
         'fecha': _fecha, // Usar el Timestamp convertido
-        'pregunta1': _pregunta1,
-        'pregunta2': _pregunta2,
+        'emocion2': _emocion2,
+        'detalle': _detalle.text,
       };
 
       // Agregar los datos al documento
@@ -58,8 +62,6 @@ final DateTime _fecha = DateTime.now();
       print('Error al agregar datos: $e');
     }
   }
-
-  
 
   @override
   Widget build(BuildContext context) {
@@ -90,6 +92,7 @@ final DateTime _fecha = DateTime.now();
                     height: 283.0,
                     width: 303.0,
                     child: TextField(
+                      controller: _detalle,
                       maxLines: 9,
                       decoration: InputDecoration(
                         fillColor: const Color(0xFFECF4D6),
@@ -109,18 +112,24 @@ final DateTime _fecha = DateTime.now();
                         backgroundColor: Colors.teal,
                         minimumSize: const Size(146, 45),
                       ),
-                      onPressed: () {
-                        // Acción al presionar el botón
+                      onPressed: () {// Acción al presionar el botón
+                        
+                        _emocion1 = (widget.data);
+                        _emocion2 = (widget.data2);
+
                         agregarDatos();
 
-                        Navigator.pushAndRemoveUntil(
+                        Dialogo.mostrarDialogo(
                           context,
-                          MaterialPageRoute(builder: (context) => const Inicio()),
-                          (Route<dynamic> route) => false,  // No permite volver a ninguna pantalla anterior
-                        );
-
-                        
-
+                          'Registro',
+                          'Se guardo su registro diario',
+                          () => {
+                            Navigator.pushAndRemoveUntil(
+                              context,
+                              MaterialPageRoute(builder: (context) => const Inicio()),
+                              (Route<dynamic> route) => false,  // No permite volver a ninguna pantalla anterior
+                          )
+                        });
                       },
                       child: const Text(
                         'Guardar',
