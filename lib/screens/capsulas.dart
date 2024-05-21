@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:umind/screens/capsula/VideoDesp.dart';
 import 'package:umind/screens/capsula/CapInfo1.dart';
 import 'package:umind/screens/capsula/CapInfo2.dart';
+import 'package:umind/screens/capsula/test.dart';
 
 class Capsulas extends StatelessWidget {
   const Capsulas({super.key});
@@ -222,6 +223,58 @@ class Capsulas extends StatelessWidget {
                             );
                           },
                           child: Image.asset('assets/info.png'),
+                        ),
+                      ),
+                    ],
+                  ),
+                  // ROW 5 TEST
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Column(
+                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                        children: [
+                          const SizedBox(
+                            width: 180,
+                            height: 80,
+                            child: Text(
+                                style: TextStyle(fontSize: 10),
+                                " Test para detectar estadp mental "),
+                          ),
+                          ElevatedButton(
+                            style: ElevatedButton.styleFrom(
+                              backgroundColor:
+                                  const Color.fromARGB(255, 234, 116, 77),
+                              minimumSize: const Size(107, 21),
+                            ),
+                            child: const Text(
+                                style: TextStyle(
+                                    color: Color.fromARGB(255, 0, 0, 0),
+                                    fontSize: 10),
+                                "Test"),
+                            onPressed: () => {
+                              Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                    builder: (context) => const test(),
+                                  )),
+                            },
+                          ),
+                        ],
+                      ),
+                      SizedBox(
+                        height: 120.0,
+                        width: 120.0,
+                        child: InkWell(
+                          onTap: () {
+                            // Acción al tocar la imagen
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) => const test()),
+                            );
+                          },
+                          child: Image.asset('assets/test.png'),
                         ),
                       ),
                     ],
