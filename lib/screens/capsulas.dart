@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
+import 'package:umind/screens/capsula/VideoDesp.dart';
+import 'package:umind/screens/capsula/CapInfo1.dart';
+import 'package:umind/screens/capsula/CapInfo2.dart';
 
 class Capsulas extends StatelessWidget {
   const Capsulas({super.key});
@@ -97,7 +99,7 @@ class Capsulas extends StatelessWidget {
                               Navigator.push(
                                   context,
                                   MaterialPageRoute(
-                                    builder: (context) => const InfoDep(),
+                                    builder: (context) => const CapInfo1(),
                                   )),
                             },
                           ),
@@ -112,7 +114,7 @@ class Capsulas extends StatelessWidget {
                             Navigator.push(
                               context,
                               MaterialPageRoute(
-                                  builder: (context) => const InfoDep()),
+                                  builder: (context) => const CapInfo1()),
                             );
                           },
                           child: Image.asset('assets/info.png'),
@@ -201,7 +203,7 @@ class Capsulas extends StatelessWidget {
                               Navigator.push(
                                   context,
                                   MaterialPageRoute(
-                                    builder: (context) => const InfoDep(),
+                                    builder: (context) => const CapInfo2(),
                                   )),
                             },
                           ),
@@ -216,7 +218,7 @@ class Capsulas extends StatelessWidget {
                             Navigator.push(
                               context,
                               MaterialPageRoute(
-                                  builder: (context) => const InfoDep()),
+                                  builder: (context) => const CapInfo2()),
                             );
                           },
                           child: Image.asset('assets/info.png'),
@@ -230,32 +232,6 @@ class Capsulas extends StatelessWidget {
           ),
         ),
       ),
-    );
-  }
-}
-
-class VideoDesp extends StatelessWidget {
-  const VideoDesp({super.key});
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: const Text(" Capsula video "),
-      ),
-      body: const Center(),
-    );
-  }
-}
-
-class InfoDep extends StatelessWidget {
-  const InfoDep({super.key});
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: const Text(" Capsula información"),
-      ),
-      body: const Center(),
     );
   }
 }
