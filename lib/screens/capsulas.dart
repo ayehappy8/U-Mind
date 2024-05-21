@@ -27,7 +27,7 @@ class Capsulas extends StatelessWidget {
                         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                         children: [
                           const SizedBox(
-                            width: 180,
+                            width: 139,
                             height: 80,
                             child: Text(
                                 style: TextStyle(fontSize: 10),
@@ -79,7 +79,7 @@ class Capsulas extends StatelessWidget {
                         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                         children: [
                           const SizedBox(
-                            width: 180,
+                            width: 139,
                             height: 80,
                             child: Text(
                                 style: TextStyle(fontSize: 10),
@@ -131,7 +131,7 @@ class Capsulas extends StatelessWidget {
                         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                         children: [
                           const SizedBox(
-                            width: 180,
+                            width: 139,
                             height: 80,
                             child: Text(
                                 style: TextStyle(fontSize: 10),
@@ -183,7 +183,7 @@ class Capsulas extends StatelessWidget {
                         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                         children: [
                           const SizedBox(
-                            width: 180,
+                            width: 139,
                             height: 80,
                             child: Text(
                                 style: TextStyle(fontSize: 10),
@@ -235,11 +235,11 @@ class Capsulas extends StatelessWidget {
                         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                         children: [
                           const SizedBox(
-                            width: 180,
+                            width: 139,
                             height: 80,
                             child: Text(
                                 style: TextStyle(fontSize: 10),
-                                " Test para detectar estadp mental "),
+                                " Test para detectar estado mental "),
                           ),
                           ElevatedButton(
                             style: ElevatedButton.styleFrom(
@@ -276,6 +276,67 @@ class Capsulas extends StatelessWidget {
                           },
                           child: Image.asset('assets/test.png'),
                         ),
+                      ),
+                    ],
+                  ),
+                  //ROW 6 - Estado de animo
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      const SizedBox(
+                        width: 162,
+                        height: 34,
+                        child: Text(
+                          ' Tú estado de hoy: ',
+                          style: TextStyle(
+                              color: Color.fromARGB(255, 0, 0, 0),
+                              fontSize: 15),
+                        ),
+                      ),
+                      SizedBox(
+                        width: 100,
+                        height: 100,
+                        child: Image.asset('assets/mascota.png'),
+                      ),
+                    ],
+                  ),
+                  //Row 7 - Actividades recomendadas
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Column(
+                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                        children: [
+                          const SizedBox(
+                            width: 202,
+                            height: 38,
+                            child: Text('Te recomendamos: ',
+                                style: TextStyle(
+                                    color: Color.fromARGB(255, 0, 0, 0),
+                                    fontSize: 15)),
+                          ),
+                          ElevatedButton(
+                            style: ElevatedButton.styleFrom(
+                              backgroundColor:
+                                  const Color.fromARGB(255, 12, 88, 151),
+                              minimumSize: const Size(118, 30),
+                            ),
+                            child: const Text(
+                                style: TextStyle(
+                                    color: Color.fromARGB(255, 255, 255, 255),
+                                    fontSize: 10),
+                                "Actividad 1"),
+                            onPressed: () => {
+                              showDialog(
+                                  context: context,
+                                  builder: (context) => const AlertDialog(
+                                        title: Text('Actividad 1'),
+                                        content:
+                                            Text("una lista de actividades."),
+                                      )),
+                            },
+                          ),
+                        ],
                       ),
                     ],
                   ),
