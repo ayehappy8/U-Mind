@@ -53,8 +53,6 @@ class CardSelect extends StatelessWidget {
         splashColor: const Color.fromARGB(255, 24, 109, 86),
         onTap: () async {
           final uri = Uri.parse(url);
-          print(uri);
-          print(url);
           if (await canLaunchUrl(uri)) {
             await launchUrl(uri);
           } else {
