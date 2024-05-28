@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import '/widget/card.dart';
+import 'package:umind/screens/capsulas/actividades.dart';
 
 class Capsulas extends StatelessWidget {
   const Capsulas({super.key});
@@ -68,7 +69,12 @@ class Capsulas extends StatelessWidget {
                         style: TextStyle(color: Colors.white, fontSize: 20),
                         "Actividades",
                         textAlign: TextAlign.center),
-                    onPressed: () => {},
+                    onPressed: () => {
+                      Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => Actividades()))
+                    },
                   ),
                 ],
               ),
@@ -76,32 +82,6 @@ class Capsulas extends StatelessWidget {
           ),
         ),
       ),
-    );
-  }
-}
-
-class VideoDesp extends StatelessWidget {
-  const VideoDesp({super.key});
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: const Text(" Capsula video "),
-      ),
-      body: const Center(),
-    );
-  }
-}
-
-class InfoDep extends StatelessWidget {
-  const InfoDep({super.key});
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: const Text(" Capsula información"),
-      ),
-      body: const Center(),
     );
   }
 }
