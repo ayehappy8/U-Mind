@@ -16,25 +16,59 @@ class Capsulas extends StatelessWidget {
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: <Widget>[
-                  CardSelect(
-                    text: 'Video de ejemplo',
-                    type: 'video',
-                    url: 'https://www.youtube.com',
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceAround,
+                    children: [
+                      RichText(
+                        text: TextSpan(
+                          style: const TextStyle(
+                            color: Color.fromARGB(255, 23, 56, 84),
+                            fontSize: 24,
+                          ),
+                          children: <TextSpan>[
+                            TextSpan(text: 'Tu estado hoy:'),
+                          ],
+                        ),
+                      ),
+                      SizedBox(
+                        height: 130.0,
+                        width: 150.0,
+                        child: Image.asset('assets/mascota.png'),
+                      ),
+                    ],
                   ),
                   CardSelect(
-                    text: 'Como dejar de procastinar',
+                    text: '3 Consejos Para NO Procrastinar',
+                    type: 'video',
+                    url: 'https://www.youtube.com/watch?v=WxiWEwOeu1U',
+                  ),
+                  CardSelect(
+                    text: 'Introducción a los trastornos de ansiedad',
                     type: 'informacion',
-                    url: 'https://x.com/',
+                    url:
+                        'https://www.msdmanuals.com/es-cl/hogar/trastornos-de-la-salud-mental/ansiedad-y-trastornos-relacionados-con-el-estr%C3%A9s/introducci%C3%B3n-a-los-trastornos-de-ansiedad',
                   ),
                   CardSelect(
-                    text: 'Como dejar de procastinar',
+                    text: 'Un antídoto contra la insatisfacción',
                     type: 'video',
-                    url: 'https://x.com/',
+                    url:
+                        'https://www.youtube.com/watch?v=WPPPFqsECz0&list=WL&index=29',
                   ),
                   CardSelect(
                     text: 'Como dejar de procastinar',
                     type: 'test',
                     url: '',
+                  ),
+                  ElevatedButton(
+                    style: ElevatedButton.styleFrom(
+                      backgroundColor: Colors.blue[900],
+                      minimumSize: const Size(176, 50),
+                    ),
+                    child: const Text(
+                        style: TextStyle(color: Colors.white, fontSize: 20),
+                        "Actividades",
+                        textAlign: TextAlign.center),
+                    onPressed: () => {},
                   ),
                 ],
               ),

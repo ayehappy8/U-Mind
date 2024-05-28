@@ -32,12 +32,12 @@ class CardSelect extends StatelessWidget {
       case 'informacion':
         icon = Icons.info;
         buttonText = "Información";
-        disabledButtonColor = Colors.blue[200]!;
+        disabledButtonColor = Color.fromARGB(255, 216, 207, 128);
         break;
       case 'test':
         icon = Icons.check_circle;
         buttonText = "Test";
-        disabledButtonColor = Colors.green[200]!;
+        disabledButtonColor = Color.fromARGB(255, 220, 112, 88);
         break;
       default:
         icon = Icons.help;
@@ -56,7 +56,7 @@ class CardSelect extends StatelessWidget {
           if (await canLaunchUrl(uri)) {
             await launchUrl(uri);
           } else {
-            throw 'Could not launch $url';
+            throw 'no se pudo lanzar la url $url';
           }
         },
         child: SizedBox(
@@ -76,7 +76,7 @@ class CardSelect extends StatelessWidget {
                         text,
                         style: const TextStyle(
                           color: Colors.white,
-                          fontSize: 10,
+                          fontSize: 12,
                         ),
                         maxLines: 3,
                         overflow: TextOverflow.ellipsis,
@@ -92,7 +92,7 @@ class CardSelect extends StatelessWidget {
                         child: Text(
                           buttonText,
                           style: const TextStyle(
-                            color: Color.fromARGB(255, 0, 0, 0),
+                            color: Color.fromARGB(255, 31, 31, 31),
                             fontSize: 10,
                           ),
                         ),
