@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import '/widget/card.dart';
+import 'package:umind/screens/capsulas/actividades.dart';
 
 class Capsulas extends StatelessWidget {
   const Capsulas({super.key});
@@ -15,213 +17,64 @@ class Capsulas extends StatelessWidget {
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: <Widget>[
-                  //Row 1 - video 1 -
                   Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
+                    mainAxisAlignment: MainAxisAlignment.spaceAround,
                     children: [
-                      Column(
-                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                        children: [
-                          const SizedBox(
-                            width: 180,
-                            height: 80,
-                            child: Text(
-                                style: TextStyle(fontSize: 10),
-                                " ¿Cómo trabajar el bienestar emocional? "),
+                      RichText(
+                        text: TextSpan(
+                          style: const TextStyle(
+                            color: Color.fromARGB(255, 23, 56, 84),
+                            fontSize: 24,
                           ),
-                          ElevatedButton(
-                            style: ElevatedButton.styleFrom(
-                              backgroundColor:
-                                  const Color.fromARGB(255, 0, 150, 40),
-                              minimumSize: const Size(107, 21),
-                            ),
-                            child: const Text(
-                                style: TextStyle(
-                                    color: Color.fromARGB(255, 0, 0, 0),
-                                    fontSize: 10),
-                                "Video"),
-                            onPressed: () => {
-                              Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                    builder: (context) => const VideoDesp(),
-                                  )),
-                            },
-                          ),
-                        ],
+                          children: <TextSpan>[
+                            TextSpan(text: 'Tu estado hoy:'),
+                          ],
+                        ),
                       ),
                       SizedBox(
-                        height: 125.0,
-                        width: 125.0,
-                        child: InkWell(
-                          onTap: () {
-                            // Acción al tocar la imagen
-                            Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                  builder: (context) => const VideoDesp()),
-                            );
-                          },
-                          child: Image.asset('assets/video.png'),
-                        ),
+                        height: 130.0,
+                        width: 150.0,
+                        child: Image.asset('assets/mascota.png'),
                       ),
                     ],
                   ),
-                  //Row 2 - Informacion 1 -
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      Column(
-                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                        children: [
-                          const SizedBox(
-                            width: 180,
-                            height: 80,
-                            child: Text(
-                                style: TextStyle(fontSize: 10),
-                                " ¿Cómo dejar de procrastrinar? "),
-                          ),
-                          ElevatedButton(
-                            style: ElevatedButton.styleFrom(
-                              backgroundColor:
-                                  const Color.fromARGB(255, 230, 233, 89),
-                              minimumSize: const Size(107, 21),
-                            ),
-                            child: const Text(
-                                style: TextStyle(
-                                    color: Color.fromARGB(255, 0, 0, 0),
-                                    fontSize: 10),
-                                "Información"),
-                            onPressed: () => {
-                              Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                    builder: (context) => const InfoDep(),
-                                  )),
-                            },
-                          ),
-                        ],
-                      ),
-                      SizedBox(
-                        height: 110.0,
-                        width: 110.0,
-                        child: InkWell(
-                          onTap: () {
-                            // Acción al tocar la imagen
-                            Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                  builder: (context) => const InfoDep()),
-                            );
-                          },
-                          child: Image.asset('assets/info.png'),
-                        ),
-                      ),
-                    ],
+                  CardSelect(
+                    text: '3 Consejos Para NO Procrastinar',
+                    type: 'video',
+                    url: 'https://www.youtube.com/watch?v=WxiWEwOeu1U',
                   ),
-                  //Row 3
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      Column(
-                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                        children: [
-                          const SizedBox(
-                            width: 180,
-                            height: 80,
-                            child: Text(
-                                style: TextStyle(fontSize: 10),
-                                " ¿Cómo sobrellevar el estés o la sobrecarga de trabajo? "),
-                          ),
-                          ElevatedButton(
-                            style: ElevatedButton.styleFrom(
-                              backgroundColor:
-                                  const Color.fromARGB(255, 0, 150, 40),
-                              minimumSize: const Size(107, 21),
-                            ),
-                            child: const Text(
-                                style: TextStyle(
-                                    color: Color.fromARGB(255, 0, 0, 0),
-                                    fontSize: 10),
-                                "Video"),
-                            onPressed: () => {
-                              Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                    builder: (context) => const VideoDesp(),
-                                  )),
-                            },
-                          ),
-                        ],
-                      ),
-                      SizedBox(
-                        height: 125.0,
-                        width: 125.0,
-                        child: InkWell(
-                          onTap: () {
-                            // Acción al tocar la imagen
-                            Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                  builder: (context) => const VideoDesp()),
-                            );
-                          },
-                          child: Image.asset('assets/video.png'),
-                        ),
-                      ),
-                    ],
+                  CardSelect(
+                    text: 'Introducción a los trastornos de ansiedad',
+                    type: 'informacion',
+                    url:
+                        'https://www.msdmanuals.com/es-cl/hogar/trastornos-de-la-salud-mental/ansiedad-y-trastornos-relacionados-con-el-estr%C3%A9s/introducci%C3%B3n-a-los-trastornos-de-ansiedad',
                   ),
-                  //Row 4
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      Column(
-                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                        children: [
-                          const SizedBox(
-                            width: 180,
-                            height: 80,
-                            child: Text(
-                                style: TextStyle(fontSize: 10),
-                                " ¿Qué es la autoconciencia? "),
-                          ),
-                          ElevatedButton(
-                            style: ElevatedButton.styleFrom(
-                              backgroundColor:
-                                  const Color.fromARGB(255, 230, 233, 89),
-                              minimumSize: const Size(107, 21),
-                            ),
-                            child: const Text(
-                                style: TextStyle(
-                                    color: Color.fromARGB(255, 0, 0, 0),
-                                    fontSize: 10),
-                                "Información"),
-                            onPressed: () => {
-                              Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                    builder: (context) => const InfoDep(),
-                                  )),
-                            },
-                          ),
-                        ],
-                      ),
-                      SizedBox(
-                        height: 110.0,
-                        width: 110.0,
-                        child: InkWell(
-                          onTap: () {
-                            // Acción al tocar la imagen
-                            Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                  builder: (context) => const InfoDep()),
-                            );
-                          },
-                          child: Image.asset('assets/info.png'),
-                        ),
-                      ),
-                    ],
+                  CardSelect(
+                    text: 'Un antídoto contra la insatisfacción',
+                    type: 'video',
+                    url:
+                        'https://www.youtube.com/watch?v=WPPPFqsECz0&list=WL&index=29',
+                  ),
+                  CardSelect(
+                    text: 'Como dejar de procastinar',
+                    type: 'test',
+                    url: '',
+                  ),
+                  ElevatedButton(
+                    style: ElevatedButton.styleFrom(
+                      backgroundColor: Colors.blue[900],
+                      minimumSize: const Size(176, 50),
+                    ),
+                    child: const Text(
+                        style: TextStyle(color: Colors.white, fontSize: 20),
+                        "Actividades",
+                        textAlign: TextAlign.center),
+                    onPressed: () => {
+                      Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => Actividades()))
+                    },
                   ),
                 ],
               ),
@@ -229,32 +82,6 @@ class Capsulas extends StatelessWidget {
           ),
         ),
       ),
-    );
-  }
-}
-
-class VideoDesp extends StatelessWidget {
-  const VideoDesp({super.key});
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: const Text(" Capsula video "),
-      ),
-      body: const Center(),
-    );
-  }
-}
-
-class InfoDep extends StatelessWidget {
-  const InfoDep({super.key});
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: const Text(" Capsula información"),
-      ),
-      body: const Center(),
     );
   }
 }
