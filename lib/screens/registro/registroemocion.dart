@@ -1,12 +1,17 @@
 import 'package:flutter/material.dart';
 import 'package:umind/screens/registro/registrocuadro.dart';
 
+
+
+
 class Registroemocion extends StatefulWidget {
   const Registroemocion({Key? key}) : super(key: key);
 
   @override
   _RegistroemocionState createState() => _RegistroemocionState();
 }
+String emocion1='Tristeza';
+String emocion2='Penita';
 
 class _RegistroemocionState extends State<Registroemocion> {
   List<String> buttonNames = [
@@ -125,18 +130,25 @@ class _RegistroemocionState extends State<Registroemocion> {
                             minimumSize: const Size(146, 45),
                           ),
                           onPressed: () {
+                            
                             if (cont == true) {
+                              emocion2=buttonNames[index];
+
                               Navigator.push(
                                 context,
-                                MaterialPageRoute(builder: (context) => const Registrocuadro()),
+                                MaterialPageRoute(builder: (context) => Registrocuadro(data: emocion1,data2: emocion2,)),
                               );
                             }
-                            cont = true;
-                            _text= "¿Y más especificamente?";
-                            ratio=10/4;
+                            if (cont != true) {
+                              emocion1=buttonNames[index];
+                              cont = true;
+                              _text= "¿Y más especificamente?";
+                              ratio=10/4;
+                              
+                              // Cambia los nombres basándose en el botón presionado
+                              changeButtonNames(index);
+                            }
                             
-                            // Cambia los nombres basándose en el botón presionado
-                            changeButtonNames(index);
                           },
                           child: Text(
                             buttonNames[index],   //nombres de los botones

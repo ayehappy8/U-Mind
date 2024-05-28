@@ -2,12 +2,12 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'screens/login.dart';
 
-void main() => {
-      WidgetsFlutterBinding.ensureInitialized(),
+void main() {
+      WidgetsFlutterBinding.ensureInitialized();
       Firebase.initializeApp().then((value) {
         runApp(const UMind());
-      }),
-    };
+      });
+    }
 
 class UMind extends StatelessWidget {
   const UMind({Key? key}) : super(key: key);
