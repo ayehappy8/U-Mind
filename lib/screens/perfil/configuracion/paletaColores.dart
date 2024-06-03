@@ -1,9 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:umind/screens/perfil/configuracion/paletaColores.dart';
-import 'package:umind/screens/perfil/configuracion/persoAsistente.dart';
 
-class Configuracion extends StatelessWidget {
-  const Configuracion({super.key});
+class PaletaColores extends StatelessWidget {
+  const PaletaColores({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -26,7 +24,7 @@ class Configuracion extends StatelessWidget {
               Container(
                 margin: const EdgeInsets.only(bottom: 20.0),
                 width: 320,
-                child: const Text("Configuración", 
+                child: const Text("Cambiar paleta de colores", 
                   textAlign: TextAlign.center,
                   style: TextStyle(
                     fontSize: 20,
@@ -37,19 +35,41 @@ class Configuracion extends StatelessWidget {
               Container(
                 margin: const EdgeInsets.only(bottom: 20.0),
                 width: 320,
-                child: ElevatedButton(
-                  style: ElevatedButton.styleFrom(
-                    backgroundColor: const Color.fromARGB(255, 38, 80, 115),
-                    minimumSize: const Size(294, 50),
-                  ),
-                  child: const Text(
-                      style: TextStyle(
-                          color: Color.fromARGB(255, 236, 244, 214),
-                          fontSize: 20),
-                      "Repetir tutorial",
-                      textAlign: TextAlign.center),
-                  onPressed: () => {},
-                ),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                  children: [
+                    Container(
+                      child: ElevatedButton(
+                        style: ElevatedButton.styleFrom(
+                          backgroundColor: const Color.fromARGB(255, 45, 149, 150),
+                          minimumSize: const Size(294, 50),
+                        ),
+                        child: const Text(
+                            style: TextStyle(
+                                color: Color.fromARGB(255, 236, 244, 214),
+                                fontSize: 20),
+                            "Clásico",
+                            textAlign: TextAlign.center),
+                        onPressed: () => {},
+                      ),
+                    ),
+                    Container(
+                      child: ElevatedButton(
+                        style: ElevatedButton.styleFrom(
+                          backgroundColor: const Color.fromARGB(255, 219, 192, 95),
+                          minimumSize: const Size(294, 50),
+                        ),
+                        child: const Text(
+                            style: TextStyle(
+                                color: Color.fromARGB(255, 236, 244, 214),
+                                fontSize: 20),
+                            "Cálido",
+                            textAlign: TextAlign.center),
+                        onPressed: () => {},
+                      ),
+                    ),
+                  ],
+                )
               ),
               Container(
                 margin: const EdgeInsets.only(bottom: 20.0),
@@ -65,38 +85,7 @@ class Configuracion extends StatelessWidget {
                           fontSize: 20),
                       "Cambiar paleta de colores",
                       textAlign: TextAlign.center),
-                  onPressed: () => {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                        builder: (context) => PaletaColores()
-                      )
-                    )
-                  },
-                ),
-              ),
-              Container(
-                margin: const EdgeInsets.only(bottom: 20.0),
-                width: 320,
-                child: ElevatedButton(
-                  style: ElevatedButton.styleFrom(
-                    backgroundColor: const Color.fromARGB(255, 38, 80, 115),
-                    minimumSize: const Size(294, 50),
-                  ),
-                  child: const Text(
-                      style: TextStyle(
-                          color: Color.fromARGB(255, 236, 244, 214),
-                          fontSize: 20),
-                      "Personalizar asistente",
-                      textAlign: TextAlign.center),
-                  onPressed: () => {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                        builder: (context) => PersoAsistente()
-                      )
-                    )
-                  },
+                  onPressed: () => {},
                 ),
               ),
               Container(

@@ -4,9 +4,7 @@ import 'package:umind/screens/perfil/consultas.dart';
 import 'package:umind/screens/perfil/configuracion.dart';
 import 'package:pelaicons/pelaicons.dart';
 import "package:firebase_auth/firebase_auth.dart";
-import 'package:umind/screens/perfil/consultasAnteriores.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:intl/intl.dart';
 import 'package:umind/usuario_auth/firebase_auth_service/getUsuario.dart';
 
 
@@ -118,7 +116,7 @@ class _PerfilState extends State<Perfil> {
                 const SizedBox(
                   width: 320,
                   child: Text(
-                    'Última Consulta',
+                    'Última consulta',
                     textAlign: TextAlign.start,
                     style: TextStyle(
                         fontSize: 25, color: Color.fromARGB(255, 23, 56, 84)),
@@ -191,7 +189,7 @@ class _PerfilState extends State<Perfil> {
                           style: TextStyle(
                               color: Color.fromARGB(255, 236, 244, 214),
                               fontSize: 20),
-                          "Ver\nConsultas",
+                          "Ver\nconsultas",
                           textAlign: TextAlign.center),
                       onPressed: () => {
                         Navigator.push(context,
@@ -210,9 +208,11 @@ class _PerfilState extends State<Perfil> {
                       ),
                       onPressed: () => {
                         Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                                builder: (context) => Configuracion()))
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => Configuracion()
+                          )
+                        )
                       },
                     ),
                     ElevatedButton(
@@ -224,7 +224,7 @@ class _PerfilState extends State<Perfil> {
                           style: TextStyle(
                               color: Color.fromARGB(255, 236, 244, 214),
                               fontSize: 20),
-                          "Cerrar\nSesión"),
+                          "Cerrar\nsesión"),
                       onPressed: () => {
                         FirebaseAuth.instance.signOut(),
                         Navigator.pushReplacement(context,
