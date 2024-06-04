@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:umind/screens/perfil/configuracion/paletaColores.dart';
+import 'package:umind/screens/perfil/configuracion/persoAsistente.dart';
 
 class Configuracion extends StatelessWidget {
   const Configuracion({super.key});
@@ -24,7 +26,7 @@ class Configuracion extends StatelessWidget {
               Container(
                 margin: const EdgeInsets.only(bottom: 20.0),
                 width: 320,
-                child: const Text("Configuracion", 
+                child: const Text("Configuración", 
                   textAlign: TextAlign.center,
                   style: TextStyle(
                     fontSize: 20,
@@ -44,7 +46,7 @@ class Configuracion extends StatelessWidget {
                       style: TextStyle(
                           color: Color.fromARGB(255, 236, 244, 214),
                           fontSize: 20),
-                      "Repetir Tutorial",
+                      "Repetir tutorial",
                       textAlign: TextAlign.center),
                   onPressed: () => {},
                 ),
@@ -61,9 +63,16 @@ class Configuracion extends StatelessWidget {
                       style: TextStyle(
                           color: Color.fromARGB(255, 236, 244, 214),
                           fontSize: 20),
-                      "Cambiar Paleta de Colores",
+                      "Cambiar paleta de colores",
                       textAlign: TextAlign.center),
-                  onPressed: () => {},
+                  onPressed: () => {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => PaletaColores()
+                      )
+                    )
+                  },
                 ),
               ),
               Container(
@@ -78,9 +87,16 @@ class Configuracion extends StatelessWidget {
                       style: TextStyle(
                           color: Color.fromARGB(255, 236, 244, 214),
                           fontSize: 20),
-                      "Personalizar Asistente",
+                      "Personalizar asistente",
                       textAlign: TextAlign.center),
-                  onPressed: () => {},
+                  onPressed: () => {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => PersoAsistente()
+                      )
+                    )
+                  },
                 ),
               ),
               Container(
