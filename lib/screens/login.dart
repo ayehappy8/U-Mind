@@ -1,5 +1,8 @@
 import "package:firebase_auth/firebase_auth.dart";
 import "package:flutter/material.dart";
+import 'package:cloud_firestore/cloud_firestore.dart';
+import "package:umind/screens/perfil/configuracion/crearAsistente.dart";
+import 'package:umind/usuario_auth/firebase_auth_service/getUsuario.dart';
 import "package:umind/usuario_auth/firebase_auth_service/firebase_auth_service.dart";
 import '/widget/dialogo.dart';
 import "inicio.dart";
@@ -11,8 +14,27 @@ class Login extends StatefulWidget {
   _LoginState createState() => _LoginState();
 }
 
+final List<Map<String, dynamic>> _datosAsistente = <Map<String, dynamic>>[];
+
 class _LoginState extends State<Login> {
   final FirebaseAuthService _auth = FirebaseAuthService();
+
+  void getInfoAsistente() async {
+    _datosAsistente.clear();
+    DocumentReference documentReference = FirebaseFirestore.instance
+        .collection("Usuarios")
+        .doc(getCurrentUserId());
+    QuerySnapshot consultas =
+        await documentReference.collection("Asistente").get();
+
+    if (consultas.docs.isNotEmpty) {
+      for (var doc in consultas.docs) {
+        _datosAsistente.add(doc.data() as Map<String, dynamic>);
+      }
+    }
+    setState(() {});
+  }
+
 //Funcion de inicio de sesion con firebaseauth
   void _signIn() async {
     String email = _emailController.text;
@@ -23,8 +45,13 @@ class _LoginState extends State<Login> {
     if (user != null) {
       print("Se ha logiado con exito");
       //navegación hacia inicio
-      Navigator.pushReplacement(
-          context, MaterialPageRoute(builder: (context) => Inicio()));
+      if (_datosAsistente.isEmpty) {
+        Navigator.pushReplacement(
+            context, MaterialPageRoute(builder: (context) => CrearAsistente()));
+      } else {
+        Navigator.pushReplacement(
+            context, MaterialPageRoute(builder: (context) => Inicio()));
+      }
     } else {
       print("Error en el login");
       Dialogo.mostrarDialogo(
@@ -34,6 +61,12 @@ class _LoginState extends State<Login> {
 
   final _emailController = TextEditingController();
   final _passwordController = TextEditingController();
+
+  @override
+  void initState() {
+    super.initState();
+    getInfoAsistente();
+  }
 
   @override
   void dispose() {
