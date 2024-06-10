@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:umind/usuario_auth/firebase_auth_service/getUsuario.dart';
 import '/widget/dialogo.dart';
+import 'package:umind/functions/getInfoAsistente.dart';
 
 class PersoAsistente extends StatefulWidget {
   const PersoAsistente({Key? key}) : super(key: key);
@@ -11,26 +12,11 @@ class PersoAsistente extends StatefulWidget {
 }
 
 final List<Map<String, dynamic>> _datosAsistente = <Map<String, dynamic>>[];
+bool _isLoading = true;
+String _asistenteSeleccionado = 'nutria';
 
 class _PersoAsistenteState extends State<PersoAsistente> {
   final _nombre = TextEditingController();
-
-  void getInfoAsistente() async {
-    _datosAsistente.clear();
-    DocumentReference documentReference = FirebaseFirestore.instance
-        .collection("Usuarios")
-        .doc(getCurrentUserId());
-    QuerySnapshot consultas =
-        await documentReference.collection("Asistente").get();
-
-    if (consultas.docs.isNotEmpty) {
-      for (var doc in consultas.docs) {
-        _datosAsistente.add(doc.data() as Map<String, dynamic>);
-      }
-    }
-    setState(() {});
-    _asistenteSeleccionado = _datosAsistente[0]['mascota'];
-  }
 
   Future<void> actualizarDatos() async {
     try {
@@ -71,35 +57,29 @@ class _PersoAsistenteState extends State<PersoAsistente> {
     }
   }
 
+  Future<void> fetchInfoAsistente() async {
+    List<Map<String, dynamic>> datos = await getInfoAsistente();
+    setState(() {
+      _datosAsistente.addAll(datos);
+      _isLoading = false;
+      _asistenteSeleccionado = _datosAsistente[0]['mascota'];
+      print(_datosAsistente[0]['mascota']);
+    });
+  }
+
   @override
   void initState() {
     super.initState();
-    getInfoAsistente();
+    fetchInfoAsistente();
   }
-
-  String _asistenteSeleccionado = 'Nutria';
 
   @override
   Widget build(BuildContext context) {
-    if (_datosAsistente.isEmpty) {
+    if (_isLoading) {
       //*************************Esqueleto************************//
       return Scaffold(
         backgroundColor: const Color.fromARGB(255, 187, 222, 202),
-        body: Container(
-          margin: const EdgeInsets.only(bottom: 15.0),
-          child: SingleChildScrollView(
-            child: Column(
-                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                children: [
-                  Container(
-                    margin: const EdgeInsets.only(bottom: 40, top: 50),
-                    height: 180,
-                    width: 450,
-                    child: Image.asset('assets/Logo2.png'),
-                  ),
-                ]),
-          ),
-        ),
+        body: Center(child: CircularProgressIndicator()),
       );
       //*************************Esqueleto************************//
     } else {
@@ -146,7 +126,7 @@ class _PersoAsistenteState extends State<PersoAsistente> {
                             SizedBox(
                                 width: 130,
                                 child: MyRadioMenuButton(
-                                  value: 'Nutria',
+                                  value: 'nutria',
                                   groupValue: _asistenteSeleccionado,
                                   onChanged: (selectedValue) {
                                     setState(() => _asistenteSeleccionado =
@@ -179,7 +159,7 @@ class _PersoAsistenteState extends State<PersoAsistente> {
                                         ),
                                       ),
                                       Radio<String>(
-                                        value: 'Nutria',
+                                        value: 'nutria',
                                         groupValue: _asistenteSeleccionado,
                                         onChanged: (selectedValue) {
                                           setState(() =>
@@ -197,7 +177,7 @@ class _PersoAsistenteState extends State<PersoAsistente> {
                             SizedBox(
                                 width: 130,
                                 child: MyRadioMenuButton(
-                                  value: 'Elefante',
+                                  value: 'elefante',
                                   groupValue: _asistenteSeleccionado,
                                   onChanged: (selectedValue) {
                                     setState(() => _asistenteSeleccionado =
@@ -230,7 +210,7 @@ class _PersoAsistenteState extends State<PersoAsistente> {
                                         ),
                                       ),
                                       Radio<String>(
-                                        value: 'Elefante',
+                                        value: 'elefante',
                                         groupValue: _asistenteSeleccionado,
                                         onChanged: (selectedValue) {
                                           setState(() =>
@@ -248,7 +228,7 @@ class _PersoAsistenteState extends State<PersoAsistente> {
                             SizedBox(
                                 width: 130,
                                 child: MyRadioMenuButton(
-                                  value: 'Panda',
+                                  value: 'panda',
                                   groupValue: _asistenteSeleccionado,
                                   onChanged: (selectedValue) {
                                     setState(() => _asistenteSeleccionado =
@@ -281,7 +261,7 @@ class _PersoAsistenteState extends State<PersoAsistente> {
                                         ),
                                       ),
                                       Radio<String>(
-                                        value: 'Panda',
+                                        value: 'panda',
                                         groupValue: _asistenteSeleccionado,
                                         onChanged: (selectedValue) {
                                           setState(() =>

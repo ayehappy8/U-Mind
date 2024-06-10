@@ -64,7 +64,7 @@ class _CrearAsistenteState extends State<CrearAsistente> {
     getInfoAsistente();
   }
 
-  String _asistenteSeleccionado = 'Nutria';
+  String _asistenteSeleccionado = 'nutria';
 
   @override
   Widget build(BuildContext context) {
@@ -111,7 +111,7 @@ class _CrearAsistenteState extends State<CrearAsistente> {
                           SizedBox(
                               width: 130,
                               child: MyRadioMenuButton(
-                                value: 'Nutria',
+                                value: 'nutria',
                                 groupValue: _asistenteSeleccionado,
                                 onChanged: (selectedValue) {
                                   setState(() =>
@@ -144,7 +144,7 @@ class _CrearAsistenteState extends State<CrearAsistente> {
                                       ),
                                     ),
                                     Radio<String>(
-                                      value: 'Nutria',
+                                      value: 'nutria',
                                       groupValue: _asistenteSeleccionado,
                                       onChanged: (selectedValue) {
                                         setState(() => _asistenteSeleccionado =
@@ -161,7 +161,7 @@ class _CrearAsistenteState extends State<CrearAsistente> {
                           SizedBox(
                               width: 130,
                               child: MyRadioMenuButton(
-                                value: 'Elefante',
+                                value: 'elefante',
                                 groupValue: _asistenteSeleccionado,
                                 onChanged: (selectedValue) {
                                   setState(() =>
@@ -194,7 +194,7 @@ class _CrearAsistenteState extends State<CrearAsistente> {
                                       ),
                                     ),
                                     Radio<String>(
-                                      value: 'Elefante',
+                                      value: 'elefante',
                                       groupValue: _asistenteSeleccionado,
                                       onChanged: (selectedValue) {
                                         setState(() => _asistenteSeleccionado =
@@ -211,7 +211,7 @@ class _CrearAsistenteState extends State<CrearAsistente> {
                           SizedBox(
                               width: 130,
                               child: MyRadioMenuButton(
-                                value: 'Panda',
+                                value: 'panda',
                                 groupValue: _asistenteSeleccionado,
                                 onChanged: (selectedValue) {
                                   setState(() =>
@@ -244,7 +244,7 @@ class _CrearAsistenteState extends State<CrearAsistente> {
                                       ),
                                     ),
                                     Radio<String>(
-                                      value: 'Panda',
+                                      value: 'panda',
                                       groupValue: _asistenteSeleccionado,
                                       onChanged: (selectedValue) {
                                         setState(() => _asistenteSeleccionado =

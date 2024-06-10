@@ -37,6 +37,7 @@ class _LoginState extends State<Login> {
 
 //Funcion de inicio de sesion con firebaseauth
   void _signIn() async {
+    getInfoAsistente();
     String email = _emailController.text;
     String password = _passwordController.text;
 
