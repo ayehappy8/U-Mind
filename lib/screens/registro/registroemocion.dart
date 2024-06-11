@@ -58,7 +58,7 @@ class _RegistroemocionState extends State<Registroemocion> {
             'Agresivo',
             'Frustrado',
             'Distante',
-            'Critico',
+            'Crítico',
           ];
           break;
           case 3:  // Para 'Miedo'
@@ -142,7 +142,7 @@ class _RegistroemocionState extends State<Registroemocion> {
                             if (cont != true) {
                               emocion1=buttonNames[index];
                               cont = true;
-                              _text= "¿Y más especificamente?";
+                              _text= "¿Y más específicamente?";
                               ratio=10/4;
                               
                               // Cambia los nombres basándose en el botón presionado
