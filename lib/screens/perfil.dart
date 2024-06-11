@@ -97,8 +97,8 @@ class _PerfilState extends State<Perfil> {
                   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                   children: [
                     Container(
-                      margin: EdgeInsets.only(left: 45),
-                      width: 250,
+                      margin: EdgeInsets.only(left: 0),
+                      width: 180,
                       child: RichText(
                         text: TextSpan(
                           style: const TextStyle(
