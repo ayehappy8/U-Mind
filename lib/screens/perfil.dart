@@ -23,9 +23,13 @@ bool _isLoading = true;
 
 class _PerfilState extends State<Perfil> {
   Future<void> fetchInfoAsistente() async {
+    _datosAsistente.clear();
     List<Map<String, dynamic>> datos = await getInfoAsistente();
     setState(() {
       _datosAsistente.addAll(datos);
+      print('Datos ${datos}');
+      print('Datos asistente ${_datosAsistente}');
+
       _isLoading = false;
     });
   }
@@ -61,15 +65,15 @@ class _PerfilState extends State<Perfil> {
   @override
   void initState() {
     super.initState();
+    fetchInfoAsistente();
     getInfoConsultas();
     getInfoPerfil();
-    fetchInfoAsistente();
+    _isLoading = true;
   }
 
   @override
   Widget build(BuildContext context) {
     if (_datosConsulta.isEmpty || _datosPerfil.isEmpty || _isLoading) {
-      print("Datos vacios");
       return Scaffold(
         backgroundColor: const Color.fromARGB(255, 187, 222, 202),
         body: Center(child: CircularProgressIndicator()),
@@ -90,6 +94,7 @@ class _PerfilState extends State<Perfil> {
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: [
                 Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                   children: [
                     Container(
                       margin: EdgeInsets.only(left: 45),
