@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:umind/usuario_auth/firebase_auth_service/getUsuario.dart';
 
-
 class ConsultasAnteriores extends StatefulWidget {
   const ConsultasAnteriores({Key? key}) : super(key: key);
 
@@ -23,7 +22,6 @@ class _ConsultasAnterioresState extends State<ConsultasAnteriores> {
   }
 
   void getInfoConsultas() async {
-
     _datosConsulta.clear();
     DocumentReference documentReference = FirebaseFirestore.instance
         .collection("Usuarios")
@@ -57,6 +55,8 @@ class _ConsultasAnterioresState extends State<ConsultasAnteriores> {
     return Column(children: [
       DataTable(
           columnSpacing: 40,
+          dataRowMinHeight: 20,
+          dataRowMaxHeight: 90,
           columns: const [
             DataColumn(
               label: Text(
@@ -156,8 +156,7 @@ List<DataRow> _buildRows(
 }
 
 // Función para mostrar la información en un diálogo
-void _mostrarInformacion(
-    BuildContext context, Map<String, dynamic> consulta) {
+void _mostrarInformacion(BuildContext context, Map<String, dynamic> consulta) {
   final DateFormat formato = DateFormat('dd-MM-yyyy');
   final DateTime fecha = (consulta['fecha'] as Timestamp).toDate();
   showDialog(
