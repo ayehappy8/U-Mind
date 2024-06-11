@@ -16,11 +16,11 @@ String emocion2='Penita';
 class _RegistroemocionState extends State<Registroemocion> {
   List<String> buttonNames = [
     'Felicidad😀',
-    'Tristeza 😢',
-    'Ira\t😠',
-    'Miedo     😰',
-    'Asco        🥴',
-    'Sorpresa  😮',
+    'Tristeza😢',
+    'Ira😠',
+    'Miedo😰',
+    'Asco🥴',
+    'Sorpresa😮',
   ];
 
   void changeButtonNames(int index) {
