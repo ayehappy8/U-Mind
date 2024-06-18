@@ -58,12 +58,12 @@ class _PersoAsistenteState extends State<PersoAsistente> {
   }
 
   Future<void> fetchInfoAsistente() async {
+    _datosAsistente.clear();
     List<Map<String, dynamic>> datos = await getInfoAsistente();
     setState(() {
       _datosAsistente.addAll(datos);
-      _isLoading = false;
       _asistenteSeleccionado = _datosAsistente[0]['mascota'];
-      print(_datosAsistente[0]['mascota']);
+      _isLoading = false;
     });
   }
 
@@ -71,6 +71,7 @@ class _PersoAsistenteState extends State<PersoAsistente> {
   void initState() {
     super.initState();
     fetchInfoAsistente();
+    _isLoading = true;
   }
 
   @override
