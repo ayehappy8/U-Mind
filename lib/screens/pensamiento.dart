@@ -239,11 +239,11 @@ class _PensamientoState extends State<Pensamiento> {
                         ElevatedButton(
                           style: ElevatedButton.styleFrom(
                             backgroundColor: Colors.blue[900],
-                            minimumSize: const Size(146, 70),
+                            minimumSize: Size(70, 60),
                           ),
                           child: const Text(
                               style:
-                                  TextStyle(color: Colors.white, fontSize: 20),
+                                  TextStyle(color: Colors.white, fontSize: 26),
                               "Pensamientos\npasados",
                               textAlign: TextAlign.center),
                           onPressed: () => {
