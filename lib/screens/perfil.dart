@@ -27,8 +27,6 @@ class _PerfilState extends State<Perfil> {
     List<Map<String, dynamic>> datos = await getInfoAsistente();
     setState(() {
       _datosAsistente.addAll(datos);
-      print('Datos ${datos}');
-      print('Datos asistente ${_datosAsistente}');
 
       _isLoading = false;
     });
