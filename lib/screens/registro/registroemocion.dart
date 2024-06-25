@@ -21,6 +21,15 @@ class _RegistroemocionState extends State<Registroemocion> {
     'Sorpresa',
   ];
 
+  List<String> buttonValues = [
+    'Felicidad',
+    'Tristeza',
+    'Ira',
+    'Miedo',
+    'Asco',
+    'Sorpresa',
+  ];
+
   void changeButtonNames(int index) {
     setState(() {
       // Cada botón puede tener su propia lógica de cambio
@@ -32,10 +41,11 @@ class _RegistroemocionState extends State<Registroemocion> {
             'Orgulloso',
             'Aceptado',
             'Poderoso',
-            'Pacifico',
-            'Intimo',
+            'Pacífico',
+            'Íntimo',
             'Optimista',
           ];
+          buttonValues = buttonNames; // Actualiza los valores guardados sin emojis
           break;
         case 1: // Para 'Tristeza'
           buttonNames = [
@@ -46,6 +56,7 @@ class _RegistroemocionState extends State<Registroemocion> {
             'Solo',
             'Aburrido',
           ];
+          buttonValues = buttonNames; // Actualiza los valores guardados sin emojis
           break;
         case 2: // Para 'Ira'
           buttonNames = [
@@ -58,32 +69,36 @@ class _RegistroemocionState extends State<Registroemocion> {
             'Distante',
             'Crítico',
           ];
+          buttonValues = buttonNames; // Actualiza los valores guardados sin emojis
           break;
-        case 3: // Para 'Miedo'
+        case 3:  // Para 'Miedo'
           buttonNames = [
             'Humillado',
             'Rechazado',
             'Sumiso',
             'Inseguro',
-            'Ancioso',
+            'Ansioso',
             'Asustado',
           ];
+          buttonValues = buttonNames; // Actualiza los valores guardados sin emojis
           break;
-        case 4: // Para 'Asco'
+        case 4:  // Para 'Asco'
           buttonNames = [
             'Disconforme',
-            'Decepcionado',
+            'Decepción',
             'Horrible',
             'Abstinencia',
           ];
+          buttonValues = buttonNames; // Actualiza los valores guardados sin emojis
           break;
-        case 5: // Para 'Sorpresa'
+        case 5:  // Para 'Sorpresa'
           buttonNames = [
             'Sorprendido',
             'Confundido',
             'Asombrado',
-            'Entusiasmado',
+            'Entusiasmo',
           ];
+          buttonValues = buttonNames; // Actualiza los valores guardados sin emojis
           break;
         default:
           // Dejar los nombres como están o cambiarlos a algo por defecto
@@ -125,35 +140,36 @@ class _RegistroemocionState extends State<Registroemocion> {
                         child: ElevatedButton(
                           style: ElevatedButton.styleFrom(
                             backgroundColor: Colors.teal,
-                            minimumSize: const Size(146, 45),
+                            minimumSize: const Size(170, 45),
                           ),
                           onPressed: () {
                             if (cont == true) {
-                              emocion2 = buttonNames[index];
-
+                              emocion2 = buttonValues[index]; // Guarda el valor sin emoji
                               Navigator.push(
                                 context,
                                 MaterialPageRoute(
-                                    builder: (context) => Registrocuadro(
-                                          data: emocion1,
-                                          data2: emocion2,
-                                        )),
+                                  builder: (context) => Registrocuadro(
+                                    data: emocion1,
+                                    data2: emocion2,
+                                  ),
+                                ),
                               );
                             }
                             if (cont != true) {
-                              emocion1 = buttonNames[index];
+                              emocion1 = buttonValues[index]; // Guarda el valor sin emoji
                               cont = true;
                               _text = "¿Y más específicamente?";
                               ratio = 10 / 4;
-
                               // Cambia los nombres basándose en el botón presionado
                               changeButtonNames(index);
                             }
                           },
                           child: Text(
-                            buttonNames[index], //nombres de los botones
+                            buttonNames[index],   // nombres de los botones con emojis
                             style: const TextStyle(
-                                color: Colors.white, fontSize: 20),
+                              color: Colors.white, 
+                              fontSize: 20
+                            ),
                           ),
                         ),
                       );
