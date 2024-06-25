@@ -22,16 +22,6 @@ final List<Map<String, dynamic>> _datosPerfil = <Map<String, dynamic>>[];
 bool _isLoading = true;
 
 class _PerfilState extends State<Perfil> {
-  Future<void> fetchInfoAsistente() async {
-    _datosAsistente.clear();
-    List<Map<String, dynamic>> datos = await getInfoAsistente();
-    setState(() {
-      _datosAsistente.addAll(datos);
-
-      _isLoading = false;
-    });
-  }
-
   void getInfoPerfil() async {
     _datosPerfil.clear();
     DocumentSnapshot usuarioDatos = await FirebaseFirestore.instance
