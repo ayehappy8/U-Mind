@@ -85,7 +85,7 @@ class _RegistroemocionState extends State<Registroemocion> {
         case 4:  // Para 'Asco'
           buttonNames = [
             'Disconforme',
-            'Decepcionado',
+            'Decepción',
             'Horrible',
             'Abstinencia',
           ];
@@ -96,7 +96,7 @@ class _RegistroemocionState extends State<Registroemocion> {
             'Sorprendido',
             'Confundido',
             'Asombrado',
-            'Entusiasmado',
+            'Entusiasmo',
           ];
           buttonValues = buttonNames; // Actualiza los valores guardados sin emojis
           break;
@@ -140,7 +140,7 @@ class _RegistroemocionState extends State<Registroemocion> {
                         child: ElevatedButton(
                           style: ElevatedButton.styleFrom(
                             backgroundColor: Colors.teal,
-                            minimumSize: const Size(146, 45),
+                            minimumSize: const Size(170, 45),
                           ),
                           onPressed: () {
                             if (cont == true) {
