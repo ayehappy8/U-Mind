@@ -6,8 +6,7 @@ import 'package:pelaicons/pelaicons.dart';
 import "package:firebase_auth/firebase_auth.dart";
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:umind/usuario_auth/firebase_auth_service/getUsuario.dart';
-
-
+import 'package:umind/functions/getInfoAsistente.dart';
 
 class Perfil extends StatefulWidget {
   const Perfil({Key? key}) : super(key: key);
@@ -19,22 +18,35 @@ class Perfil extends StatefulWidget {
 final List<Map<String, dynamic>> _datosConsulta = <Map<String, dynamic>>[];
 final List<Map<String, dynamic>> _datosPerfil = <Map<String, dynamic>>[];
 
-
-
+final List<Map<String, dynamic>> _datosAsistente = <Map<String, dynamic>>[];
+bool _isLoading = true;
 
 class _PerfilState extends State<Perfil> {
+  Future<void> fetchInfoAsistente() async {
+    _datosAsistente.clear();
+    List<Map<String, dynamic>> datos = await getInfoAsistente();
+    setState(() {
+      _datosAsistente.addAll(datos);
+      print('Datos ${datos}');
+      print('Datos asistente ${_datosAsistente}');
+
+      _isLoading = false;
+    });
+  }
 
   void getInfoPerfil() async {
     _datosPerfil.clear();
-    DocumentSnapshot usuarioDatos = await FirebaseFirestore.instance.collection("Usuarios").doc(getCurrentUserId()).get();
-    if (usuarioDatos.exists){
+    DocumentSnapshot usuarioDatos = await FirebaseFirestore.instance
+        .collection("Usuarios")
+        .doc(getCurrentUserId())
+        .get();
+    if (usuarioDatos.exists) {
       _datosPerfil.add(usuarioDatos.data() as Map<String, dynamic>);
     }
     setState(() {});
   }
 
   void getInfoConsultas() async {
-
     _datosConsulta.clear();
     DocumentReference documentReference = FirebaseFirestore.instance
         .collection("Usuarios")
@@ -49,36 +61,30 @@ class _PerfilState extends State<Perfil> {
     }
     setState(() {});
   }
-  
+
   @override
   void initState() {
     super.initState();
+    fetchInfoAsistente();
     getInfoConsultas();
     getInfoPerfil();
+    _isLoading = true;
   }
 
   @override
   Widget build(BuildContext context) {
-
-    if (_datosConsulta.isEmpty || _datosPerfil.isEmpty){
-      print("Datos vacios");
+    if (_datosConsulta.isEmpty || _datosPerfil.isEmpty || _isLoading) {
       return Scaffold(
         backgroundColor: const Color.fromARGB(255, 187, 222, 202),
-        body: Center(
-          child: Text(
-          'Cargando',
-          style: TextStyle(fontSize: 20, color: Color.fromARGB(255, 23, 56, 84)),
-          ),
-        )
+        body: Center(child: CircularProgressIndicator()),
       );
-    }else{
+    } else {
       _datosConsulta.sort((a, b) {
         final DateTime fechaA = (a['fecha'] as Timestamp).toDate();
         final DateTime fechaB = (b['fecha'] as Timestamp).toDate();
         return fechaB.compareTo(fechaA);
       });
-    
-    
+
       return Scaffold(
         backgroundColor: const Color.fromARGB(255, 187, 222, 202),
         body: Container(
@@ -88,29 +94,33 @@ class _PerfilState extends State<Perfil> {
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: [
                 Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                   children: [
                     Container(
-                      margin: EdgeInsets.only(left: 45),
-                      width: 250,
+                      margin: EdgeInsets.only(left: 0),
+                      width: 180,
                       child: RichText(
-                              text: TextSpan(
-                                style: const TextStyle(
-                                  color: Color.fromARGB(255, 23, 56, 84),
-                                  fontSize: 24,
-                                ),
-                                children: <TextSpan>[
-                                  TextSpan(
-                                    text: '${_datosPerfil[0]['nombre']}\n${_datosPerfil[0]['rut']}'
-                                  ),
-                                ],
-                              ),
-                            ),
+                        text: TextSpan(
+                          style: const TextStyle(
+                            color: Color.fromARGB(255, 23, 56, 84),
+                            fontSize: 24,
+                          ),
+                          children: <TextSpan>[
+                            TextSpan(
+                                text:
+                                    '${_datosPerfil[0]['nombre']}\n${_datosPerfil[0]['rut']}'),
+                          ],
+                        ),
+                      ),
                     ),
-                    SizedBox(
-                      height: 95.0,
-                      width: 95.0,
-                      child: Image.asset('assets/mascota.png'),
-                    ),
+                    Container(
+                      margin: EdgeInsets.only(top: 5),
+                      child: SizedBox(
+                        height: 80.0,
+                        child: Image.asset(
+                            'assets/asistentes/${_datosAsistente[0]['mascota']}.png'),
+                      ),
+                    )
                   ],
                 ),
                 const SizedBox(
@@ -123,60 +133,60 @@ class _PerfilState extends State<Perfil> {
                   ),
                 ),
                 Container(
-                  margin: const EdgeInsets.only(bottom: 40),
-                  decoration: BoxDecoration(
-                      color: Color.fromARGB(255, 236, 244, 214), // Cambia el color de fondo del Container (y, por lo tanto, del SizedBox)
-                      borderRadius: BorderRadius.circular(20.0),
-                      border: Border.all(
-                          color: Colors
-                              .black) // Ajusta el radio de borde según tus preferencias
-                      ),
-                  width: 320,
-                  height: 340,
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    mainAxisSize: MainAxisSize.min,
-                    children: [
-                      Container(
-                        margin: const EdgeInsets.all(5),
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          mainAxisSize: MainAxisSize.min,
-                          children: [
-                            RichText(
-                              text: TextSpan(
-                                style: const TextStyle(
-                                  color: Color.fromARGB(255, 23, 56, 84),
-                                  fontSize: 24,
-                                ),
-                                children: <TextSpan>[
-                                  TextSpan(
-                                    text: '${_datosConsulta[0]['asunto']}',
-                                    style: const TextStyle(fontWeight: FontWeight.bold)
-                                  ),
-                                ],
-                              ),
-                            ),
-                            const SizedBox(height: 5),
-                            RichText(
-                              text: TextSpan(
-                                style: const TextStyle(
-                                  color: Color.fromARGB(255, 23, 56, 84),
-                                  fontSize: 18,
-                                ),
-                                children: <TextSpan>[
-                                  TextSpan(
-                                    text: '${_datosConsulta[0]['detalle']}',
-                                  ),
-                                ],
-                              ),
-                            ),
-                          ],
+                    margin: const EdgeInsets.only(bottom: 40),
+                    decoration: BoxDecoration(
+                        color: Color.fromARGB(255, 236, 244,
+                            214), // Cambia el color de fondo del Container (y, por lo tanto, del SizedBox)
+                        borderRadius: BorderRadius.circular(20.0),
+                        border: Border.all(
+                            color: Colors
+                                .black) // Ajusta el radio de borde según tus preferencias
                         ),
-                      ),
-                    ],
-                  )
-                ),
+                    width: 320,
+                    height: 340,
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      mainAxisSize: MainAxisSize.min,
+                      children: [
+                        Container(
+                          margin: const EdgeInsets.all(5),
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            mainAxisSize: MainAxisSize.min,
+                            children: [
+                              RichText(
+                                text: TextSpan(
+                                  style: const TextStyle(
+                                    color: Color.fromARGB(255, 23, 56, 84),
+                                    fontSize: 24,
+                                  ),
+                                  children: <TextSpan>[
+                                    TextSpan(
+                                        text: '${_datosConsulta[0]['asunto']}',
+                                        style: const TextStyle(
+                                            fontWeight: FontWeight.bold)),
+                                  ],
+                                ),
+                              ),
+                              const SizedBox(height: 5),
+                              RichText(
+                                text: TextSpan(
+                                  style: const TextStyle(
+                                    color: Color.fromARGB(255, 23, 56, 84),
+                                    fontSize: 18,
+                                  ),
+                                  children: <TextSpan>[
+                                    TextSpan(
+                                      text: '${_datosConsulta[0]['detalle']}',
+                                    ),
+                                  ],
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
+                      ],
+                    )),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                   children: [
@@ -192,8 +202,10 @@ class _PerfilState extends State<Perfil> {
                           "Ver\nconsultas",
                           textAlign: TextAlign.center),
                       onPressed: () => {
-                        Navigator.push(context,
-                            MaterialPageRoute(builder: (context) => Consultas()))
+                        Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => Consultas()))
                       },
                     ),
                     ElevatedButton(
@@ -208,11 +220,9 @@ class _PerfilState extends State<Perfil> {
                       ),
                       onPressed: () => {
                         Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                            builder: (context) => Configuracion()
-                          )
-                        )
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => Configuracion()))
                       },
                     ),
                     ElevatedButton(

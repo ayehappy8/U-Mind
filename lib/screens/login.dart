@@ -1,8 +1,12 @@
 import "package:firebase_auth/firebase_auth.dart";
 import "package:flutter/material.dart";
+import 'package:cloud_firestore/cloud_firestore.dart';
+import "package:umind/screens/perfil/configuracion/crearAsistente.dart";
+import 'package:umind/usuario_auth/firebase_auth_service/getUsuario.dart';
 import "package:umind/usuario_auth/firebase_auth_service/firebase_auth_service.dart";
 import '/widget/dialogo.dart';
 import "inicio.dart";
+import 'package:umind/functions/getInfoAsistente.dart';
 
 class Login extends StatefulWidget {
   const Login({Key? key}) : super(key: key);
@@ -11,20 +15,41 @@ class Login extends StatefulWidget {
   _LoginState createState() => _LoginState();
 }
 
+final List<Map<String, dynamic>> _datosAsistente = <Map<String, dynamic>>[];
+bool _isLoading = true;
+
 class _LoginState extends State<Login> {
   final FirebaseAuthService _auth = FirebaseAuthService();
+
+  Future<void> fetchInfoAsistente() async {
+    _datosAsistente.clear();
+    List<Map<String, dynamic>> datos = await getInfoAsistente();
+    setState(() {
+      _datosAsistente.addAll(datos);
+
+      _isLoading = false;
+    });
+  }
+
+//Bug cuando es primera vez iniciando sesión al abrir la aplicación
 //Funcion de inicio de sesion con firebaseauth
   void _signIn() async {
     String email = _emailController.text;
     String password = _passwordController.text;
 
     User? user = await _auth.singInwithEmailAndPassword(email, password);
+    await fetchInfoAsistente();
 
     if (user != null) {
       print("Se ha logiado con exito");
       //navegación hacia inicio
-      Navigator.pushReplacement(
-          context, MaterialPageRoute(builder: (context) => Inicio()));
+      if (_datosAsistente.isEmpty) {
+        Navigator.pushReplacement(
+            context, MaterialPageRoute(builder: (context) => CrearAsistente()));
+      } else {
+        Navigator.pushReplacement(
+            context, MaterialPageRoute(builder: (context) => Inicio()));
+      }
     } else {
       print("Error en el login");
       Dialogo.mostrarDialogo(
@@ -36,10 +61,8 @@ class _LoginState extends State<Login> {
   final _passwordController = TextEditingController();
 
   @override
-  void dispose() {
-    _emailController.dispose();
-    _passwordController.dispose();
-    super.dispose();
+  void initState() {
+    super.initState();
   }
 
   @override
@@ -52,7 +75,7 @@ class _LoginState extends State<Login> {
             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             children: [
               //Logo universidad
-              Image.asset('assets/ulagos.png'),
+              Image.asset('assets/Logo2.png'),
               const Text(style: TextStyle(fontSize: 35), "Inicio de sesión"),
               Container(
                 margin: const EdgeInsets.only(bottom: 30),
@@ -129,5 +152,12 @@ class _LoginState extends State<Login> {
             ],
           ),
         ));
+  }
+
+  @override
+  void dispose() {
+    _emailController.dispose();
+    _passwordController.dispose();
+    super.dispose();
   }
 }
