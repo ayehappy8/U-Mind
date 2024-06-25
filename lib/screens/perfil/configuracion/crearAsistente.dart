@@ -3,6 +3,9 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:umind/usuario_auth/firebase_auth_service/getUsuario.dart';
 import '/widget/dialogo.dart';
 import "package:umind/screens/inicio.dart";
+import 'package:provider/provider.dart';
+import 'package:umind/providers/assistant_provider.dart';
+import 'package:umind/functions/getInfoAsistente.dart';
 
 class CrearAsistente extends StatefulWidget {
   const CrearAsistente({Key? key}) : super(key: key);
@@ -11,25 +14,12 @@ class CrearAsistente extends StatefulWidget {
   _CrearAsistenteState createState() => _CrearAsistenteState();
 }
 
-final List<Map<String, dynamic>> _datosAsistente = <Map<String, dynamic>>[];
-
 class _CrearAsistenteState extends State<CrearAsistente> {
   final _nombre = TextEditingController();
 
-  void getInfoAsistente() async {
-    _datosAsistente.clear();
-    DocumentReference documentReference = FirebaseFirestore.instance
-        .collection("Usuarios")
-        .doc(getCurrentUserId());
-    QuerySnapshot consultas =
-        await documentReference.collection("Asistente").get();
-
-    if (consultas.docs.isNotEmpty) {
-      for (var doc in consultas.docs) {
-        _datosAsistente.add(doc.data() as Map<String, dynamic>);
-      }
-    }
-    setState(() {});
+  Future<void> fetchInfoAsistente() async {
+    List<Map<String, dynamic>> datos = await getInfoAsistente();
+    Provider.of<AsistenteInfo>(context, listen: false).setDatosAsistente(datos);
   }
 
   Future<void> agregarDatos() async {
@@ -302,6 +292,11 @@ class _CrearAsistenteState extends State<CrearAsistente> {
                                             'Se actualizó el Asistente Correctamente',
                                             () => {
                                                   {
+                                                    {
+                                                      setState(() {
+                                                        fetchInfoAsistente();
+                                                      })
+                                                    },
                                                     Navigator.pushReplacement(
                                                         context,
                                                         MaterialPageRoute(
