@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:umind/usuario_auth/firebase_auth_service/getUsuario.dart';
+import 'package:provider/provider.dart';
 import '/widget/dialogo.dart';
+import 'package:umind/providers/assistant_provider.dart';
 import 'package:umind/functions/getInfoAsistente.dart';
 
 class PersoAsistente extends StatefulWidget {
@@ -11,7 +13,6 @@ class PersoAsistente extends StatefulWidget {
   _PersoAsistenteState createState() => _PersoAsistenteState();
 }
 
-final List<Map<String, dynamic>> _datosAsistente = <Map<String, dynamic>>[];
 bool _isLoading = true;
 String _asistenteSeleccionado = 'nutria';
 
@@ -58,11 +59,15 @@ class _PersoAsistenteState extends State<PersoAsistente> {
   }
 
   Future<void> fetchInfoAsistente() async {
-    _datosAsistente.clear();
     List<Map<String, dynamic>> datos = await getInfoAsistente();
+    Provider.of<AsistenteInfo>(context, listen: false).setDatosAsistente(datos);
+
+    if (datos.isNotEmpty) {
+      _asistenteSeleccionado = datos[0]['mascota'] ?? 'Nutria';
+      _nombre.text = datos[0]['nombre'] ?? '';
+    }
+
     setState(() {
-      _datosAsistente.addAll(datos);
-      _asistenteSeleccionado = _datosAsistente[0]['mascota'];
       _isLoading = false;
     });
   }
@@ -76,6 +81,8 @@ class _PersoAsistenteState extends State<PersoAsistente> {
 
   @override
   Widget build(BuildContext context) {
+    final asistenteInfo = Provider.of<AsistenteInfo>(context);
+
     if (_isLoading) {
       //*************************Esqueleto************************//
       return Scaffold(
@@ -289,7 +296,9 @@ class _PersoAsistenteState extends State<PersoAsistente> {
                         filled: true,
                         border: OutlineInputBorder(
                             borderRadius: BorderRadius.circular(20)),
-                        hintText: _datosAsistente[0]['nombre'],
+                        hintText: asistenteInfo.datosAsistente.isNotEmpty
+                            ? asistenteInfo.datosAsistente[0]['nombre']
+                            : 'Nombre',
                       ),
                     ),
                   ),
@@ -337,7 +346,12 @@ class _PersoAsistenteState extends State<PersoAsistente> {
                                               'Datos',
                                               'Se actualizó el Asistente Correctamente',
                                               () => {
-                                                    {Navigator.pop(context)},
+                                                    {
+                                                      setState(() {
+                                                        fetchInfoAsistente();
+                                                      })
+                                                    },
+                                                    Navigator.pop(context)
                                                   }),
                                         }
                                     : null),

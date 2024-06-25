@@ -7,6 +7,8 @@ import "package:umind/usuario_auth/firebase_auth_service/firebase_auth_service.d
 import '/widget/dialogo.dart';
 import "inicio.dart";
 import 'package:umind/functions/getInfoAsistente.dart';
+import 'package:provider/provider.dart';
+import 'package:umind/providers/assistant_provider.dart';
 
 class Login extends StatefulWidget {
   const Login({Key? key}) : super(key: key);
@@ -24,6 +26,7 @@ class _LoginState extends State<Login> {
   Future<void> fetchInfoAsistente() async {
     _datosAsistente.clear();
     List<Map<String, dynamic>> datos = await getInfoAsistente();
+    Provider.of<AsistenteInfo>(context, listen: false).setDatosAsistente(datos);
     setState(() {
       _datosAsistente.addAll(datos);
 
