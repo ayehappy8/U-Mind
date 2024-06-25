@@ -1,33 +1,31 @@
 import 'package:flutter/material.dart';
 import 'package:umind/screens/registro/registrocuadro.dart';
 
-
-
-
 class Registroemocion extends StatefulWidget {
   const Registroemocion({Key? key}) : super(key: key);
 
   @override
   _RegistroemocionState createState() => _RegistroemocionState();
 }
-String emocion1='Tristeza';
-String emocion2='Penita';
+
+String emocion1 = 'Tristeza';
+String emocion2 = 'Penita';
 
 class _RegistroemocionState extends State<Registroemocion> {
   List<String> buttonNames = [
-    'Felicidad😀',
-    'Tristeza😢',
-    'Ira😠',
-    'Miedo😰',
-    'Asco🥴',
-    'Sorpresa😮',
+    'Felicidad',
+    'Tristeza',
+    'Ira',
+    'Miedo',
+    'Asco',
+    'Sorpresa',
   ];
 
   void changeButtonNames(int index) {
     setState(() {
       // Cada botón puede tener su propia lógica de cambio
       switch (index) {
-        case 0:  // Para 'Felicidad'
+        case 0: // Para 'Felicidad'
           buttonNames = [
             'Alegre',
             'Interesado',
@@ -39,7 +37,7 @@ class _RegistroemocionState extends State<Registroemocion> {
             'Optimista',
           ];
           break;
-        case 1:  // Para 'Tristeza'
+        case 1: // Para 'Tristeza'
           buttonNames = [
             'Culpable',
             'Abandonado',
@@ -49,7 +47,7 @@ class _RegistroemocionState extends State<Registroemocion> {
             'Aburrido',
           ];
           break;
-        case 2:  // Para 'Ira'
+        case 2: // Para 'Ira'
           buttonNames = [
             'Herido',
             'Amenazado',
@@ -61,7 +59,7 @@ class _RegistroemocionState extends State<Registroemocion> {
             'Crítico',
           ];
           break;
-          case 3:  // Para 'Miedo'
+        case 3: // Para 'Miedo'
           buttonNames = [
             'Humillado',
             'Rechazado',
@@ -71,7 +69,7 @@ class _RegistroemocionState extends State<Registroemocion> {
             'Asustado',
           ];
           break;
-          case 4:  // Para 'Asco'
+        case 4: // Para 'Asco'
           buttonNames = [
             'Disconforme',
             'Decepcionado',
@@ -79,7 +77,7 @@ class _RegistroemocionState extends State<Registroemocion> {
             'Abstinencia',
           ];
           break;
-          case 5:  // Para 'Sorpresa'
+        case 5: // Para 'Sorpresa'
           buttonNames = [
             'Sorprendido',
             'Confundido',
@@ -94,9 +92,9 @@ class _RegistroemocionState extends State<Registroemocion> {
     });
   }
 
-  double ratio = 2/1;
+  double ratio = 2 / 1;
   bool cont = false;
-  String _text= "¿Qué sientes hoy?";
+  String _text = "¿Qué sientes hoy?";
 
   @override
   Widget build(BuildContext context) {
@@ -130,29 +128,32 @@ class _RegistroemocionState extends State<Registroemocion> {
                             minimumSize: const Size(146, 45),
                           ),
                           onPressed: () {
-                            
                             if (cont == true) {
-                              emocion2=buttonNames[index];
+                              emocion2 = buttonNames[index];
 
                               Navigator.push(
                                 context,
-                                MaterialPageRoute(builder: (context) => Registrocuadro(data: emocion1,data2: emocion2,)),
+                                MaterialPageRoute(
+                                    builder: (context) => Registrocuadro(
+                                          data: emocion1,
+                                          data2: emocion2,
+                                        )),
                               );
                             }
                             if (cont != true) {
-                              emocion1=buttonNames[index];
+                              emocion1 = buttonNames[index];
                               cont = true;
-                              _text= "¿Y más específicamente?";
-                              ratio=10/4;
-                              
+                              _text = "¿Y más específicamente?";
+                              ratio = 10 / 4;
+
                               // Cambia los nombres basándose en el botón presionado
                               changeButtonNames(index);
                             }
-                            
                           },
                           child: Text(
-                            buttonNames[index],   //nombres de los botones
-                            style: const TextStyle(color: Colors.white, fontSize: 20),
+                            buttonNames[index], //nombres de los botones
+                            style: const TextStyle(
+                                color: Colors.white, fontSize: 20),
                           ),
                         ),
                       );
