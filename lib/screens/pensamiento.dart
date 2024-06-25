@@ -243,7 +243,7 @@ class _PensamientoState extends State<Pensamiento> {
                           ),
                           child: const Text(
                               style:
-                                  TextStyle(color: Colors.white, fontSize: 26),
+                                  TextStyle(color: Colors.white, fontSize: 20),
                               "Pensamientos\npasados",
                               textAlign: TextAlign.center),
                           onPressed: () => {
