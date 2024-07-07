@@ -6,6 +6,8 @@ import '/widget/penasamientosPasados.dart';
 import 'inicio.dart';
 import '/widget/dialogo.dart';
 import 'package:umind/usuario_auth/firebase_auth_service/getUsuario.dart';
+import 'package:umind/providers/assistant_provider.dart';
+import 'package:provider/provider.dart';
 
 class Pensamiento extends StatefulWidget {
   const Pensamiento({Key? key}) : super(key: key);
@@ -84,6 +86,7 @@ class _PensamientoState extends State<Pensamiento> {
 
   @override
   Widget build(BuildContext context) {
+    final asistenteInfo = Provider.of<AsistenteInfo>(context);
     return Scaffold(
       backgroundColor: const Color.fromARGB(255, 187, 222, 202),
       body: Container(
@@ -95,10 +98,14 @@ class _PensamientoState extends State<Pensamiento> {
               mainAxisAlignment: MainAxisAlignment.center,
               children: <Widget>[
                 Row(mainAxisAlignment: MainAxisAlignment.start, children: [
-                  SizedBox(
-                    height: 150.0,
-                    width: 150.0,
-                    child: Image.asset('assets/mascota.png'),
+                  Container(
+                    margin: EdgeInsets.only(
+                        left: 50, top: 10, bottom: 15, right: 45),
+                    child: SizedBox(
+                      height: 70.0,
+                      child: Image.asset(
+                          'assets/asistentes/${asistenteInfo.datosAsistente[0]['mascota']}.png'),
+                    ),
                   ),
                   Text(style: TextStyle(fontSize: 20), "¿Qué pienso?"),
                 ]),
@@ -119,10 +126,14 @@ class _PensamientoState extends State<Pensamiento> {
                 ),
                 //row 1
                 Row(mainAxisAlignment: MainAxisAlignment.start, children: [
-                  SizedBox(
-                    height: 150.0,
-                    width: 150.0,
-                    child: Image.asset('assets/mascota.png'),
+                  Container(
+                    margin: EdgeInsets.only(
+                        left: 50, top: 10, bottom: 15, right: 45),
+                    child: SizedBox(
+                      height: 70.0,
+                      child: Image.asset(
+                          'assets/asistentes/${asistenteInfo.datosAsistente[0]['mascota']}.png'),
+                    ),
                   ),
                   const Text(
                       style: TextStyle(fontSize: 20),
@@ -145,10 +156,14 @@ class _PensamientoState extends State<Pensamiento> {
                 ),
                 //row 2
                 Row(mainAxisAlignment: MainAxisAlignment.start, children: [
-                  SizedBox(
-                    height: 150.0,
-                    width: 150.0,
-                    child: Image.asset('assets/mascota.png'),
+                  Container(
+                    margin: EdgeInsets.only(
+                        left: 50, top: 10, bottom: 15, right: 45),
+                    child: SizedBox(
+                      height: 70.0,
+                      child: Image.asset(
+                          'assets/asistentes/${asistenteInfo.datosAsistente[0]['mascota']}.png'),
+                    ),
                   ),
                   const Text(
                       style: TextStyle(fontSize: 20),

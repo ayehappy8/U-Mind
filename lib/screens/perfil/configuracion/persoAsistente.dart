@@ -4,7 +4,7 @@ import 'package:umind/usuario_auth/firebase_auth_service/getUsuario.dart';
 import 'package:provider/provider.dart';
 import '/widget/dialogo.dart';
 import 'package:umind/providers/assistant_provider.dart';
-import 'package:umind/functions/getInfoAsistente.dart';
+import 'package:umind/functions/getInfo.dart';
 
 class PersoAsistente extends StatefulWidget {
   const PersoAsistente({Key? key}) : super(key: key);
@@ -67,6 +67,7 @@ class _PersoAsistenteState extends State<PersoAsistente> {
       _nombre.text = datos[0]['nombre'] ?? '';
     }
 
+    print("FetchinfoAsistente");
     setState(() {
       _isLoading = false;
     });
@@ -320,7 +321,9 @@ class _PersoAsistenteState extends State<PersoAsistente> {
                                       color: Color.fromARGB(255, 236, 244, 214),
                                       fontSize: 20),
                                   "Volver"),
-                              onPressed: () => {Navigator.pop(context)},
+                              onPressed: () => {
+                                Navigator.pop(context, fetchInfoAsistente())
+                              },
                             ),
                           ),
                           Container(
@@ -338,23 +341,15 @@ class _PersoAsistenteState extends State<PersoAsistente> {
                                         fontSize: 20),
                                     "Guardar",
                                     textAlign: TextAlign.center),
-                                onPressed: (_nombre.text.isNotEmpty)
-                                    ? () => {
-                                          actualizarDatos(),
-                                          Dialogo.mostrarDialogo(
-                                              context,
-                                              'Datos',
-                                              'Se actualizó el Asistente Correctamente',
-                                              () => {
-                                                    {
-                                                      setState(() {
-                                                        fetchInfoAsistente();
-                                                      })
-                                                    },
-                                                    Navigator.pop(context)
-                                                  }),
-                                        }
-                                    : null),
+                                onPressed: () async {
+                                  await actualizarDatos();
+                                  await fetchInfoAsistente();
+                                  Dialogo.mostrarDialogo(
+                                      context,
+                                      'Datos',
+                                      'Se actualizó el Asistente Correctamente',
+                                      () => {Navigator.pop(context)});
+                                }),
                           ),
                         ]),
                   ),

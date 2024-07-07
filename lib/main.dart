@@ -19,6 +19,7 @@ class UMind extends StatelessWidget {
     return MultiProvider(
         providers: [
           ChangeNotifierProvider(create: (_) => AsistenteInfo()),
+          ChangeNotifierProvider(create: (_) => RegistroInfo()),
         ],
         child: GestureDetector(
           onTap: () {

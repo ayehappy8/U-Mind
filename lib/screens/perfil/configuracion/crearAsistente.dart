@@ -5,7 +5,7 @@ import '/widget/dialogo.dart';
 import "package:umind/screens/inicio.dart";
 import 'package:provider/provider.dart';
 import 'package:umind/providers/assistant_provider.dart';
-import 'package:umind/functions/getInfoAsistente.dart';
+import 'package:umind/functions/getInfo.dart';
 
 class CrearAsistente extends StatefulWidget {
   const CrearAsistente({Key? key}) : super(key: key);

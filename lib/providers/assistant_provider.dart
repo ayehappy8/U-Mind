@@ -10,3 +10,14 @@ class AsistenteInfo with ChangeNotifier {
     notifyListeners();
   }
 }
+
+class RegistroInfo with ChangeNotifier {
+  List<Map<String, dynamic>> _datosRegistro = [];
+
+  List<Map<String, dynamic>> get datosRegistro => _datosRegistro;
+
+  void setDatosRegistro(List<Map<String, dynamic>> datos) {
+    _datosRegistro = datos;
+    notifyListeners();
+  }
+}

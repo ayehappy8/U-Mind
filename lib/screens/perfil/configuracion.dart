@@ -1,9 +1,28 @@
 import 'package:flutter/material.dart';
 import 'package:umind/screens/perfil/configuracion/paletaColores.dart';
 import 'package:umind/screens/perfil/configuracion/persoAsistente.dart';
+import 'package:umind/functions/getInfo.dart';
+import 'package:umind/providers/assistant_provider.dart';
+import 'package:provider/provider.dart';
 
-class Configuracion extends StatelessWidget {
-  const Configuracion({super.key});
+class Configuracion extends StatefulWidget {
+  const Configuracion({Key? key}) : super(key: key);
+
+  @override
+  _ConfiguracionState createState() => _ConfiguracionState();
+}
+
+class _ConfiguracionState extends State<Configuracion> {
+  Future<void> fetchInfoAsistente() async {
+    List<Map<String, dynamic>> datos = await getInfoAsistente();
+    Provider.of<AsistenteInfo>(context, listen: false).setDatosAsistente(datos);
+  }
+  /*
+  @override
+  void initState() {
+    super.initState();
+    fetchInfoAsistente();
+  }*/
 
   @override
   Widget build(BuildContext context) {

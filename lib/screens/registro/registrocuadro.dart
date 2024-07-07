@@ -1,30 +1,28 @@
 import 'package:flutter/material.dart';
+import 'package:umind/functions/getInfo.dart';
 import 'package:umind/screens/inicio.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:umind/screens/registro/registroemocion.dart';
 import '/widget/dialogo.dart';
-
-
+import 'package:umind/providers/assistant_provider.dart';
+import 'package:provider/provider.dart';
 
 class Registrocuadro extends StatefulWidget {
   final String data;
   final String data2;
-  Registrocuadro({Key? key, required this.data, required this.data2}) : super(key: key);
+  Registrocuadro({Key? key, required this.data, required this.data2})
+      : super(key: key);
 
   @override
   _RegistrocuadroState createState() => _RegistrocuadroState();
 }
 
 class _RegistrocuadroState extends State<Registrocuadro> {
+  String _emocion1 = 'alegria';
+  String _emocion2 = 'Felicidad';
+  final _detalle = TextEditingController();
 
-String _emocion1 = 'alegria';
-String _emocion2 = 'Felicidad';
-final _detalle = TextEditingController();
-
-
-final List<Map<String, dynamic>> _datosUsuarios = <Map<String, dynamic>>[];
-final DateTime _fecha = DateTime.now();
+  final DateTime _fecha = DateTime.now();
 
   String? getCurrentUserId() {
     User? user = FirebaseAuth.instance.currentUser;
@@ -63,8 +61,14 @@ final DateTime _fecha = DateTime.now();
     }
   }
 
+  Future<void> fetchInfoRegistro() async {
+    List<Map<String, dynamic>> datos = await getInfoRegistro();
+    Provider.of<RegistroInfo>(context, listen: false).setDatosRegistro(datos);
+  }
+
   @override
   Widget build(BuildContext context) {
+    final asistenteInfo = Provider.of<AsistenteInfo>(context);
     return GestureDetector(
       onTap: () {
         // Oculta el teclado cuando se toca fuera de un widget de entrada de texto
@@ -72,7 +76,6 @@ final DateTime _fecha = DateTime.now();
       },
       child: Scaffold(
         backgroundColor: const Color.fromARGB(255, 187, 222, 202),
-        
         body: Container(
           margin: const EdgeInsets.only(bottom: 15.0),
           child: Center(
@@ -80,14 +83,16 @@ final DateTime _fecha = DateTime.now();
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 children: [
-                  const Text("Profundiza tu emoción", style: TextStyle(fontSize: 25)),
-
-                  SizedBox(
-                    height: 300.0,
-                    width: 350.0,
-                    child: Image.asset('assets/mascota.png'),
+                  const Text("Profundiza tu emoción",
+                      style: TextStyle(fontSize: 25)),
+                  Container(
+                    margin: EdgeInsets.only(top: 20, bottom: 20),
+                    child: SizedBox(
+                      height: 200.0,
+                      child: Image.asset(
+                          'assets/asistentes/${asistenteInfo.datosAsistente[0]['mascota']}.png'),
+                    ),
                   ),
-
                   SizedBox(
                     height: 283.0,
                     width: 303.0,
@@ -100,36 +105,40 @@ final DateTime _fecha = DateTime.now();
                         border: OutlineInputBorder(
                           borderRadius: BorderRadius.circular(20.0),
                         ),
-                        hintText: '....',
+                        hintText: '...',
                       ),
                     ),
                   ),
-
                   Padding(
-                    padding: const EdgeInsets.only(left: 250),
+                    padding: const EdgeInsets.only(left: 160),
                     child: ElevatedButton(
                       style: ElevatedButton.styleFrom(
                         backgroundColor: Colors.teal,
                         minimumSize: const Size(146, 45),
                       ),
-                      onPressed: () {// Acción al presionar el botón
-                        
+                      onPressed: () async {
+                        // Acción al presionar el botón
+
                         _emocion1 = (widget.data);
                         _emocion2 = (widget.data2);
 
-                        agregarDatos();
+                        await agregarDatos();
+
+                        fetchInfoRegistro();
 
                         Dialogo.mostrarDialogo(
-                          context,
-                          'Registro',
-                          'Se guardo su registro diario',
-                          () => {
-                            Navigator.pushAndRemoveUntil(
-                              context,
-                              MaterialPageRoute(builder: (context) => const Inicio()),
-                              (Route<dynamic> route) => false,  // No permite volver a ninguna pantalla anterior
-                          )
-                        });
+                            context,
+                            'Registro',
+                            'Se guardo su registro diario',
+                            () => {
+                                  Navigator.pushAndRemoveUntil(
+                                    context,
+                                    MaterialPageRoute(
+                                        builder: (context) => const Inicio()),
+                                    (Route<dynamic> route) =>
+                                        false, // No permite volver a ninguna pantalla anterior
+                                  )
+                                });
                       },
                       child: const Text(
                         'Guardar',

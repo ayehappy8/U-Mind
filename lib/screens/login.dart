@@ -1,12 +1,10 @@
 import "package:firebase_auth/firebase_auth.dart";
 import "package:flutter/material.dart";
-import 'package:cloud_firestore/cloud_firestore.dart';
 import "package:umind/screens/perfil/configuracion/crearAsistente.dart";
-import 'package:umind/usuario_auth/firebase_auth_service/getUsuario.dart';
 import "package:umind/usuario_auth/firebase_auth_service/firebase_auth_service.dart";
 import '/widget/dialogo.dart';
 import "inicio.dart";
-import 'package:umind/functions/getInfoAsistente.dart';
+import 'package:umind/functions/getInfo.dart';
 import 'package:provider/provider.dart';
 import 'package:umind/providers/assistant_provider.dart';
 

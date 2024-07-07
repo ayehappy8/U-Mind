@@ -6,7 +6,7 @@ import 'package:pelaicons/pelaicons.dart';
 import "package:firebase_auth/firebase_auth.dart";
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:umind/usuario_auth/firebase_auth_service/getUsuario.dart';
-import 'package:umind/functions/getInfoAsistente.dart';
+import 'package:umind/functions/getInfo.dart';
 import 'package:umind/providers/assistant_provider.dart';
 import 'package:provider/provider.dart';
 
@@ -62,10 +62,9 @@ class _PerfilState extends State<Perfil> {
   @override
   void initState() {
     super.initState();
-    //fetchInfoAsistente();
     getInfoConsultas();
     getInfoPerfil();
-    //_isLoading = true;
+    fetchInfoAsistente();
   }
 
   @override
