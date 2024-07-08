@@ -42,7 +42,6 @@ class _LoginState extends State<Login> {
     await fetchInfoAsistente();
 
     if (user != null) {
-      print("Se ha logiado con exito");
       //navegación hacia inicio
       if (_datosAsistente.isEmpty) {
         Navigator.pushReplacement(
