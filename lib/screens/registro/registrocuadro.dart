@@ -117,28 +117,32 @@ class _RegistrocuadroState extends State<Registrocuadro> {
                         minimumSize: const Size(146, 45),
                       ),
                       onPressed: () async {
-                        // Acción al presionar el botón
+                        if (_detalle.text.isEmpty) {
+                          Dialogo.mostrarError(context, 'Error',
+                              'Debe completar el detalle', () => {});
+                        } else {
+                          // Acción al presionar el botón
 
-                        _emocion1 = (widget.data);
-                        _emocion2 = (widget.data2);
+                          _emocion1 = (widget.data);
+                          _emocion2 = (widget.data2);
 
-                        await agregarDatos();
+                          await agregarDatos();
+                          await fetchInfoRegistro();
 
-                        fetchInfoRegistro();
-
-                        Dialogo.mostrarDialogo(
-                            context,
-                            'Registro',
-                            'Se guardo su registro diario',
-                            () => {
-                                  Navigator.pushAndRemoveUntil(
-                                    context,
-                                    MaterialPageRoute(
-                                        builder: (context) => const Inicio()),
-                                    (Route<dynamic> route) =>
-                                        false, // No permite volver a ninguna pantalla anterior
-                                  )
-                                });
+                          Dialogo.mostrarDialogo(
+                              context,
+                              'Registro',
+                              'Se guardo su registro diario',
+                              () => {
+                                    Navigator.pushAndRemoveUntil(
+                                      context,
+                                      MaterialPageRoute(
+                                          builder: (context) => const Inicio()),
+                                      (Route<dynamic> route) =>
+                                          false, // No permite volver a ninguna pantalla anterior
+                                    )
+                                  });
+                        }
                       },
                       child: const Text(
                         'Guardar',

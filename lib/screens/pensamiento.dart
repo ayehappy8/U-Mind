@@ -271,28 +271,37 @@ class _PensamientoState extends State<Pensamiento> {
                           },
                         ),
                         ElevatedButton(
-                            style: ElevatedButton.styleFrom(
-                              backgroundColor: Colors.teal,
-                              minimumSize: const Size(146, 70),
-                            ),
-                            child: const Text(
-                                style: TextStyle(
-                                    color: Colors.white, fontSize: 20),
-                                "Guardar"),
-                            onPressed: (_emocion != 'Seleccionar emoción' &&
-                                    _pregunta1.text.isNotEmpty &&
-                                    _pregunta2.text.isNotEmpty)
-                                ? () => {
-                                      agregarDatos(),
-                                      Dialogo.mostrarDialogo(
-                                          context,
-                                          'Datos',
-                                          'Se guardaron los datos',
-                                          () => {
-                                                Inicio.cambiarTab(context, 0),
-                                              }),
-                                    }
-                                : null),
+                          style: ElevatedButton.styleFrom(
+                            backgroundColor: Colors.teal,
+                            minimumSize: const Size(146, 70),
+                          ),
+                          child: const Text(
+                              style:
+                                  TextStyle(color: Colors.white, fontSize: 20),
+                              "Guardar"),
+                          onPressed: (() async {
+                            if (_pregunta1.text.isEmpty ||
+                                _pregunta2.text.isEmpty) {
+                              Dialogo.mostrarError(
+                                  context,
+                                  'Error',
+                                  'Debe completar los campos solicitados',
+                                  () => {});
+                            } else if (_emocion == 'Seleccionar emoción') {
+                              Dialogo.mostrarError(context, 'Error',
+                                  'Debe seleccionar una emoción', () => {});
+                            } else {
+                              await agregarDatos();
+                              Dialogo.mostrarDialogo(
+                                  context,
+                                  'Datos',
+                                  'Se guardaron los datos',
+                                  () => {
+                                        Inicio.cambiarTab(context, 0),
+                                      });
+                            }
+                          }),
+                        )
                       ]),
                 ),
                 Visibility(

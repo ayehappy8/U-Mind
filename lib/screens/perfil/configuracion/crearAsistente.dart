@@ -283,30 +283,33 @@ class _CrearAsistenteState extends State<CrearAsistente> {
                                       fontSize: 20),
                                   "Guardar",
                                   textAlign: TextAlign.center),
-                              onPressed: (_nombre.text.isNotEmpty)
-                                  ? () => {
-                                        agregarDatos(),
-                                        Dialogo.mostrarDialogo(
-                                            context,
-                                            'Datos',
-                                            'Se actualizó el Asistente Correctamente',
-                                            () => {
-                                                  {
-                                                    {
-                                                      setState(() {
-                                                        fetchInfoAsistente();
-                                                      })
-                                                    },
-                                                    Navigator.pushReplacement(
-                                                        context,
-                                                        MaterialPageRoute(
-                                                            builder:
-                                                                (context) =>
-                                                                    Inicio()))
-                                                  },
-                                                }),
-                                      }
-                                  : null),
+                              onPressed: () async {
+                                if (_nombre.text.isEmpty) {
+                                  Dialogo.mostrarError(context, 'Error',
+                                      'Debe ingresar un nombre', () => {});
+                                } else if (!RegExp(r'^[a-zA-Z0-9._-]+$')
+                                    .hasMatch(_nombre.text)) {
+                                  Dialogo.mostrarError(
+                                      context,
+                                      'Error',
+                                      'Debe ingresar un nombre válido',
+                                      () => {});
+                                } else {
+                                  await agregarDatos();
+                                  await fetchInfoAsistente();
+                                  Dialogo.mostrarDialogo(
+                                      context,
+                                      'Datos',
+                                      'Se actualizó el Asistente Correctamente',
+                                      () => {
+                                            Navigator.pushReplacement(
+                                                context,
+                                                MaterialPageRoute(
+                                                    builder: (context) =>
+                                                        Inicio()))
+                                          });
+                                }
+                              }),
                         ),
                       ]),
                 ),

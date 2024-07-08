@@ -342,13 +342,25 @@ class _PersoAsistenteState extends State<PersoAsistente> {
                                     "Guardar",
                                     textAlign: TextAlign.center),
                                 onPressed: () async {
-                                  await actualizarDatos();
-                                  await fetchInfoAsistente();
-                                  Dialogo.mostrarDialogo(
-                                      context,
-                                      'Datos',
-                                      'Se actualizó el Asistente Correctamente',
-                                      () => {Navigator.pop(context)});
+                                  if (_nombre.text.isEmpty) {
+                                    Dialogo.mostrarError(context, 'Error',
+                                        'Debe ingresar un nombre', () => {});
+                                  } else if (!RegExp(r'^[a-zA-Z0-9._-]+$')
+                                      .hasMatch(_nombre.text)) {
+                                    Dialogo.mostrarError(
+                                        context,
+                                        'Error',
+                                        'Debe ingresar un nombre válido',
+                                        () => {});
+                                  } else {
+                                    await actualizarDatos();
+                                    await fetchInfoAsistente();
+                                    Dialogo.mostrarDialogo(
+                                        context,
+                                        'Datos',
+                                        'Se actualizó el Asistente Correctamente',
+                                        () => {Navigator.pop(context)});
+                                  }
                                 }),
                           ),
                         ]),
