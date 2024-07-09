@@ -307,7 +307,7 @@ class _PensamientoState extends State<Pensamiento> {
                 Visibility(
                     visible: condicionContainer,
                     child: Container(
-                        height: 440,
+                        height: 450,
                         margin: EdgeInsets.only(bottom: 10),
                         decoration: BoxDecoration(
                             color: Colors.teal,

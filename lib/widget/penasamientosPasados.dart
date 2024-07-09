@@ -17,6 +17,9 @@ final List<Map<String, dynamic>> _datosUsuarios = <Map<String, dynamic>>[];
 class _PensamientoPasadoState extends State<PensamientoPasado> {
   @override
   void initState() {
+    setState(() {
+      _paginaActual = 0;
+    });
     super.initState();
 
     getInfoPensamientos();
@@ -75,9 +78,6 @@ class _PensamientoPasadoState extends State<PensamientoPasado> {
             ))
           ],
           rows: _buildRows(context, rowsDeLaPaginaActual)),
-      SizedBox(
-        height: 10,
-      ),
       Row(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
