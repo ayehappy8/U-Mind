@@ -19,6 +19,7 @@ final List<Map<String, dynamic>> _datosAsistente = <Map<String, dynamic>>[];
 bool _isLoading = true;
 
 class _LoginState extends State<Login> {
+  bool _isLogin = false;
   final FirebaseAuthService _auth = FirebaseAuthService();
 
   Future<void> fetchInfoAsistente() async {
@@ -35,6 +36,9 @@ class _LoginState extends State<Login> {
 //Bug cuando es primera vez iniciando sesión al abrir la aplicación
 //Funcion de inicio de sesion con firebaseauth
   void _signIn() async {
+    setState(() {
+      _isLogin = true;
+    });
     String email = _emailController.text;
     String password = _passwordController.text;
 
@@ -55,6 +59,9 @@ class _LoginState extends State<Login> {
       Dialogo.mostrarDialogo(
           context, 'Error', 'Correo y/o contraseña Equivocada', () => {});
     }
+    setState(() {
+      _isLogin = false;
+    });
   }
 
   final _emailController = TextEditingController();
@@ -137,17 +144,19 @@ class _LoginState extends State<Login> {
                     ]),
               ),
               Center(
-                child: ElevatedButton(
-                    style: ElevatedButton.styleFrom(
-                      backgroundColor: Colors.blue[900],
-                      minimumSize: const Size(294, 50),
-                    ),
-                    onPressed: () {
-                      _signIn();
-                    },
-                    child: const Text(
-                        style: TextStyle(color: Colors.white, fontSize: 20),
-                        "Iniciar sesión")),
+                child: _isLogin
+                    ? const CircularProgressIndicator()
+                    : ElevatedButton(
+                        style: ElevatedButton.styleFrom(
+                          backgroundColor: Colors.blue[900],
+                          minimumSize: const Size(294, 50),
+                        ),
+                        onPressed: () {
+                          _signIn();
+                        },
+                        child: const Text(
+                            style: TextStyle(color: Colors.white, fontSize: 20),
+                            "Iniciar sesión")),
               )
             ],
           ),
