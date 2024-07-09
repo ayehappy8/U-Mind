@@ -17,6 +17,9 @@ final List<Map<String, dynamic>> _datosUsuarios = <Map<String, dynamic>>[];
 class _PensamientoPasadoState extends State<PensamientoPasado> {
   @override
   void initState() {
+    setState(() {
+      _paginaActual = 0;
+    });
     super.initState();
 
     getInfoPensamientos();
@@ -87,7 +90,7 @@ class _PensamientoPasadoState extends State<PensamientoPasado> {
                   }
                 : null,
             icon: Icon(
-              Icons.arrow_back_ios,
+              Icons.arrow_back,
               color: Colors.white,
             ),
           ),
