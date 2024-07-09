@@ -19,9 +19,12 @@ class _CapsulasState extends State<Capsulas> {
   Future<void> fetchInfoRegistro() async {
     List<Map<String, dynamic>> datos = await getInfoRegistro();
     Provider.of<RegistroInfo>(context, listen: false).setDatosRegistro(datos);
-    setState(() {
-      _isLoading = false;
-    });
+
+    if (datos.isNotEmpty) {
+      setState(() {
+        _isLoading = false;
+      });
+    }
   }
 
   @override
