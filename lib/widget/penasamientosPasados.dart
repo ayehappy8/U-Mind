@@ -75,6 +75,9 @@ class _PensamientoPasadoState extends State<PensamientoPasado> {
             ))
           ],
           rows: _buildRows(context, rowsDeLaPaginaActual)),
+      SizedBox(
+        height: 10,
+      ),
       Row(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
@@ -87,7 +90,7 @@ class _PensamientoPasadoState extends State<PensamientoPasado> {
                   }
                 : null,
             icon: Icon(
-              Icons.arrow_back_ios,
+              Icons.arrow_back,
               color: Colors.white,
             ),
           ),

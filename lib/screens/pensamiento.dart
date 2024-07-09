@@ -307,6 +307,7 @@ class _PensamientoState extends State<Pensamiento> {
                 Visibility(
                     visible: condicionContainer,
                     child: Container(
+                        height: 440,
                         margin: EdgeInsets.only(bottom: 10),
                         decoration: BoxDecoration(
                             color: Colors.teal,
@@ -314,6 +315,7 @@ class _PensamientoState extends State<Pensamiento> {
                         child: Column(
                           children: [
                             PensamientoPasado(),
+                            Spacer(),
                             Container(
                               margin: EdgeInsets.all(15),
                               child: ElevatedButton(
